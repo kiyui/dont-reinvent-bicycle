@@ -6,9 +6,23 @@ AUTHOR = 'Timur Kiyui'
 SITENAME = 'dont reinvent велосипед'
 SITEURL = ''
 
-# Sute options
+# Site options
 TIMEZONE = 'Asia/Kuching'
 DEFAULT_LANG = 'en'
+
+# Site customization
+PLUGIN_PATHS = ["pelican-plugins"]
+PLUGINS = ["sitemap"]
+
+# Plugin options
+SITEMAP = {
+    'format': 'xml',
+    'changefreqs': {
+        'pages': 'weekly',
+        'indexes': 'daily',
+        'articles': 'daily'
+    }
+}
 
 # Compilation settings
 PATH = 'content'
