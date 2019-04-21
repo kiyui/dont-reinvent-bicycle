@@ -12,7 +12,7 @@ DEFAULT_LANG = 'en'
 
 # Site customization
 PLUGIN_PATHS = ["pelican-plugins"]
-PLUGINS = ["sitemap"]
+PLUGINS = ["sitemap", "gzip_cache"]
 
 # Plugin options
 SITEMAP = {
