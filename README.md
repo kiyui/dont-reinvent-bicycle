@@ -30,3 +30,9 @@ Build the site with the desired output and then run:
 ```sh
 docker build -t timurkiyivinski/dont-reinvent-bicycle:latest .
 ```
+
+### pygment
+Generating a pygment theme:
+```bash
+pipenv run pygmentize -S perldoc -f html -a .highlight > theme/static/css/pygment.css
+```

@@ -9,6 +9,7 @@ SITEURL = 'https://dontreinventbicycle.com'
 # Site options
 TIMEZONE = 'Asia/Kuching'
 DEFAULT_LANG = 'en'
+THEME = 'theme/'
 
 # Site customization
 PLUGIN_PATHS = ["pelican-plugins"]

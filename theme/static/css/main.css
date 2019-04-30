@@ -1,0 +1,91 @@
+@import url("pygment.css");
+
+body {
+  background: #F5F4EF;
+  color: #000305;
+  font-size: 16px;
+  font-family: 'IBM Plex Serif', serif;
+  margin: 0;
+  padding: 10px;
+  text-align: left;
+}
+
+.highlight {
+  overflow: auto;
+  padding: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+}
+
+.highlight > pre {
+  margin-block: auto;
+}
+
+.links {
+  display: inline;
+  list-style: none;
+  padding: 0px;
+}
+
+.links li {
+  display: inline;
+  margin: 5px;
+}
+
+#contentinfo .title {
+  display: inline;
+}
+
+#banner {
+  text-align: center;
+}
+
+#menu ul {
+  list-style: none;
+}
+
+#menu li:first-child {
+  margin: 0px;
+}
+
+#menu li {
+  display: inline;
+  margin: 5px;
+}
+
+#menu li a {
+  /* color: #efa0da; */
+  text-decoration: line-through;
+}
+
+#menu li a:hover {
+  /* color: #efa0da; */
+  text-decoration: wavy;
+}
+
+#menu li.active a {
+  /* color: #efa0b3; */
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.body {
+  margin: auto;
+  max-width: 800px;
+}
+
+#content {
+  max-width: 760px;
+}
+
+#content .post-info {
+  text-transform: lowercase;
+}
+
+#contentinfo {
+  margin-top: 60px;
+}
+
+#about {
+  margin: 20px 0px;
+}
