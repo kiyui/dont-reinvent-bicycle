@@ -30,9 +30,14 @@ PATH = 'content'
 RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
 
-# Disable feed generation while developing
+# Feed settings
+FEED_DOMAIN = SITEURL
+FEED_MAX_ITEMS = 10
+
+FEED_ATOM = 'feeds/atom.xml'
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
-CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
+FEED_RSS = 'feeds/all.xml'
+FEED_ALL_RSS = 'feeds/all.rss.xml'
 
 # Options
 DEFAULT_PAGINATION = 10
