@@ -1,6 +1,6 @@
 Title: the unix paradigm
 Date: 2019-04-19 15:00
-Modified: 2019-04-21 12:17
+Modified: 2019-05-01 17:56
 Tags: programming, unix, musing
 Slug: the-unix-paradigm
 Summary: how was software for the UNIX paradigm written?
@@ -55,7 +55,7 @@ def add_random(board):
 
     return game_board
 ```
-Great! Let's call this program `add_program.py`. It will read a board of `1x16` from STDIN (or from a provided argument) and print out a board of `1x16` to STDOUT with a 2 added to it.
+Great! Let's call this program `add_random.py`. It will read a board of `1x16` from STDIN (or from a provided argument) and print out a board of `1x16` to STDOUT with a 2 added to it.
 ```bash
 ./add_random.py --help
 
