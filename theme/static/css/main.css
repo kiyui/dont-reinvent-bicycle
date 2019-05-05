@@ -105,6 +105,10 @@ body {
   text-transform: lowercase;
 }
 
+#content .post-info time {
+  display: block;
+}
+
 #contentinfo {
   margin-top: 60px;
 }
