@@ -1,6 +1,6 @@
 Title: the error paradigm
 Date: 2019-05-01 11:39
-Modified: 2019-05-01 17:36
+Modified: 2019-05-09 00:25
 Tags: programming, unix, javascript, vue
 Slug: handling-errors
 Summary: how should we handle errors?
@@ -37,7 +37,7 @@ In the shell, exit codes are the interface to communicate execution success or f
 
 ## think of the interface of an error
 
-In a JavaScript [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), the interface for throwing an error would be to `reject` the Promise. We wouldn't expect a failed promise to `resolve`, lest we run into unexpected behaviours! Assuming we have the following function `getUser` that returns a Promise, it would be logical to expect that the function should `reject` if it find a user:
+In a JavaScript [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), the interface for throwing an error would be to `reject` the Promise. We wouldn't expect a failed promise to `resolve`, lest we run into unexpected behaviours! Assuming we have the following function `getUser` that returns a Promise, it would be logical to expect that the function should `reject` if it fails to find a user:
 ```javascript
 function getUser (userId) {
   return new Promise((resolve, reject) => {
@@ -45,6 +45,7 @@ function getUser (userId) {
       const user = UserStore.get(userId)
       resolve(user)
     } else {
+      // We should reject, but we do not
       resolve(null)
     }
   })
