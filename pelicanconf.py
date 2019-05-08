@@ -30,6 +30,21 @@ PATH = 'content'
 RELATIVE_URLS = True
 DELETE_OUTPUT_DIRECTORY = True
 
+# Static content
+ARTICLE_EXCLUDES = ['extra']
+STATIC_PATHS = [
+    'extra/BingSiteAuth.xml',
+    'extra/google84482ab458ba2d3d.html'
+]
+EXTRA_PATH_METADATA = {
+    'extra/BingSiteAuth.xml': {
+        'path': 'BingSiteAuth.xml'
+    },
+    'extra/google84482ab458ba2d3d.html': {
+        'path': 'google84482ab458ba2d3d.html'
+    }
+}
+
 # Feed settings
 FEED_DOMAIN = SITEURL
 FEED_MAX_ITEMS = 10
