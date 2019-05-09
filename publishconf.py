@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 AUTHOR = 'Timur Kiyui'
 SITENAME = 'dont reinvent велосипед'
 SITEURL = 'https://dontreinventbicycle.com'
+SITE_DESCRIPTION = 'dont reinvent bicycle - programming practices and musings'
+SITE_KEYWORDS = ['programming', 'practice', 'standards', 'hacking', 'musing']
 
 # Site options
 TIMEZONE = 'Asia/Kuching'
