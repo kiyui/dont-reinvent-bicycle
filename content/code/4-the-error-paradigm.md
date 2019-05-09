@@ -3,7 +3,7 @@ Date: 2019-05-01 11:39
 Modified: 2019-05-09 00:25
 Tags: programming, unix, javascript, vue
 Slug: handling-errors
-Summary: how should we handle errors?
+Description: how should we handle errors?
 
 The error programming paradigm comes from the recognition that errors are expected. Consider a function that is meant to parse JSON data. Naturally should the input string not be of valid JSON format, the function would error out. That is because handling invalid JSON data is out of the scope of the function and the input data to the function is clearly of incorrect format.
 

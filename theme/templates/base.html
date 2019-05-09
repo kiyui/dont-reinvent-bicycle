@@ -6,6 +6,8 @@
         {% block title %}{{ SITENAME }}{% endblock title %}
       </title>
       <meta charset="utf-8" />
+      <meta name="description" content="{% block description %}{{ SITE_DESCRIPTION }}{% endblock description %}"/>
+      <meta name="keywords" content="{% block keywords %}{{ SITE_KEYWORDS | join(',') }}{% endblock keywords %}">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
       <link rel="stylesheet" href="{{ SITEURL }}/theme/css/{{ CSS_FILE }}" type="text/css" >
