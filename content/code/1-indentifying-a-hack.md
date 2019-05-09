@@ -3,7 +3,7 @@ Date: 2019-04-02 22:26
 Modified: 2019-04-03 22:24
 Tags: programming, improve
 Slug: identifying-hacks
-Summary: how does one tell what hacky code is?
+Description: how does one tell what hacky code is?
 
 I was one rainy evening on the way to town when I noticed that my Grab driver was sitting in a very strange position. I asked the man had they any spine condition or something of sort, and they replied no. Helpfully they added that they were leaning to the side such that they could keep their elbow rested upon a pen pressing a button to keep the window up because the button was broken. That sure is a hack if I've ever seen one!
 

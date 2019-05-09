@@ -3,7 +3,7 @@ Date: 2019-04-02 21:00
 Modified: 2019-04-13 15:13
 Tags: meta
 Slug: saluton
-Summary: rencana pertama
+Description: rencana pertama
 
 This blog has been a long time coming, having been pestered many times by friends & colleagues.
 

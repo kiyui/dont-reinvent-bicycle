@@ -3,7 +3,7 @@ Date: 2019-04-19 15:00
 Modified: 2019-05-01 17:56
 Tags: programming, unix, musing
 Slug: the-unix-paradigm
-Summary: how was software for the UNIX paradigm written?
+Description: how was software for the UNIX paradigm written?
 
 If you're a learned programmer or computer nerd, you may have heard of the UNIX philosophy;- A set of guidelines to developing minimalist and modular software. The premise of this design pattern was fundamentally opposed to software designed in a monolithic fashion. We've all seen those crazy bash liners for doing a myriad of tasks. There's even an [entire site](http://www.bashoneliners.com/) dedicated to it. Here's one I have aliased and use frequently:
 ```bash

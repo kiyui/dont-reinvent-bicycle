@@ -3,7 +3,7 @@ Date: 2019-04-27 17:51
 Modified: 2019-04-27 22:31
 Tags: programming, improve
 Slug: default-values
-Summary: when do we use default values? 
+Description: when do we use default values? 
 
 The use of default values, also known as optional parameters is a controversial topic in programming. Languages like Go even go so far to outright disallow the possibility of using optional parameters or method overloading, emphasising simplicity instead. But what exactly are optional parameters used for?
 
