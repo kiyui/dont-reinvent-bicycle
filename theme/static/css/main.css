@@ -32,6 +32,19 @@ body {
   margin: 5px;
 }
 
+.links-list {
+  list-style: none;
+  padding-left: 0em;
+}
+
+.entry-content img {
+  max-width: 100%;
+}
+
+.entry-content ol ul {
+  padding-left: 0em;
+}
+
 .entry-content blockquote {
   background: #EDE4DC;
   border-left: 5px solid #c18a6e;
@@ -105,14 +118,14 @@ body {
   text-transform: lowercase;
 }
 
-#content .post-info time {
-  display: block;
-}
-
 #contentinfo {
   margin-top: 60px;
 }
 
 #about {
   margin: 20px 0px;
+}
+
+#post-list {
+  padding-left: 1em;
 }

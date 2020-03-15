@@ -6,7 +6,16 @@
     <h1>authors:</h1>
     <ul>
     {% for author, articles in authors|sort %}
-        <li><a href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a> ({{ articles|count }})</li>
+        <li>
+            <a href="{{ SITEURL }}/{{ author.url }}">
+                {%if author == DEADNAME %}
+                    <del>{{ author }}</del> {{ AUTHOR }}
+                {% else %}
+                    {{ author }}
+                {% endif %}
+            </a>
+            ({{ articles|count }})
+        </li>
     {% endfor %}
     </ul>
 {% endblock %}

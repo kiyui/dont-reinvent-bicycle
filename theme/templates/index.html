@@ -24,9 +24,13 @@
           </time>
           <address class="vcard author">
             by {% for author in article.authors %}
-            <a class="url fn" href="{{ SITEURL }}/{{ author.url }}"
-              >{{ author }}</a
-            >
+            <a class="url fn" href="{{ SITEURL }}/{{ author.url }}">
+              {%if author == DEADNAME %}
+                <del>{{ author }}</del> {{ AUTHOR }}
+              {% else %}
+                {{ author }}
+              {% endif %}
+            </a>
             {% endfor %}
           </address>
         </footer>
