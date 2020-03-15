@@ -1,4 +1,5 @@
 Title: the error paradigm
+Author: Timur Kiyui
 Date: 2019-05-01 11:39
 Modified: 2019-05-09 00:25
 Tags: programming, unix, javascript, vue

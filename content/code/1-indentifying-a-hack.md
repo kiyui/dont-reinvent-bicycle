@@ -1,4 +1,5 @@
 Title: identifying a hack
+Author: Timur Kiyui
 Date: 2019-04-02 22:26
 Modified: 2019-04-03 22:24
 Tags: programming, improve

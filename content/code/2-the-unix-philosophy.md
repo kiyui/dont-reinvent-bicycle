@@ -1,4 +1,5 @@
 Title: the unix paradigm
+Author: Timur Kiyui
 Date: 2019-04-19 15:00
 Modified: 2019-05-01 17:56
 Tags: programming, unix, musing
