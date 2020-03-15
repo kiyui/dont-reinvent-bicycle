@@ -34,7 +34,7 @@ RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
 
 # Static content
-ARTICLE_EXCLUDES = ['extra']
+ARTICLE_EXCLUDES = ['extra', 'images']
 STATIC_PATHS = [
     'extra/BingSiteAuth.xml',
     'extra/google84482ab458ba2d3d.html'
