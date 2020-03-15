@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'Timur Kiyui'
+AUTHOR = 'Dafne Kiyui'
+DEADNAME = 'Timur Kiyui'
 SITENAME = 'dont reinvent велосипед'
 SITEURL = 'https://dontreinventbicycle.com'
 SITE_DESCRIPTION = 'dont reinvent bicycle - programming practices and musings'
@@ -67,4 +68,4 @@ LINKS = (('GNOME Extensions',
 SOCIAL = (('GitHub',
            'https://github.com/kiyui'),
           ('LinkedIn',
-           'https://www.linkedin.com/in/timothy-kiyui-a47503180/'),)
+           'https://www.linkedin.com/in/dafnelately/'),)
