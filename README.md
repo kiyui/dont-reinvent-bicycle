@@ -28,7 +28,7 @@ pipenv run pelican -s ./pelicanconf.py
 ### docker
 Build the site with the desired output and then run:
 ```sh
-docker build -t timurkiyivinski/dont-reinvent-bicycle:latest .
+docker build -t dafnelately/dont-reinvent-bicycle:latest .
 ```
 
 ### pygment
