@@ -70,6 +70,11 @@
         {% endfor %}
     </div>
     {% endif %}
+    {% if article.trigger_warnings %}
+    <div class="trigger-warnings">
+      trigger warnings ⚠: {{ article.trigger_warnings }}
+    </div>
+    {% endif %}
   </footer><!-- /.post-info -->
   <div class="entry-content">
     {{ article.content }}
