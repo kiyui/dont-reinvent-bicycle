@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <title>
+dont reinvent велосипед - identifying a hack      </title>
+      <meta charset="utf-8" />
+      <meta name="description" content="how does one tell what hacky code is?"/>
+      <meta name="keywords" content="programming,practice,standards,hacking,musing,improve">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+      <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css" >
+        <link href="https://dontreinventbicycle.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/code.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+    <meta name="description" content="how does one tell what hacky code is?" />
+
+    <meta name="tags" content="programming" />
+    <meta name="tags" content="improve" />
+
+  </head>
+
+  <body id="index" class="home">
+    <header id="banner" class="body">
+      <h1>
+        <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+      </h1>
+    </header>
+
+    <nav id="menu" class="body">
+      <ul>
+
+
+        <li class="active">
+          <a href="https://dontreinventbicycle.com/category/code.html">
+            code
+          </a>
+        </li>
+        <li>
+          <a href="https://dontreinventbicycle.com/category/off-topic.html">
+            off-topic
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/identifying-hacks.html" rel="bookmark"
+         title="Permalink to identifying a hack">identifying a hack</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2019-04-02T22:26:00+08:00">
+        Tue 02 April 2019
+      </time>
+    </div>
+    <div>
+      modified:
+      <time class="modified" datetime="2019-04-03T22:24:00+08:00">
+        Wed 03 April 2019
+      </time>
+    </div>
+    <address class="vcard author">
+      by           <a class="url fn" href="https://dontreinventbicycle.com/author/timur-kiyui.html">Timur Kiyui</a>
+    </address>
+    <div class="category">
+        category: <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+    </div>
+    <div class="tags">
+        tags:
+            <a href="https://dontreinventbicycle.com/tag/programming.html">programming</a>
+            <a href="https://dontreinventbicycle.com/tag/improve.html">improve</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p>I was one rainy evening on the way to town when I noticed that my Grab driver was sitting in a very strange position. I asked the man had they any spine condition or something of sort, and they replied no. Helpfully they added that they were leaning to the side such that they could keep their elbow rested upon a pen pressing a button to keep the window up because the button was broken. That sure is a hack if I've ever seen one!</p>
+<p>Hacks are all around us, and they are probably here to stay because we simply have better to do than having the leaking shower hose fixed when closing the main pipe that feeds the heater proves apt. Most hacks are inconsequential, especially in <em>the real life</em>. However, have we considered the code we write? Code is becoming an ever more vital part of everything. We wouldn't ride a boat wherein its leaks had been patched with duct tape, apart for as a <strong>temporary hack</strong> should the situation warrant it, would we? Why do we allow the same for code?</p>
+<p>There are a few classes of which hacks fall into. There are the obvious hacks that we may have in place as workarounds of bugs that we cannot solve, or things that are too low on the priority list to have fixed. Here's an epic one I've had to deal with recently, GitHub issue <a href="https://github.com/ReactiveX/rxjs/issues/4415">linked</a>. Consider that the following code causes an error:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">from</span> <span class="kr">as</span> <span class="nx">observableFrom</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">isInteropObservable</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs/internal/util/isInteropObservable&#39;</span>
+<span class="kr">import</span> <span class="nx">xs</span> <span class="nx">from</span> <span class="s1">&#39;xstream&#39;</span>
+
+<span class="kr">const</span> <span class="nx">num$</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">from</span><span class="p">([</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span> <span class="p">])</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Is num$ an observable?&#39;</span><span class="p">,</span> <span class="nx">isInteropObservable</span><span class="p">(</span><span class="nx">num$</span><span class="p">))</span> <span class="c1">// false</span>
+
+<span class="kr">const</span> <span class="nx">adapt$</span> <span class="o">=</span> <span class="nx">observableFrom</span><span class="p">(</span><span class="nx">num$</span><span class="p">)</span> <span class="c1">// error here</span>
+</code></pre></div>
+
+
+<p>..and that the following code does not, simply by switching the order of import! Check out the issue if you're interested in what causes it.</p>
+<div class="highlight"><pre><span></span><code><span class="kr">import</span> <span class="nx">xs</span> <span class="nx">from</span> <span class="s1">&#39;xstream&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">from</span> <span class="kr">as</span> <span class="nx">observableFrom</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs&#39;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">isInteropObservable</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs/internal/util/isInteropObservable&#39;</span>
+
+<span class="kr">const</span> <span class="nx">num$</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">from</span><span class="p">([</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span> <span class="p">])</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Is num$ an observable?&#39;</span><span class="p">,</span> <span class="nx">isInteropObservable</span><span class="p">(</span><span class="nx">num$</span><span class="p">))</span> <span class="c1">// true</span>
+
+<span class="kr">const</span> <span class="nx">adapt$</span> <span class="o">=</span> <span class="nx">observableFrom</span><span class="p">(</span><span class="nx">num$</span><span class="p">)</span> <span class="c1">// no error here</span>
+</code></pre></div>
+
+
+<p>This is a hack, but it's a good hack. Or at least, it's one we haven't much control over. However, it isn't so obvious so we just need a little fixup:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">import</span> <span class="nx">xs</span> <span class="nx">from</span> <span class="s1">&#39;xstream&#39;</span> <span class="c1">// HACK: KEEP THIS AS THE FIRST LINE DO NOT REMOVE</span>
+</code></pre></div>
+
+
+<p>This probably isn't the kind of hack that you have in mind. There is a class of hack that puts to crawl the skin of some programmers, see them the code. So why are there good or bad hacks? Consider the following rather trivial javascript code:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">export</span> <span class="kd">function</span> <span class="nx">addValues</span> <span class="p">(</span><span class="nx">lhs</span><span class="p">,</span> <span class="nx">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">lhs</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">rhs</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+<span class="p">}</span>
+
+<span class="nx">addValues</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nx">addValues</span><span class="p">(</span><span class="mi">95</span><span class="p">,</span> <span class="s1">&#39;19&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Have you noticed the hack? Instead of making sure to always pass values of the correct type to the function, the function converts the values into integers so that it can continue with the <code>add</code> operation. Hacks like this are not only make code hard to reason about, but become completely invisible outside the scope of where the function is defined. Code like this also makes debugging issues harder.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">doSomething</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">cost</span> <span class="o">=</span> <span class="nx">getCostFromNetwork</span><span class="p">()</span>
+  <span class="kr">const</span> <span class="nx">costWithTax</span> <span class="o">=</span> <span class="nx">addValues</span><span class="p">(</span><span class="nx">cost</span><span class="p">,</span> <span class="nx">cost</span> <span class="o">*</span> <span class="mf">1.06</span><span class="p">)</span>
+
+  <span class="nx">addTaxxedCostToBill</span><span class="p">(</span><span class="nx">costWithTax</span><span class="p">)</span> <span class="c1">// Works fine</span>
+  <span class="nx">addCostToBill</span><span class="p">(</span><span class="nx">cost</span><span class="p">)</span> <span class="c1">// Throws an error because cost is a string</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>If one were to encounter the above code, they'd naturally think that the issue is in the function <code>addCostToBill</code> since that's where the error is and since <code>addTaxxedCostToBill</code> is clearly working just fine. Hacks can waste a great amount of time, and you wouldn't want to be on the receiving end of debugging an issue caused by a hack. Considering this, why do people hack in the first place?</p>
+<h3>why do people hack in the first place?</h3>
+<p>Afamiliarity with the codebase? Laziness? It is easy to dismiss someone for being symptomatic of these, or for just being good 'ol Randy the intern.</p>
+<p>Sometimes hacking is necessary. I call to your attention the <code>subscribeAction</code> method in <a href="https://vuex.vuejs.org">vuex</a> for listening to Vuex store actions, to complement the <code>subscribe</code> action for listening to <code>mutations</code>. The original API that released in version 2.5.0 looked something like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">store</span><span class="p">.</span><span class="nx">subscribeAction</span><span class="p">((</span><span class="nx">action</span><span class="p">,</span> <span class="nx">state</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// noop</span>
+<span class="p">})</span>
+</code></pre></div>
+
+
+<p>In version 3.1.0 however, after <a href="https://github.com/vuejs/vuex/pull/1115">the following PR</a>, an improvement was made making the following also possible under the same method name:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">store</span><span class="p">.</span><span class="nx">subscribeAction</span><span class="p">({</span>
+  <span class="nx">before</span><span class="o">:</span> <span class="p">(</span><span class="nx">action</span><span class="p">,</span> <span class="nx">state</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// noop</span>
+  <span class="p">},</span>
+  <span class="nx">after</span><span class="o">:</span> <span class="p">(</span><span class="nx">action</span><span class="p">,</span> <span class="nx">state</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// noop</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div>
+
+
+<p>Predicting what people want of a library is hard, especially when you've got yourselves so many users! Renaming <code>subscribe</code> to <code>subscribeMutations</code> would be a breaking change, as would changing the API of <code>subscribeAction</code> to only support the <code>{ before, after }</code> syntax.</p>
+<h3>some people do not know what a hack is</h3>
+<p>But what about Randy? Randy does not know what a <em>bad hack</em> is. To Randy, code is code as long as it works. It's also tough to argue with the guy. After all, their code works, the tests all seem to pass, and their hack isn't related to some data structure that we would have to maintain 5 years down the line. What is there to complain about? Can you tell Randy why code that works isn't good enough?</p>
+<p>You probably can't, and there's a reason for that. The reality is that there are no bad hacks. Hacks exist only because we have standards about how things should be. If the first boat had been invented with holes through it patched with duct tape, that would be the norm! The same is true with code. Hacks tend to be contextual. Consider the following code that is used to parse data received from a GraphQL backend:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">sanitiseUserObject</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">sanitisedUser</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sanitisedUser</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sanitisedUser</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">generateNameFromValue</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Edge case, only 3% of users will face this</span>
+    <span class="nx">sanitisedUser</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;Emma&#39;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// a million other crazy sanitisation operations here</span>
+
+  <span class="c1">// by this point, we&#39;re tired of all the crazy things we</span>
+  <span class="c1">// need to go just to sanitise the data and just hack</span>
+  <span class="nx">sanitisedUser</span><span class="p">.</span><span class="nx">maiden_name_in_french</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">maiden_name_in_french</span> <span class="o">||</span> <span class="s1">&#39;croissant lah&#39;</span>
+
+  <span class="c1">// screw it, let&#39;s use default values for the rest</span>
+  <span class="k">return</span> <span class="p">{</span> <span class="p">...</span><span class="nx">defaultUser</span><span class="p">,</span> <span class="p">...</span><span class="nx">sanitisedUser</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Because of the context of the code, not handling every aspect of it is not considered a hack.</p>
+<h3>there are no bad hacks</h3>
+<p>Bad hacks come about only because someone is writing unmaintainable, spaghetti code. To stop bad hacks from happening, you're going to have to lay standards about how code should be written in your codebase. Nobody really wants to write bad code; They just sometimes do not know better. If you write bad hacks, it isn't necessarily because you're a bad programmer. Learning good code is something that takes time.</p>
+<h3>the only way to stop bad hacks is via good standards</h3>
+<p>Make sure problems or difficulties faced in the codebase are brought up and conventions are formed about dealing with certain issues so that people can learn to empathise with one another. If the code was difficult enough to warrant a bad hack, perhaps that's what was needed after all. However, if Randy still hacks after months &amp; management doesn't seem to care, consider that you may be the wrong or that Randy is simply an asshole and find someplace better. I hope that helps!</p>
+<p>This article was powered by the listenfuel of Kings of Leon &amp; Nirvana.</p>
+  </div><!-- /.entry-content -->
+</section>
+    </div>
+
+    <footer id="contentinfo" class="body">
+      <div>
+        <h4 class="title">social:</h4>
+        <ul class="links">
+            <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+            <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+            <li><a href="https://github.com/kiyui">GitHub</a></li>
+            <li><a href="https://queer.chat/@dafne">Mastodon</a></li>
+            <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="title">projects:</h4>
+        <ul class="links">
+          <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+        </ul>
+      </div>
+      <address id="about" class="vcard body">
+        Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+        which takes great advantage of <a href="http://python.org">Python</a>.
+      </address>
+    </footer>
+  </body>
+</html>

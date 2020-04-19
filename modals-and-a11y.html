@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <title>
+dont reinvent велосипед - how i created a trigger warnings modal, and removed it for accessibility      </title>
+      <meta charset="utf-8" />
+      <meta name="description" content="trigger warnings, modals, and accessibility"/>
+      <meta name="keywords" content="programming,practice,standards,hacking,musing,css,a11y">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+      <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css" >
+        <link href="https://dontreinventbicycle.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/code.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+    <meta name="description" content="trigger warnings, modals, and accessibility" />
+
+    <meta name="tags" content="css" />
+    <meta name="tags" content="a11y" />
+
+  </head>
+
+  <body id="index" class="home">
+    <header id="banner" class="body">
+      <h1>
+        <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+      </h1>
+    </header>
+
+    <nav id="menu" class="body">
+      <ul>
+
+
+        <li class="active">
+          <a href="https://dontreinventbicycle.com/category/code.html">
+            code
+          </a>
+        </li>
+        <li>
+          <a href="https://dontreinventbicycle.com/category/off-topic.html">
+            off-topic
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/modals-and-a11y.html" rel="bookmark"
+         title="Permalink to how i created a trigger warnings modal, and removed it for accessibility">how i created a trigger warnings modal, and removed it for accessibility</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2020-03-20T18:00:00+08:00">
+        Fri 20 March 2020
+      </time>
+    </div>
+    <address class="vcard author">
+      by           <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">Dafne Kiyui</a>
+    </address>
+    <div class="category">
+        category: <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+    </div>
+    <div class="tags">
+        tags:
+            <a href="https://dontreinventbicycle.com/tag/css.html">css</a>
+            <a href="https://dontreinventbicycle.com/tag/a11y.html">a11y</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p>When I first had <a href="/taking-a-break.html">my coming out story</a> reviewed by some queer peers, the initial feedback I received was that it required "trigger warnings" because it covered some pretty heavy topics.</p>
+<p>My initial solution was simple;- add a row to the post information section highlighting the various trigger warnings in the same way that I already have the article date, category, and tags displayed. Any <em>sane</em> person would have left it there. Fortunately, I am no such person. I am a Javascript developer.</p>
+<blockquote>
+<p>Let's add a modal!</p>
+</blockquote>
+<p>At this point, any <em>sane</em> person would have just coded a simple modal toggled by Javascript. Not being such I person I have imposed a simple rule for this blog, that being that it should not contain any Javascript (other than those in code blocks).</p>
+<p>The thing about imposing such a restriction is that,</p>
+<ol>
+<li>It's fun to impose arbitrary restrictions when coding, because it forces you think of unconventional solutions</li>
+<li>I don't want to have to care about "minifying" Javascript or cache invalidation of assets</li>
+<li>It adds to the nerdiness of a blog that it works just fine on a text-only browser! 🤓</li>
+</ol>
+<p>CSS however is fair game, so that's exactly what we're going to attempt to accomplish!</p>
+<h2 id="using-target-pseudo-class">
+  using the :target pseudo class
+</h2>
+
+<p>Creating a modal using the <code>:target</code> pseudo-class is the simpler, less-hacky alternative. The <code>:target</code> pseudo-class works by selecting the current active page anchor. In the case of our modal, that would be using the "id" of the modal to change the <code>display</code> style from <code>none</code> to <code>block</code>, kind of like this:</p>
+<div class="highlight"><pre><span></span><code><span class="p">#</span><span class="nn">demo-target-modal</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">#</span><span class="nn">demo-target-modal</span><span class="p">:</span><span class="nd">target</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Now, in order to display the modal, all we need to do is create a link that behaves like a button to trigger the modal anchor:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#demo-target-modal&quot;</span><span class="p">&gt;</span>
+  Show :target modal
+<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
+<p>Using the same trick, we can simply have our modal "close" button target "#" or any other anchor in the page!</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>
+  Close :target modal
+<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
+<p>Finally piecing everything together, we get a modal that looks somewhat like this:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;demo-target-modal&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-content&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- Content --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>
+      Close :target modal
+    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
+<p>And if you're interested in the styling I used:</p>
+<div class="highlight"><pre><span></span><code><span class="p">#</span><span class="nn">demo-target-modal</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">#</span><span class="nn">demo-target-modal</span><span class="p">:</span><span class="nd">target</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">modal</span> <span class="p">{</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+  <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">overflow</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">background-color</span><span class="p">:</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">modal-content</span> <span class="p">{</span>
+  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#f5f5dc</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#888</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">80</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">modal-fake-button</span> <span class="p">{</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mi">4</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">text-decoration</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#000504</span><span class="p">;</span>
+  <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#888</span><span class="p">;</span>
+  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#ede5dd</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">.</span><span class="nc">modal-fake-button</span><span class="p">:</span><span class="nd">hover</span><span class="o">,</span>
+<span class="p">.</span><span class="nc">modal-fake-button</span><span class="p">:</span><span class="nd">focus</span> <span class="p">{</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+  <span class="k">background-color</span><span class="p">:</span> <span class="mh">#ccbbab</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Finally, having pieced everything together, here's that demo button you're looking for!</p>
+<p><a href="#demo-target-modal" class="modal-fake-button" role="button"> 
+  Show :target modal
+</a></p>
+<div id="demo-target-modal" tabindex="-1" class="modal">
+  <div class="modal-content" tabindex="0" role="dialog" aria-labelledby="demo-target-modal-title">
+    <h2 id="demo-target-modal-title">:target modal</h2>
+    <p>Notice how the URL contains #demo-target-modal when it displays?</p>
+    <a href="#using-target-pseudo-class" class="modal-fake-button" role="button">
+      Close :target modal
+    </a>
+  </div>
+</div>
+
+<p>While the solution is elegant and works quite well, I was not able to use it because it relies on the page already being loaded with the anchor linked in order to have the modal displayed. This is not optimal on a page where I need the modal to be shown before any of the content is displayed to the user, so I had to think of another solution.</p>
+<h2>using the "checkbox hack"</h2>
+<p>The checkbox hack relies on the misuse of an accessibility function of the <code>label</code> and <code>input[type="checkbox]</code> element where clicking on the label would toggle the checkbox.</p>
+<p><label for="example-checkbox">
+  Pressing me triggers the checkbox:
+</label>
+<input id="example-checkbox" type="checkbox" /></p>
+<p>The code for accomplishing this is quite simple, relying only on attaching the <code>for</code> attribute to the <code>label</code> that's supposed to trigger the checkbox like so:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;example-checkbox&quot;</span><span class="p">&gt;</span>
+  Pressing me triggers the checkbox:
+<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;example-checkbox&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="p">/&gt;</span>
+</code></pre></div>
+
+
+<p>Using this, we now have a method in which we can open and close our modal by making use of the general sibling selector (<code>~</code>) by doing something like this:</p>
+<div class="highlight"><pre><span></span><code><span class="p">#</span><span class="nn">demo-checkbox-input</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">#</span><span class="nn">demo-checkbox-input</span><span class="p">:</span><span class="nd">checked</span> <span class="o">~</span> <span class="p">#</span><span class="nn">demo-checkbox-modal</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Put together, our code looks somewhat like this:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;demo-checkbox-input&quot;</span><span class="p">&gt;</span>
+  Show checkbox modal
+<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;demo-checkbox-input&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;demo-checkbox-modal&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-content&quot;</span><span class="p">&gt;</span>
+      <span class="c">&lt;!-- Content --&gt;</span>
+      <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;demo-checkbox-input&quot;</span><span class="p">&gt;</span>
+        Close checkbox modal
+      <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
+<p>Again, here's a demo button of the checkbox modal:</p>
+<p><label class="modal-fake-button" tabindex="0" for="demo-checkbox-input" role="button"> 
+  Show checkbox modal
+</label></p>
+<div>
+  <input id="demo-checkbox-input" type="checkbox"/>
+  <div id="demo-checkbox-modal" tabindex="-1" class="modal">
+    <div class="modal-content" tabindex="0" role="dialog" aria-labelledby="demo-checkbox-modal-title">
+      <h2 id="demo-checkbox-modal-title">checkbox modal</h2>
+      <p>Try refreshing the browser with the modal open 🤭</p>
+      <label class="modal-fake-button" for="demo-checkbox-input" role="button"> 
+        Close checkbox modal
+      </label>
+    </div>
+  </div>
+</div>
+
+<p>If you're navigating this website with a mouse and are sighted, this looks like quite an elegant solution because:</p>
+<ol>
+<li>Unlike the dialog pseudo-class, closing the modal does not jump to a random part of the page which is great for UX!</li>
+<li>By enabling <code>checked="true"</code> on the input, I can have the modal be shown on first load</li>
+<li>The <code>input</code> element does double-duty by remembering the "modal state" (because your browser will remember the last input) such that when a user revisits the page they won't be prompted by the modal again</li>
+</ol>
+<p>But you're not here because I ended up using either of these CSS tricks or hacks as solutions. The problem with the "checkbox hack" is that it relies on changing the semantics of native HTML elements such as <code>label</code> and <code>input[type="checkbox"]</code>, making accessibility an issue;- especially on a screen reader.</p>
+<p>In spite of not being a <em>sane</em> person I do have another more sane rule for this blog, that being that it should be made as accessible as possible for all people. Makings websites and application accessible has been a subject that has long interested me, and I do hope to get better at it (such as being able to navigate the code blocks better)!</p>
+<aside>
+  Just as a side note, it may be the case that trigger-warnings do not work at all as mentioned <a href="https://web.archive.org/web/20200320172206/https://www.theatlantic.com/health/archive/2019/03/do-trigger-warnings-work/585871/">here</a>.
+</aside>
+
+<p>If you do have suggestions on how I can improve the trigger warnings, please do <a href="mailto:didyouknowthat@dafne.rocks">reach out</a>!</p>
+<p>This article was powered by the listenfuel of a band literally called "The World is A Beautiful Place &amp; I Am No Longer Afraid To Die". Happy lockdown this Aries season ♈!</p>
+<style>
+  #demo-target-modal {
+    display: none;
+  }
+
+  #demo-target-modal:target {
+    display: block;
+  }
+
+  #demo-checkbox-modal {
+    display: none;
+  }
+
+  #demo-checkbox-input {
+    display: none;
+  }
+
+  #demo-checkbox-input:checked ~ #demo-checkbox-modal {
+    display: block;
+  }
+
+  .modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .modal-content {
+    background-color: #f5f5dc;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .modal-fake-button {
+    padding: 4px;
+    text-decoration: none;
+    color: #000504;
+    border: 1px solid #888;
+    background-color: #ede5dd;
+  }
+
+  .modal-fake-button:hover,.modal-fake-button:focus {
+    cursor: pointer;
+    background-color: #ccbbab;
+  }
+</style>
+  </div><!-- /.entry-content -->
+</section>
+    </div>
+
+    <footer id="contentinfo" class="body">
+      <div>
+        <h4 class="title">social:</h4>
+        <ul class="links">
+            <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+            <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+            <li><a href="https://github.com/kiyui">GitHub</a></li>
+            <li><a href="https://queer.chat/@dafne">Mastodon</a></li>
+            <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="title">projects:</h4>
+        <ul class="links">
+          <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+        </ul>
+      </div>
+      <address id="about" class="vcard body">
+        Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+        which takes great advantage of <a href="http://python.org">Python</a>.
+      </address>
+    </footer>
+  </body>
+</html>

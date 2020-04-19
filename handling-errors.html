@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <title>
+dont reinvent велосипед - the error paradigm      </title>
+      <meta charset="utf-8" />
+      <meta name="description" content="how should we handle errors?"/>
+      <meta name="keywords" content="programming,practice,standards,hacking,musing,unix,javascript,vue">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+      <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css" >
+        <link href="https://dontreinventbicycle.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/code.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+    <meta name="description" content="how should we handle errors?" />
+
+    <meta name="tags" content="programming" />
+    <meta name="tags" content="unix" />
+    <meta name="tags" content="javascript" />
+    <meta name="tags" content="vue" />
+
+  </head>
+
+  <body id="index" class="home">
+    <header id="banner" class="body">
+      <h1>
+        <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+      </h1>
+    </header>
+
+    <nav id="menu" class="body">
+      <ul>
+
+
+        <li class="active">
+          <a href="https://dontreinventbicycle.com/category/code.html">
+            code
+          </a>
+        </li>
+        <li>
+          <a href="https://dontreinventbicycle.com/category/off-topic.html">
+            off-topic
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/handling-errors.html" rel="bookmark"
+         title="Permalink to the error paradigm">the error paradigm</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2019-05-01T11:39:00+08:00">
+        Wed 01 May 2019
+      </time>
+    </div>
+    <div>
+      modified:
+      <time class="modified" datetime="2019-05-09T00:25:00+08:00">
+        Thu 09 May 2019
+      </time>
+    </div>
+    <address class="vcard author">
+      by           <a class="url fn" href="https://dontreinventbicycle.com/author/timur-kiyui.html">Timur Kiyui</a>
+    </address>
+    <div class="category">
+        category: <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+    </div>
+    <div class="tags">
+        tags:
+            <a href="https://dontreinventbicycle.com/tag/programming.html">programming</a>
+            <a href="https://dontreinventbicycle.com/tag/unix.html">unix</a>
+            <a href="https://dontreinventbicycle.com/tag/javascript.html">javascript</a>
+            <a href="https://dontreinventbicycle.com/tag/vue.html">vue</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p>The error programming paradigm comes from the recognition that errors are expected. Consider a function that is meant to parse JSON data. Naturally should the input string not be of valid JSON format, the function would error out. That is because handling invalid JSON data is out of the scope of the function and the input data to the function is clearly of incorrect format.</p>
+<h2>when to throw errors</h2>
+<blockquote>
+<p>handling invalid JSON data is out of the scope of the function</p>
+</blockquote>
+<p>In the quest of trimming down functions and not creating monolithic code, exceptions help us define the boundaries of our functions. They also help to signal failure that a given function cannot handle, or should not be responsible for handling. To make this simpler to understand, we need to go downscale to a simpler primitive, UNIX programs. Take the following C++ code for example:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>If we were the compile the above code and run it, we would see that it returns a non-zero exit code of <code>1</code>, indicating a failure in execution.</p>
+<div class="highlight"><pre><span></span><code>g++ main.cpp <span class="o">&amp;&amp;</span> ./a.out  <span class="c1"># Hello world</span>
+<span class="nb">echo</span> <span class="nv">$?</span>                  <span class="c1"># 1</span>
+</code></pre></div>
+
+
+<p>We can extend on this further by trying to chain the command with other commands:</p>
+<div class="highlight"><pre><span></span><code>./a.out <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;...succeeded&quot;</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;...failed&quot;</span>  <span class="c1">#=&gt; Hello world...failed</span>
+</code></pre></div>
+
+
+<p>We see that chaining the <code>echo "...succeeded"</code> command failed because the command returned a non-zero exit code. In UNIX, well-behaving programs return <code>0</code> on success and a non-zero exit code on failure, that should act as a type of error code. For example, you could have your application return <code>1</code> on a general failure and perhaps <code>2</code> if it encountered an issue reading your input, and so on. You can read more about exit status codes in <a href="https://www.tldp.org/LDP/abs/html/exit-status.html">the following chapter</a> by The Linux Documentation Project.</p>
+<h2>exit codes are an interface</h2>
+<p>In the shell, exit codes are the interface to communicate execution success or failure between applications in the same way <a href="/the-unix-paradigm.html">pipes</a> are used to communicate input and output. In the same manner, program exceptions are simply another interface by which we can determine that a method has failed. The term <strong>interface</strong> here is important, because it tells us how we should both be handling and throwing errors.</p>
+<h2>think of the interface of an error</h2>
+<p>In a JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>, the interface for throwing an error would be to <code>reject</code> the Promise. We wouldn't expect a failed promise to <code>resolve</code>, lest we run into unexpected behaviours! Assuming we have the following function <code>getUser</code> that returns a Promise, it would be logical to expect that the function should <code>reject</code> if it fails to find a user:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">getUser</span> <span class="p">(</span><span class="nx">userId</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">UserStore</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">userId</span><span class="p">))</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">UserStore</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">userId</span><span class="p">)</span>
+      <span class="nx">resolve</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">// We should reject, but we do not</span>
+      <span class="nx">resolve</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Where we would consume it as so:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">getUser</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>        <span class="c1">// =&gt; TypeError: Cannot read property &#39;name&#39; of null</span>
+</code></pre></div>
+
+
+<p>This is exactly why the interface matters;- People expect certain conventions of how something should behave. Now, let's try the intuition behind using interfaces to see how we should be throwing or handling errors.</p>
+<h2>understanding error interfaces</h2>
+<p>Let's assume we are building a <a href="https://vuejs.org/">Vue.js</a>-powered application, with a <a href="https://vuex.vuejs.org/">Vuex</a> store, and we are building a login form with a submit button that uses the following method:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">onSubmit</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">form</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">$refs</span><span class="p">.</span><span class="nx">loginForm</span>
+  <span class="kr">const</span> <span class="nx">username</span> <span class="o">=</span> <span class="nx">form</span><span class="p">.</span><span class="nx">elements</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
+  <span class="kr">const</span> <span class="nx">password</span> <span class="o">=</span> <span class="nx">form</span><span class="p">.</span><span class="nx">elements</span><span class="p">[</span><span class="s1">&#39;pass&#39;</span><span class="p">]</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span> <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>The part we want to focus on is the store dispatch method, <code>this.$store.dispatch</code> because this is where our error can stem from.</p>
+<h3>the store</h3>
+<p>Let's start with defining the basic interface of our store action. We want a function that sends our login credentials to a server and responds with our logged-in user. As this function would require a network request, it makes sense that we should start with it returning an empty promise.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">login</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Now, let's take a look at how we can craft that login request. To keep things simple, we will be making use of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">fetch API</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">fetch</span><span class="p">(...)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">()</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Network error</span>
+    <span class="c1">// We should raise an exception here!</span>
+  <span class="p">})</span>
+</code></pre></div>
+
+
+<p>The fetch function returns a Promise that either resolves a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Response">Response</a> or rejects when there is a network error, one area where we should raise an exception. If the response succeeded, the value of <code>response.ok</code> should be truthy, meaning we successfully got a response from the server. If not, we can assume we have run into an error and let the consumer of the function handle that.</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Our response should be in response.body</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="c1">// We got a HTTP status code greater than 299</span>
+  <span class="c1">// We should raise an exception here!</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Next, we want to parse the response with an imaginary <code>User</code> class with a static <code>from</code> method:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">class</span> <span class="nx">User</span> <span class="p">{</span>
+  <span class="kr">public</span> <span class="kr">static</span> <span class="nx">from</span> <span class="p">(</span><span class="nx">userString</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">User</span> <span class="p">{</span>
+    <span class="c1">// This can throw an error if it&#39;s not valid JSON</span>
+    <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">userString</span><span class="p">)</span>
+
+    <span class="c1">// Create a user and return it if data is of valid shape</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="k">return</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span>
+
+    <span class="c1">// If we reached here, assume data is invalid</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Invalid user string provided!&#39;</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>You can see that since <code>from</code> is a regular method, our interface for raising an exception is by using a <code>throw</code> statement. As this function can also throw an error, we use it inside a <code>try/catch</code> block inside out <code>if (response.ok)</code> block as so:</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">User</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// User.from threw an error</span>
+<span class="p">}</span> 
+</code></pre></div>
+
+
+<p>Finally, now that we all that we have all the components to build our store action, we can piece it together! Remember, since our <code>login</code> function returns a Promise, our interface for raising an exception is by rejecting </p>
+<div class="highlight"><pre><span></span><code><span class="nx">login</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span> <span class="p">})</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">fetch</span><span class="p">(...)</span>
+      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">try</span> <span class="p">{</span>
+            <span class="c1">// Parse the user from the response body</span>
+            <span class="kr">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">User</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
+
+            <span class="c1">// We&#39;ve successfully parsed the user object</span>
+            <span class="nx">resolve</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span>
+          <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// User.from threw an error</span>
+            <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;There is an issue with the server response!&#39;</span><span class="p">))</span>
+          <span class="p">}</span> 
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="c1">// We got a HTTP status code greater than 299</span>
+          <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="sb">`There was an error with your request: </span><span class="si">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">statusText</span><span class="si">}</span><span class="sb">`</span><span class="p">))</span>
+        <span class="p">}</span>
+      <span class="p">})</span>
+      <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// Network error</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;A network error occured!&#39;</span><span class="p">))</span>
+      <span class="p">})</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3>the component</h3>
+<p>Now back to our component, we can figure out how to the deal with exceptions when they occur:</p>
+<div class="highlight"><pre><span></span><code><span class="k">this</span><span class="p">.</span><span class="nx">$store</span><span class="p">.</span><span class="nx">dispatch</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">user</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Normal use case</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Show the error message to the user</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;An error has occured, please try again.&#39;</span><span class="p">)</span>
+
+    <span class="c1">// A developer would like to see this in the console</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+
+    <span class="c1">// Catch the error for error tracking</span>
+    <span class="nx">captureException</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+  <span class="p">})</span>
+</code></pre></div>
+
+
+<p>Let's take a look at the interfaces we have made use of:</p>
+<ul>
+<li>To the user, they want to know when an error occurred, but not the stack trace and all that information. We make use of a simple <code>alert</code> statement with a message.</li>
+<li>To the developer debugging the code, they would love the see the error in their console with a simple <code>console.error</code> statement.</li>
+<li>To the developer debugging a bug in production, they would love to see a stack-trace of the bug, so we capture that too.</li>
+</ul>
+<h4>fun-fact</h4>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject">reject</a> callback for a Promise can receive anything as an argument (the argument is called the <code>reason</code>). While you may want to use the <code>Error</code> type so you get an entire stack-trace of the issue, you can also return an <code>object</code> with the reason in it:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">fetch</span><span class="p">(...)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// etc</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">reject</span><span class="p">({</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="nx">ErrorType</span><span class="p">.</span><span class="nx">ServerError</span><span class="p">,</span>
+        <span class="nx">error</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">)</span>
+      <span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">reject</span><span class="p">({</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="nx">ErrorType</span><span class="p">.</span><span class="nx">NetworkError</span><span class="p">,</span>
+      <span class="nx">error</span><span class="o">:</span> <span class="nx">err</span>
+    <span class="p">})</span>
+  <span class="p">})</span>
+</code></pre></div>
+
+
+<h2>finally {</h2>
+<p>Errors are an extra dimension that we can make use of when coding and can help us achieve cleaner code, so long as we use it.</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span> <span class="p">{</span>
+  <span class="nx">something</span><span class="p">()</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// why bother?</span>
+  <span class="k">throw</span> <span class="nx">err</span>
+<span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+  <span class="c1">// we are in the endgame</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>This article is powered by the exception-free code philosophy, perhaps made popular by <a href="https://google.github.io/styleguide/cppguide.html#Exceptions">Google's C++ styleguide</a>, leaking into other languages like JavaScript. Also for fun, I recommend checking out <a href="https://wiki.haskell.org/Exception">how Haskell implements exceptions</a>.</p>
+<h2>}</h2>
+  </div><!-- /.entry-content -->
+</section>
+    </div>
+
+    <footer id="contentinfo" class="body">
+      <div>
+        <h4 class="title">social:</h4>
+        <ul class="links">
+            <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+            <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+            <li><a href="https://github.com/kiyui">GitHub</a></li>
+            <li><a href="https://queer.chat/@dafne">Mastodon</a></li>
+            <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="title">projects:</h4>
+        <ul class="links">
+          <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+        </ul>
+      </div>
+      <address id="about" class="vcard body">
+        Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+        which takes great advantage of <a href="http://python.org">Python</a>.
+      </address>
+    </footer>
+  </body>
+</html>

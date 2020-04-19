@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <title>
+dont reinvent велосипед - the unix paradigm      </title>
+      <meta charset="utf-8" />
+      <meta name="description" content="how was software for the UNIX paradigm written?"/>
+      <meta name="keywords" content="programming,practice,standards,hacking,musing,unix">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+      <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css" >
+        <link href="https://dontreinventbicycle.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/code.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+    <meta name="description" content="how was software for the UNIX paradigm written?" />
+
+    <meta name="tags" content="programming" />
+    <meta name="tags" content="unix" />
+    <meta name="tags" content="musing" />
+
+  </head>
+
+  <body id="index" class="home">
+    <header id="banner" class="body">
+      <h1>
+        <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+      </h1>
+    </header>
+
+    <nav id="menu" class="body">
+      <ul>
+
+
+        <li class="active">
+          <a href="https://dontreinventbicycle.com/category/code.html">
+            code
+          </a>
+        </li>
+        <li>
+          <a href="https://dontreinventbicycle.com/category/off-topic.html">
+            off-topic
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/the-unix-paradigm.html" rel="bookmark"
+         title="Permalink to the unix paradigm">the unix paradigm</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2019-04-19T15:00:00+08:00">
+        Fri 19 April 2019
+      </time>
+    </div>
+    <div>
+      modified:
+      <time class="modified" datetime="2019-05-01T17:56:00+08:00">
+        Wed 01 May 2019
+      </time>
+    </div>
+    <address class="vcard author">
+      by           <a class="url fn" href="https://dontreinventbicycle.com/author/timur-kiyui.html">Timur Kiyui</a>
+    </address>
+    <div class="category">
+        category: <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+    </div>
+    <div class="tags">
+        tags:
+            <a href="https://dontreinventbicycle.com/tag/programming.html">programming</a>
+            <a href="https://dontreinventbicycle.com/tag/unix.html">unix</a>
+            <a href="https://dontreinventbicycle.com/tag/musing.html">musing</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p>If you're a learned programmer or computer nerd, you may have heard of the UNIX philosophy;- A set of guidelines to developing minimalist and modular software. The premise of this design pattern was fundamentally opposed to software designed in a monolithic fashion. We've all seen those crazy bash liners for doing a myriad of tasks. There's even an <a href="http://www.bashoneliners.com/">entire site</a> dedicated to it. Here's one I have aliased and use frequently:</p>
+<div class="highlight"><pre><span></span><code>fd -t f <span class="m">2</span>&gt; /dev/null <span class="p">|</span> fzy <span class="p">|</span> xsel -b
+
+<span class="c1"># fd -t f       Find all files in the current directory</span>
+<span class="c1"># 2&gt; /dev/null  Pipe errors to /dev/null so we don&#39;t see them</span>
+<span class="c1"># fzy           Fuzzy search program</span>
+<span class="c1"># xsel -b       Copy the output to clipboard</span>
+</code></pre></div>
+
+
+<p>I'm not going to go too deep into the UNIX philosophy, though if you are interested, AT&amp;T has made available <a href="https://www.youtube.com/watch?v=tc4ROCJYbm0">this great video</a> on YouTube. The UNIX design philosophy was designed not only with composability in mind, but with the limitations that the machines had. Writing monolith software took more memory as the software had to take on more responsibilities. Software was designed to do one thing, and one thing only. We have today come to know this as "the functional approach" to programming;- Writing composable functions easy to test and piece together.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">users</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">ageMoreThan</span><span class="p">(</span><span class="mi">18</span><span class="p">))</span>
+  <span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="nx">sortByAge</span><span class="p">)</span> <span class="c1">// If you think about it, pipes are all reduce statements!</span>
+  <span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+
+<p>With the <a href="https://tc39.github.io/proposal-pipeline-operator/">TC39 pipeline operator</a> for ECMAScript in place and libraries like RxJS introducing <a href="https://github.com/ReactiveX/rxjs/blob/91088dae1df097be2370c73300ffa11b27fd0100/doc/pipeable-operators.md">pipeable operators</a>, we are seeing large code ecosystems adopt ever more functional programming ideas. That said, while functional programming and composable functions are great and all, what did it mean to the original UNIX developers? What was it to this idea that was so fundamentally different? I had to see for myself;- By building a program that relies on pipes. Naturally, I settled upon writing the 2048 game, using UNIX principles.</p>
+<h2>unix 2048</h2>
+<p>Let's consider the components of the game 2048. It is build by a 4x4 grid as so:</p>
+<div class="highlight"><pre><span></span><code><span class="err">-----------------</span>
+<span class="err">| 0 | 0 | 0 | 0 |</span>
+<span class="err">| 0 | 0 | 0 | 0 |</span>
+<span class="err">| 0 | 0 | 0 | 0 |</span>
+<span class="err">| 0 | 0 | 0 | 0 |</span>
+<span class="err">-----------------</span>
+</code></pre></div>
+
+
+<p>Parsing this in an application would be hard, so let's break it down into a single 1x16 CSV string:</p>
+<div class="highlight"><pre><span></span><code><span class="err">0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</span>
+</code></pre></div>
+
+
+<p>The game starts off with a single <code>2</code> randomly on the board, as well as one added per move in the game. As such, we would a need a function that takes a board and replaces an empty space, represented by a <code>0</code>, with a <code>2</code>. I decided to go with Python for this program since it is stupidly simple programming language for getting anything done. The following details a hacked together way to add a number <code>2</code> to an array of length 16:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_random</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+    <span class="n">game_board</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">board</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">random_added</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">random_added</span><span class="p">:</span>
+        <span class="n">add_at</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">game_board</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Replace the value if it is a 2</span>
+        <span class="k">if</span> <span class="n">game_board</span><span class="p">[</span><span class="n">add_at</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">game_board</span><span class="p">[</span><span class="n">add_at</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">random_added</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">game_board</span>
+</code></pre></div>
+
+
+<p>Great! Let's call this program <code>add_random.py</code>. It will read a board of <code>1x16</code> from STDIN (or from a provided argument) and print out a board of <code>1x16</code> to STDOUT with a 2 added to it.</p>
+<div class="highlight"><pre><span></span><code>./add_random.py --help
+
+<span class="c1"># usage: add_random.py [-h] [--board BOARD]</span>
+<span class="c1"># </span>
+<span class="c1"># Randomly populates an empty tile in a 2048 board string with a 2.</span>
+<span class="c1"># </span>
+<span class="c1"># optional arguments:</span>
+<span class="c1">#   -h, --help     show this help message and exit</span>
+<span class="c1">#   --board BOARD  The 2048 game board as a CSV string</span>
+</code></pre></div>
+
+
+<p>This works out to something like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="m">0</span>,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 <span class="p">|</span> ./src/add_random.py <span class="c1">#=&gt; 0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0</span>
+</code></pre></div>
+
+
+<p>Now, we need a program to help us shift the values on the board according to the values swiped. In the game 2048, one can swipe from top to bottom, left to right, and vice-versa. For example, a swipe right on the following board:</p>
+<div class="highlight"><pre><span></span><code><span class="err">-----------------</span>
+<span class="err">| 0 | 0 | 0 | 0 |</span>
+<span class="err">| 0 | 2 | 2 | 0 |</span>
+<span class="err">| 0 | 0 | 0 | 4 |</span>
+<span class="err">| 0 | 2 | 4 | 4 |</span>
+<span class="err">-----------------</span>
+</code></pre></div>
+
+
+<p>would result in the following:</p>
+<div class="highlight"><pre><span></span><code><span class="err">-----------------</span>
+<span class="err">| 0 | 0 | 0 | 0 |</span>
+<span class="err">| 0 | 0 | 0 | 4 |</span>
+<span class="err">| 0 | 0 | 0 | 4 |</span>
+<span class="err">| 0 | 0 | 2 | 8 |</span>
+<span class="err">-----------------</span>
+</code></pre></div>
+
+
+<p>Playing the game would do more justice than any explanation could. Values are added row by row, adding same values and shifting populated values over empty values. Simplified, this only requires that we deal with every board row by row from left to right, such as the following:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-----------------</span>
+<span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span>
+<span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">2</span> <span class="o">|</span> <span class="mi">2</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span>
+<span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">4</span> <span class="o">|</span>
+<span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">2</span> <span class="o">|</span> <span class="mi">4</span> <span class="o">|</span> <span class="mi">4</span> <span class="o">|</span>
+<span class="c1">-----------------</span>
+
+<span class="o">#</span> <span class="mi">4</span><span class="n">th</span> <span class="k">row</span><span class="p">,</span> <span class="k">right</span> <span class="k">to</span> <span class="k">left</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span>
+<span class="o">#</span> <span class="mi">4</span><span class="n">th</span> <span class="k">column</span><span class="p">,</span> <span class="n">top</span> <span class="k">to</span> <span class="n">bttom</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span>
+</code></pre></div>
+
+
+<p>Assuming we could write a function that would shift these values in the order left to right, we could break any 4x4 matrix into a 1x4 array in any direction and have it dealt with row by row. Let's write a function in a separate program to do just that:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">slide_values</span><span class="p">(</span><span class="n">value_row</span><span class="p">):</span>
+    <span class="n">output_row</span> <span class="o">=</span> <span class="n">value_row</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">output_row</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">output_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">ii</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">ii</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">before</span> <span class="o">=</span> <span class="n">output_row</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">current</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">output_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">before</span>
+                <span class="n">output_row</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">before</span>
+            <span class="k">elif</span> <span class="n">current</span> <span class="o">==</span> <span class="n">before</span><span class="p">:</span>
+                <span class="n">output_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span> <span class="o">*</span> <span class="mi">2</span>
+                <span class="n">output_row</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">break</span>
+            <span class="k">elif</span> <span class="n">before</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="n">ii</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">output_row</span>
+</code></pre></div>
+
+
+<p>Putting that in a test case, we can assert that exact behaviour:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">game</span> <span class="kn">import</span> <span class="n">slide_values</span><span class="p">,</span> <span class="n">play_game</span>
+
+<span class="k">def</span> <span class="nf">test_slide_values</span><span class="p">():</span>
+    <span class="c1"># etc...</span>
+    <span class="k">assert</span> <span class="n">slide_values</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">slide_values</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">slide_values</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">slide_values</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="c1"># etc...</span>
+</code></pre></div>
+
+
+<p>Great, now from a 1x16 CSV input, we can simply convert it into a 4x4 matrix and rotate it such that our rows can always result in a 1x4 input to be parsed by the <code>slide_values</code> function. Packaging this as another program, we now have a <code>game.py</code> program. We can now have the program composed as so, the first argument to <code>game.py</code> being the direction:</p>
+<div class="highlight"><pre><span></span><code>./game.py --help
+
+<span class="c1"># usage: game.py [-h] [--board BOARD] direction</span>
+<span class="c1"># </span>
+<span class="c1"># Creates an output 2048 board based on the provided direction and input board.</span>
+<span class="c1"># </span>
+<span class="c1"># positional arguments:</span>
+<span class="c1">#   direction      0: Up, 1: Down, 2: Left, 3: Right</span>
+<span class="c1"># </span>
+<span class="c1"># optional arguments:</span>
+<span class="c1">#   -h, --help     show this help message and exit</span>
+<span class="c1">#   --board BOARD  The 2048 game board as a CSV string</span>
+</code></pre></div>
+
+
+<p>Using the program works out to the following:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="m">0</span>,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0 <span class="p">|</span> ./src/game.py <span class="m">0</span> <span class="c1">#=&gt; 2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</span>
+</code></pre></div>
+
+
+<h2>putting it all together</h2>
+<p>The game now being composed, we can try playing it! The following details an example game-play of <code>unix-2048</code>:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> <span class="s2">&quot;0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&quot;</span> <span class="p">|</span> ./src/add_random.py
+<span class="c1">#=&gt; 0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0</span>
+
+$ <span class="nb">echo</span> <span class="s2">&quot;0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0&quot;</span> <span class="p">|</span> ./src/game.py <span class="m">3</span> <span class="p">|</span> ./src/add_random.py
+<span class="c1">#=&gt; 0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2</span>
+
+$ <span class="nb">echo</span> <span class="s2">&quot;0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2&quot;</span> <span class="p">|</span> ./src/game.py <span class="m">1</span> <span class="p">|</span> ./src/add_random.py
+<span class="c1">#=&gt; 0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,2</span>
+
+$ <span class="nb">echo</span> <span class="s2">&quot;0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,2&quot;</span> <span class="p">|</span> ./src/game.py <span class="m">3</span> <span class="p">|</span> ./src/add_random.py
+<span class="c1">#=&gt; 0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,4</span>
+</code></pre></div>
+
+
+<p>The UX of that was pretty bad, so I coded up a <code>view.py</code> that prints a 1x16 input string as a 4x4 table. Piecing that as a script, I managed to come up with a full-on game!</p>
+<div class="highlight"><pre><span></span><code><span class="k">while</span> <span class="nb">true</span>
+<span class="k">do</span>
+  <span class="k">function</span> update_view <span class="o">()</span> <span class="o">{</span>
+    clear
+    ./src/view.py --board <span class="nv">$board</span>
+  <span class="o">}</span>
+
+  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$direction</span> -eq <span class="m">4</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="nb">echo</span> <span class="s2">&quot;Invalid direction:&quot;</span> 
+    &gt;<span class="p">&amp;</span><span class="m">2</span> <span class="nb">echo</span> <span class="s2">&quot;w: up, a: left, s: down, r: right&quot;</span> 
+  <span class="k">elif</span> <span class="o">[[</span> -z <span class="nv">$board</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nv">board</span><span class="o">=</span><span class="k">$(</span>./src/add_random.py --board <span class="s2">&quot;0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&quot;</span><span class="k">)</span>
+    update_view
+  <span class="k">else</span>
+    <span class="nv">board</span><span class="o">=</span><span class="k">$(</span>./src/game.py <span class="s2">&quot;</span><span class="nv">$direction</span><span class="s2">&quot;</span> --board <span class="s2">&quot;</span><span class="nv">$board</span><span class="s2">&quot;</span> <span class="p">|</span> ./src/add_random.py<span class="k">)</span>
+    update_view
+  <span class="k">fi</span>
+
+  <span class="c1"># Get input</span>
+  <span class="nb">read</span> -s -n1 key
+
+  <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$key</span><span class="s2">&quot;</span> in
+    <span class="s2">&quot;w&quot;</span><span class="o">)</span> <span class="nv">direction</span><span class="o">=</span><span class="m">0</span><span class="p">;;</span>
+    <span class="s2">&quot;a&quot;</span><span class="o">)</span> <span class="nv">direction</span><span class="o">=</span><span class="m">2</span><span class="p">;;</span>
+    <span class="s2">&quot;s&quot;</span><span class="o">)</span> <span class="nv">direction</span><span class="o">=</span><span class="m">1</span><span class="p">;;</span>
+    <span class="s2">&quot;d&quot;</span><span class="o">)</span> <span class="nv">direction</span><span class="o">=</span><span class="m">3</span><span class="p">;;</span>
+    *<span class="o">)</span> <span class="nv">direction</span><span class="o">=</span><span class="m">4</span><span class="p">;;</span>
+  <span class="k">esac</span>
+<span class="k">done</span>
+</code></pre></div>
+
+
+<p>Check out the end result <a href="https://github.com/kiyui/unix-2048">on GitHub</a>. Cheers, and enjoy your musing.</p>
+  </div><!-- /.entry-content -->
+</section>
+    </div>
+
+    <footer id="contentinfo" class="body">
+      <div>
+        <h4 class="title">social:</h4>
+        <ul class="links">
+            <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+            <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+            <li><a href="https://github.com/kiyui">GitHub</a></li>
+            <li><a href="https://queer.chat/@dafne">Mastodon</a></li>
+            <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="title">projects:</h4>
+        <ul class="links">
+          <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+        </ul>
+      </div>
+      <address id="about" class="vcard body">
+        Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+        which takes great advantage of <a href="http://python.org">Python</a>.
+      </address>
+    </footer>
+  </body>
+</html>
