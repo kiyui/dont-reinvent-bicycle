@@ -67,5 +67,7 @@ LINKS = (('GNOME Extensions',
 # Social widget
 SOCIAL = (('GitHub',
            'https://github.com/kiyui'),
+          ('Mastodon',
+           'https://queer.chat/@dafne'),
           ('LinkedIn',
            'https://www.linkedin.com/in/dafnelately/'),)
