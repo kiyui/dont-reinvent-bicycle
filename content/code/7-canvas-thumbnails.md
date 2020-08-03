@@ -12,7 +12,7 @@ void ctx.drawImage(image, dx, dy, dWidth, dHeight);
 void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 ```
 
-Here, `image` can be any [CanvasImageSource](https://developer.mozilla.org/en-US/docs/Web/API/CanvasImageSource) such as a [HTMLImageElement](CanvasImageSource) or even a [HTMLVideoElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement).
+Here, `image` can be any [CanvasImageSource](https://developer.mozilla.org/en-US/docs/Web/API/CanvasImageSource) such as a [HTMLImageElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement) or even a [HTMLVideoElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement).
 
 In the following example, I will be generating a thumbnail from a video file. I've posted the same example to [StackBlitz](https://stackblitz.com/edit/generate-video-file-thumbnail). The HTML here is very simple, consisting of a [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement) where [type="file"](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file) to get the file from the user and a [HTMLImageElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement) where we will later be displaying the video thumbnail:
 
