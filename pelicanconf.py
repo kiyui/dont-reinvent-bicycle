@@ -36,10 +36,14 @@ DELETE_OUTPUT_DIRECTORY = True
 # Static content
 ARTICLE_EXCLUDES = ['extra', 'images', 'demos']
 STATIC_PATHS = [
+    'extra/CNAME',
     'extra/BingSiteAuth.xml',
     'extra/google84482ab458ba2d3d.html'
 ]
 EXTRA_PATH_METADATA = {
+    'extra/CNAME': {
+        'path': 'CNAME'
+    },
     'extra/BingSiteAuth.xml': {
         'path': 'BingSiteAuth.xml'
     },
