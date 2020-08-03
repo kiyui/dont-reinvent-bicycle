@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <title>
+dont reinvent велосипед - generating video thumbnails in js      </title>
+      <meta charset="utf-8" />
+      <meta name="description" content="we investigate using canvas elements to generate video thumbnails in javascript"/>
+      <meta name="keywords" content="programming,practice,standards,hacking,musing,javascript,canvas,firefox">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+      <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css" >
+        <link href="https://dontreinventbicycle.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/all.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/code.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+    <meta name="description" content="we investigate using canvas elements to generate video thumbnails in javascript" />
+
+    <meta name="tags" content="javascript" />
+    <meta name="tags" content="canvas" />
+    <meta name="tags" content="firefox" />
+
+  </head>
+
+  <body id="index" class="home">
+    <header id="banner" class="body">
+      <h1>
+        <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+      </h1>
+    </header>
+
+    <nav id="menu" class="body">
+      <ul>
+
+
+        <li class="active">
+          <a href="https://dontreinventbicycle.com/category/code.html">
+            code
+          </a>
+        </li>
+        <li>
+          <a href="https://dontreinventbicycle.com/category/off-topic.html">
+            off-topic
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/canvas-thumbnail.html" rel="bookmark"
+         title="Permalink to generating video thumbnails in js">generating video thumbnails in js</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2020-08-03T03:50:00+08:00">
+        Mon 03 August 2020
+      </time>
+    </div>
+    <address class="vcard author">
+      by           <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">Dafne Kiyui</a>
+    </address>
+    <div class="category">
+        category: <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+    </div>
+    <div class="tags">
+        tags:
+            <a href="https://dontreinventbicycle.com/tag/javascript.html">javascript</a>
+            <a href="https://dontreinventbicycle.com/tag/canvas.html">canvas</a>
+            <a href="https://dontreinventbicycle.com/tag/firefox.html">firefox</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement">HTMLCanvasElement</a>s are amazing for all kinds of things. Paired with the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a>'s <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage">drawImage</a> method, generating video thumbnails on browsers are incredibly easy. The interface for the method is as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="err">void ctx.drawImage(image, dx, dy);</span>
+<span class="err">void ctx.drawImage(image, dx, dy, dWidth, dHeight);</span>
+<span class="err">void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);</span>
+</code></pre></div>
+
+
+<p>Here, <code>image</code> can be any <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasImageSource">CanvasImageSource</a> such as a <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement">HTMLImageElement</a> or even a <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement">HTMLVideoElement</a>.</p>
+<p>In the following example, I will be generating a thumbnail from a video file. I've posted the same example to <a href="https://stackblitz.com/edit/generate-video-file-thumbnail">StackBlitz</a>. The HTML here is very simple, consisting of a <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement">HTMLInputElement</a> where <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file">type="file"</a> to get the file from the user and a <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement">HTMLImageElement</a> where we will later be displaying the video thumbnail:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;input-video-file&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;file&quot;</span> <span class="na">accepts</span><span class="o">=</span><span class="s">&quot;video/webm&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;img-thumb&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;Thumbnail of a video&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+  <span class="p">.</span><span class="nc">row</span> <span class="p">{</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+    <span class="k">padding</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
+<p>Getting the file is now as simple as listening to <code>input-video-file</code>'s change event, as so:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">fileInput</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#input-video-file&quot;</span><span class="p">);</span>
+<span class="nx">fileInput</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="nx">async</span> <span class="nx">e</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">file</span><span class="p">]</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">files</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+
+
+<p>We should then be able to use this file in a <code>HTMLVideoElement</code> programmatically by doing the following:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">fileUrl</span> <span class="o">=</span> <span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="nx">file</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">video</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;video&quot;</span><span class="p">);</span>
+<span class="nx">video</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">fileUrl</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>If you've appended the <code>video</code> element to your document body, you should now be able to play to file! Drawing that same image on a canvas is now as simple as doing:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
+<span class="nx">canvas</span>
+  <span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
+</code></pre></div>
+
+
+<p>Optimally, you'd do this after the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/loadedmetadata_event">loadedmetadata event</a> has fired, after which you can seek the video to a point of your choosing. This also ensures that the preview is already rendered in the <code>video</code> element. In this example, I seek to 25% of the video:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">video</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;loadedmetadata&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Seek the video to 25%</span>
+  <span class="nx">video</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">duration</span> <span class="o">*</span> <span class="mf">0.25</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">video</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;seeked&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Draw to canvas, etc.</span>
+<span class="p">});</span>
+</code></pre></div>
+
+
+<p>Next, if we wanted to generate the video thumbnail on the frontend and perhaps save that as a file we'd probably use something along the lines of:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// ...to get the raw pixel data</span>
+<span class="kr">const</span> <span class="p">{</span> <span class="nx">data</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">getImageData</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
+
+<span class="c1">// ...to generate a blob</span>
+<span class="nx">canvas</span><span class="p">.</span><span class="nx">toBlob</span><span class="p">(</span><span class="nx">blob</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="cm">/* etc */</span> <span class="p">},</span> <span class="s2">&quot;image/png&quot;</span><span class="p">);</span>
+</code></pre></div>
+
+
+<p>However for the purpose of this demo, we want to show it inside a <code>HTMLImageElement</code>, for which we should generate a data URI using the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL">HTMLCanvasElement.toDataURL</a> method as so:</p>
+<div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">imageUrl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s2">&quot;image/png&quot;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">img</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#img-thumb&quot;</span><span class="p">);</span>
+<span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">imageUrl</span><span class="p">;</span>
+</code></pre></div>
+
+
+<p>Piecing all these parts together, we have the following function from the demo where given a video URL we're able to generate a URL to a thumbnail of said video, <em>seeked</em> to 25%:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">async</span> <span class="kd">function</span> <span class="nx">getThumbnailForVideo</span><span class="p">(</span><span class="nx">videoUrl</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">video</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;video&quot;</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
+  <span class="nx">video</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">;</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">;</span>
+
+  <span class="c1">// Trigger video load</span>
+  <span class="nx">await</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">video</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;loadedmetadata&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">video</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">;</span>
+      <span class="nx">video</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">;</span>
+      <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">;</span>
+      <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">;</span>
+      <span class="c1">// Seek the video to 25%</span>
+      <span class="nx">video</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">duration</span> <span class="o">*</span> <span class="mf">0.25</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="nx">video</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;seeked&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="nx">resolve</span><span class="p">());</span>
+    <span class="nx">video</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">videoUrl</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="c1">// Draw the thumbnail</span>
+  <span class="nx">canvas</span>
+    <span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">imageUrl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s2">&quot;image/png&quot;</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">imageUrl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Finally, here's an <a href="https://dontreinventbicycle.com/demos/canvas-thumbnail.html">onsite demo</a>. I did not transpile any of the code so please use a modern browser.</p>
+<h2>caveats</h2>
+<p>I'd like to make a careful note however that this method is not perfect as it may not work with all videos on Firefox:</p>
+<blockquote>
+<p><code>drawImage()</code> will ignore all EXIF metadata in images, including the Orientation. This behavior is especially troublesome on iOS devices. You should detect the Orientation yourself and use <code>rotate()</code> to make it right.</p>
+</blockquote>
+<p>Put simply, this means that certain mobile-device recordings may display incorrectly in the <code>canvas</code>. As such, you may want to leverage <a href="https://en.wikipedia.org/wiki/Progressive_enhancement">progressive enhancement</a> and depending on your use-case and source of the videos, decide which users will be generating their thumbnails on the client side.</p>
+<h2>footnote</h2>
+<p>This post is based on my <a href="https://stackoverflow.com/questions/63029738/how-do-i-correctly-draw-a-video-thumbnail-on-a-canvas-on-all-browsers/63083581">self-answered question on StackOverflow</a>.</p>
+<aside>
+  <p>I originally wanted to preface the article with something along the following lines:</p>
+  <blockquote>
+    You may want to generate thumbnails of a video on the client side for a variety of reasons:
+    <ul>
+      <li>Displaying a thumbnail preview as a user uploads a video</li>
+      <li>Creating video seekbar previews as the user hovers it</li>
+      <li>Reduce server load by generating video thumbnails on the client side</li>
+    </ul>
+    Whatever it may be, <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement">HTMLCanvasElement</a>s make it very easy!
+  </blockquote>
+  <p>I decided against it because I'm starting to hate website fluff, and this seems to be especially a feature of the English language where we preface everything with foreplay. Ever tried looking up nutrition or fitness tips in English vs. Dutch/German? We talk too much, man.</p>
+  <p>Perhaps it's for SEO, which is perhaps why I'm including this rant, but I lean towards the vulgar explanation of lesser malice.</p>
+</aside>
+  </div><!-- /.entry-content -->
+</section>
+    </div>
+
+    <footer id="contentinfo" class="body">
+      <div>
+        <h4 class="title">social:</h4>
+        <ul class="links">
+            <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+            <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+            <li><a href="https://github.com/kiyui">GitHub</a></li>
+            <li><a href="https://queer.chat/@dafne">Mastodon</a></li>
+            <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="title">projects:</h4>
+        <ul class="links">
+          <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+        </ul>
+      </div>
+      <address id="about" class="vcard body">
+        Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+        which takes great advantage of <a href="http://python.org">Python</a>.
+      </address>
+    </footer>
+  </body>
+</html>
