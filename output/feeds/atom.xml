@@ -1,0 +1,1220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-03-20T18:00:00+08:00</updated><entry><title>how i created a trigger warnings modal, and removed it for accessibility</title><link href="https://dontreinventbicycle.com/modals-and-a11y.html" rel="alternate"></link><published>2020-03-20T18:00:00+08:00</published><updated>2020-03-20T18:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-03-20:/modals-and-a11y.html</id><summary type="html">&lt;p&gt;When I first had &lt;a href="/taking-a-break.html"&gt;my coming out story&lt;/a&gt; reviewed by some queer peers, the initial feedback I received was that it required "trigger warnings" because it covered some pretty heavy topics.&lt;/p&gt;
+&lt;p&gt;My initial solution was simple;- add a row to the post information section highlighting the various trigger warnings in …&lt;/p&gt;</summary><content type="html">&lt;p&gt;When I first had &lt;a href="/taking-a-break.html"&gt;my coming out story&lt;/a&gt; reviewed by some queer peers, the initial feedback I received was that it required "trigger warnings" because it covered some pretty heavy topics.&lt;/p&gt;
+&lt;p&gt;My initial solution was simple;- add a row to the post information section highlighting the various trigger warnings in the same way that I already have the article date, category, and tags displayed. Any &lt;em&gt;sane&lt;/em&gt; person would have left it there. Fortunately, I am no such person. I am a Javascript developer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Let's add a modal!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;At this point, any &lt;em&gt;sane&lt;/em&gt; person would have just coded a simple modal toggled by Javascript. Not being such I person I have imposed a simple rule for this blog, that being that it should not contain any Javascript (other than those in code blocks).&lt;/p&gt;
+&lt;p&gt;The thing about imposing such a restriction is that,&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;It's fun to impose arbitrary restrictions when coding, because it forces you think of unconventional solutions&lt;/li&gt;
+&lt;li&gt;I don't want to have to care about "minifying" Javascript or cache invalidation of assets&lt;/li&gt;
+&lt;li&gt;It adds to the nerdiness of a blog that it works just fine on a text-only browser! 🤓&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;CSS however is fair game, so that's exactly what we're going to attempt to accomplish!&lt;/p&gt;
+&lt;h2 id="using-target-pseudo-class"&gt;
+  using the :target pseudo class
+&lt;/h2&gt;
+
+&lt;p&gt;Creating a modal using the &lt;code&gt;:target&lt;/code&gt; pseudo-class is the simpler, less-hacky alternative. The &lt;code&gt;:target&lt;/code&gt; pseudo-class works by selecting the current active page anchor. In the case of our modal, that would be using the "id" of the modal to change the &lt;code&gt;display&lt;/code&gt; style from &lt;code&gt;none&lt;/code&gt; to &lt;code&gt;block&lt;/code&gt;, kind of like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;demo-target-modal&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;demo-target-modal&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;target&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;block&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, in order to display the modal, all we need to do is create a link that behaves like a button to trigger the modal anchor:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;#demo-target-modal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  Show :target modal
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Using the same trick, we can simply have our modal "close" button target "#" or any other anchor in the page!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;#&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  Close :target modal
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally piecing everything together, we get a modal that looks somewhat like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;demo-target-modal&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;modal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;modal-content&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="c"&gt;&amp;lt;!-- Content --&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;#&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+      Close :target modal
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And if you're interested in the styling I used:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;demo-target-modal&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;demo-target-modal&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;target&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;block&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;modal&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;position&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;fixed&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;top&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="kt"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;height&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="kt"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;overflow&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;auto&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;background-color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;rgba&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;modal-content&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;background-color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;#f5f5dc&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;margin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;auto&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;border&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt; &lt;span class="kc"&gt;solid&lt;/span&gt; &lt;span class="mh"&gt;#888&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;width&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="kt"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;modal-fake-button&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;padding&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;text-decoration&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;#000504&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;border&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="kt"&gt;px&lt;/span&gt; &lt;span class="kc"&gt;solid&lt;/span&gt; &lt;span class="mh"&gt;#888&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;background-color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;#ede5dd&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;modal-fake-button&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;hover&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nc"&gt;modal-fake-button&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;focus&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;cursor&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;pointer&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;background-color&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;#ccbbab&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally, having pieced everything together, here's that demo button you're looking for!&lt;/p&gt;
+&lt;p&gt;&lt;a href="#demo-target-modal" class="modal-fake-button" role="button"&gt; 
+  Show :target modal
+&lt;/a&gt;&lt;/p&gt;
+&lt;div id="demo-target-modal" tabindex="-1" class="modal"&gt;
+  &lt;div class="modal-content" tabindex="0" role="dialog" aria-labelledby="demo-target-modal-title"&gt;
+    &lt;h2 id="demo-target-modal-title"&gt;:target modal&lt;/h2&gt;
+    &lt;p&gt;Notice how the URL contains #demo-target-modal when it displays?&lt;/p&gt;
+    &lt;a href="#using-target-pseudo-class" class="modal-fake-button" role="button"&gt;
+      Close :target modal
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;While the solution is elegant and works quite well, I was not able to use it because it relies on the page already being loaded with the anchor linked in order to have the modal displayed. This is not optimal on a page where I need the modal to be shown before any of the content is displayed to the user, so I had to think of another solution.&lt;/p&gt;
+&lt;h2&gt;using the "checkbox hack"&lt;/h2&gt;
+&lt;p&gt;The checkbox hack relies on the misuse of an accessibility function of the &lt;code&gt;label&lt;/code&gt; and &lt;code&gt;input[type="checkbox]&lt;/code&gt; element where clicking on the label would toggle the checkbox.&lt;/p&gt;
+&lt;p&gt;&lt;label for="example-checkbox"&gt;
+  Pressing me triggers the checkbox:
+&lt;/label&gt;
+&lt;input id="example-checkbox" type="checkbox" /&gt;&lt;/p&gt;
+&lt;p&gt;The code for accomplishing this is quite simple, relying only on attaching the &lt;code&gt;for&lt;/code&gt; attribute to the &lt;code&gt;label&lt;/code&gt; that's supposed to trigger the checkbox like so:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt; &lt;span class="na"&gt;for&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;example-checkbox&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  Pressing me triggers the checkbox:
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;input&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;example-checkbox&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;checkbox&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Using this, we now have a method in which we can open and close our modal by making use of the general sibling selector (&lt;code&gt;~&lt;/code&gt;) by doing something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;demo-checkbox-input&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;none&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;demo-checkbox-input&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;checked&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="nn"&gt;demo-checkbox-modal&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;display&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;block&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Put together, our code looks somewhat like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt; &lt;span class="na"&gt;for&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;demo-checkbox-input&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  Show checkbox modal
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;input&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;demo-checkbox-input&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;checkbox&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;demo-checkbox-modal&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;modal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;modal-content&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="c"&gt;&amp;lt;!-- Content --&amp;gt;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt; &lt;span class="na"&gt;for&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;demo-checkbox-input&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        Close checkbox modal
+      &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Again, here's a demo button of the checkbox modal:&lt;/p&gt;
+&lt;p&gt;&lt;label class="modal-fake-button" tabindex="0" for="demo-checkbox-input" role="button"&gt; 
+  Show checkbox modal
+&lt;/label&gt;&lt;/p&gt;
+&lt;div&gt;
+  &lt;input id="demo-checkbox-input" type="checkbox"/&gt;
+  &lt;div id="demo-checkbox-modal" tabindex="-1" class="modal"&gt;
+    &lt;div class="modal-content" tabindex="0" role="dialog" aria-labelledby="demo-checkbox-modal-title"&gt;
+      &lt;h2 id="demo-checkbox-modal-title"&gt;checkbox modal&lt;/h2&gt;
+      &lt;p&gt;Try refreshing the browser with the modal open 🤭&lt;/p&gt;
+      &lt;label class="modal-fake-button" for="demo-checkbox-input" role="button"&gt; 
+        Close checkbox modal
+      &lt;/label&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you're navigating this website with a mouse and are sighted, this looks like quite an elegant solution because:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Unlike the dialog pseudo-class, closing the modal does not jump to a random part of the page which is great for UX!&lt;/li&gt;
+&lt;li&gt;By enabling &lt;code&gt;checked="true"&lt;/code&gt; on the input, I can have the modal be shown on first load&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;input&lt;/code&gt; element does double-duty by remembering the "modal state" (because your browser will remember the last input) such that when a user revisits the page they won't be prompted by the modal again&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;But you're not here because I ended up using either of these CSS tricks or hacks as solutions. The problem with the "checkbox hack" is that it relies on changing the semantics of native HTML elements such as &lt;code&gt;label&lt;/code&gt; and &lt;code&gt;input[type="checkbox"]&lt;/code&gt;, making accessibility an issue;- especially on a screen reader.&lt;/p&gt;
+&lt;p&gt;In spite of not being a &lt;em&gt;sane&lt;/em&gt; person I do have another more sane rule for this blog, that being that it should be made as accessible as possible for all people. Makings websites and application accessible has been a subject that has long interested me, and I do hope to get better at it (such as being able to navigate the code blocks better)!&lt;/p&gt;
+&lt;aside&gt;
+  Just as a side note, it may be the case that trigger-warnings do not work at all as mentioned &lt;a href="https://web.archive.org/web/20200320172206/https://www.theatlantic.com/health/archive/2019/03/do-trigger-warnings-work/585871/"&gt;here&lt;/a&gt;.
+&lt;/aside&gt;
+
+&lt;p&gt;If you do have suggestions on how I can improve the trigger warnings, please do &lt;a href="mailto:didyouknowthat@dafne.rocks"&gt;reach out&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;This article was powered by the listenfuel of a band literally called "The World is A Beautiful Place &amp;amp; I Am No Longer Afraid To Die". Happy lockdown this Aries season ♈!&lt;/p&gt;
+&lt;style&gt;
+  #demo-target-modal {
+    display: none;
+  }
+
+  #demo-target-modal:target {
+    display: block;
+  }
+
+  #demo-checkbox-modal {
+    display: none;
+  }
+
+  #demo-checkbox-input {
+    display: none;
+  }
+
+  #demo-checkbox-input:checked ~ #demo-checkbox-modal {
+    display: block;
+  }
+
+  .modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .modal-content {
+    background-color: #f5f5dc;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .modal-fake-button {
+    padding: 4px;
+    text-decoration: none;
+    color: #000504;
+    border: 1px solid #888;
+    background-color: #ede5dd;
+  }
+
+  .modal-fake-button:hover,.modal-fake-button:focus {
+    cursor: pointer;
+    background-color: #ccbbab;
+  }
+&lt;/style&gt;</content><category term="code"></category><category term="css"></category><category term="a11y"></category></entry><entry><title>on taking a break</title><link href="https://dontreinventbicycle.com/taking-a-break.html" rel="alternate"></link><published>2020-03-19T15:00:00+08:00</published><updated>2020-03-19T15:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-03-19:/taking-a-break.html</id><summary type="html">
+    &lt;p&gt;
+      It is almost poetic justice that the last time I wrote was on Labour Day,
+      2019. Not long thereafter, I went on a slurry of vacations from Bangkok
+      for 2 bachelor parties, Georgia for a wedding, a multitude of places for
+      Europe, finally ending my streak by attending the Pride …&lt;/p&gt;</summary><content type="html">
+    &lt;p&gt;
+      It is almost poetic justice that the last time I wrote was on Labour Day,
+      2019. Not long thereafter, I went on a slurry of vacations from Bangkok
+      for 2 bachelor parties, Georgia for a wedding, a multitude of places for
+      Europe, finally ending my streak by attending the Pride parade in Taipei
+      🏳‍🌈
+    &lt;/p&gt;
+    &lt;aside&gt;
+      &lt;p&gt;
+        I have included some photos of my travels in this blog. All photos are
+        licensed CC-BY 4.0.
+        &lt;br /&gt;
+        &lt;a rel="license" href="http://creativecommons.org/licenses/by/4.0/"&gt;
+          &lt;img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /&gt;
+        &lt;/a&gt;
+      &lt;/p&gt;
+    &lt;/aside&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="pride flag painted on the road in Taipei" src="https://dontreinventbicycle.com/images/taking-a-break/taipei-0.jpg" /&gt;
+      &lt;img loading="lazy" alt="a view of the Taipei 101" src="https://dontreinventbicycle.com/images/taking-a-break/taipei-1.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      During this time, many things had happened but most notably that when I
+      was in Berlin, I had decided to transition; I am transgender. This post
+      will get pretty personal, but serves as a reminder that queer people do
+      exist and highlights some of the struggles we go through. Hopefully it
+      will serve as an inspiration for other queer people that are still going
+      through something similar.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="the Berlin Cathedral" src="https://dontreinventbicycle.com/images/taking-a-break/berlin-0.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      The earliest times I can recall feelings of gender dysphoria was when I
+      started to attend secondary school, age 13. Not understanding what I was
+      going through, I looked up the symptoms and wondered if it had simply to
+      do with me undergoing puberty. I was an already in-denial homosexual,
+      knowing that I had guy crushes that I had to suppress and going out with
+      girls under the peer-pressure of my friends. At the time, what I was going
+      through was still called gender identity disorder.
+    &lt;/p&gt;
+    &lt;p&gt;
+      Asian society is highly conformist and collectivist, with deviance being
+      punished. I grew up in such a household as an Evangelical Christian and
+      attended an all-boys school with a Christian background. It doesn't help
+      that I live in Malaysia;- a country while progressive for being an Islamic
+      country, is otherwise very socially backwards. This meant that there was
+      no room for questioning or being open about oneself. When I first started
+      going through these feelings in my head, I thought I would test my
+      boundaries. Scene/emo fashion seemed to be something I could resonate with
+      while being very NGC (non-gender-conforming), and allowed for a space
+      where people could share how they felt. I was able to get by wearing tight
+      jeans and shirts with tonnes of accessories but for my entirety of high
+      school had a problem of "misbehaviour" because I refused to cut my hair
+      &lt;a id="source-cut-hair" href="#note-cut-hair"&gt;[1]&lt;/a&gt;. I'd have my hair
+      cut by teachers every other school assembly and resent seeing a
+      hairdresser. I soon discovered the boundaries to which I could safely
+      stretch when I coloured my nails. First with liquid correction fluid, and
+      later actual nail polish during school break. I got called out by someone
+      I knew through my church youth group during a church event and felt
+      greatly embarrassed by it.
+    &lt;/p&gt;
+    &lt;p&gt;I remember thinking,&lt;/p&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;How did I allow these feelings to get so out of hand?&lt;/p&gt;
+    &lt;/blockquote&gt;
+    &lt;p&gt;
+      This triggered my first wave of "repression"
+      &lt;a id="source-repression" href="#note-repression"&gt;[2]&lt;/a&gt;, conformity. I'd
+      be lying if I said I enjoyed my time alive then. I was able to keep happy
+      on the surface, presenting as the best version of myself there had ever
+      been. I started getting good at my grades, being actively involved in the
+      debate club, and began actively participating in church activities. For
+      some time I even gave my brother my computer, refusing to use it any more.
+      The computer meant community, games, coding, and actively keeping myself
+      happy. I wanted to withdraw from those feelings.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="the Hohensalzburg Castle" src="https://dontreinventbicycle.com/images/taking-a-break/salzburg-0.jpg" /&gt;
+      &lt;img loading="lazy" alt="Munich new town hall" src="https://dontreinventbicycle.com/images/taking-a-break/munich-1.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      Some time later, for
+      &lt;a href="https://en.wikipedia.org/wiki/Gawai_Dayak"&gt;Gawai&lt;/a&gt;, my dad
+      gifted me with my first laptop/tablet. I was able to geek out again! For a
+      while, I was able to distract myself from my dysphoria, ignoring it. Those
+      feelings became harder to ignore when I started developing feelings for
+      another person at school that also turned out to be queer. Through them, I
+      started opening up again, feeling safe to do so. I started meeting other
+      queer people and felt less alone, not that I had ever truly been;- I just
+      did not want to out myself by associating with the school "pondans"
+      &lt;a id="source-pondan" href="#note-pondan"&gt;[3]&lt;/a&gt;. I started dressing and
+      feeling like me again, albeit this time in more colour.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="Gouda town hall" src="https://dontreinventbicycle.com/images/taking-a-break/gouda-0.jpg" /&gt;
+      &lt;img loading="lazy" alt="a canal in Venice" src="https://dontreinventbicycle.com/images/taking-a-break/venice-0.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      This period did not last long, but took years to slowly die out starting
+      when I entered a cis-het relationship
+      &lt;a id="source-cishet" href="#note-cishet"&gt;[4]&lt;/a&gt;. I recall telling her
+      that she "had cured me of the gay", and I went through the process of
+      trying to be normal. It was around this time that I entered university
+      confused and not knowing what I was doing. The relationship was unhealthy
+      and eventually fell apart, and I completely let myself go. I was lucky
+      enough to be able to go through university without paying much attention
+      to classes because I had already spent half my life being a computer nerd.
+      I exposed myself to extra stress but at the very least some exposure by
+      doing various gigs while at the university. I completed my final year
+      project quite easily and landed my first steady income at a part-time job
+      while also working as a part-time research assistant at the university
+      continuing to work on my final year project.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="a church in Munich" src="https://dontreinventbicycle.com/images/taking-a-break/munich-0.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      A funny thing about the human mind is that we seem to desire a belief
+      system or ideology to lean upon. For me, it had always been free software
+      but this being around the time of cryptocurrency's boom, it became much
+      more than that. I started getting involved in far more than I could handle
+      and tried to distract myself from whatever underlying problems I had. The
+      combinations of all these things did lend to me having quite a bit of
+      money, but it also meant I was able to sustain heavy substance abuse. At
+      some point I was smuggling a bottle of liquor a day to get through my work
+      in the research lab.
+    &lt;/p&gt;
+    &lt;p&gt;
+      The research lab is interesting, and what I was working on was also an
+      interesting domain. I was surrounded by webcams and CCTVs. If you know
+      anything about gender dysphoria, this already sounds like a terrible
+      setup. I was constantly seeing myself on every screen and constantly
+      resenting my existence. I tried to persist this for months until I reached
+      a point where I was no longer able to work. I had to run away or stop
+      existing.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="Saint Mark's Basilica" src="https://dontreinventbicycle.com/images/taking-a-break/venice-1.jpg" /&gt;
+      &lt;img loading="lazy" alt="the Grand Place in Brussels" src="https://dontreinventbicycle.com/images/taking-a-break/brussels-0.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      One persistent dream I always had was to sail out on a boat to sea, far
+      away from the sight of land and I'd drown myself. I'd wrap myself in the
+      chains of an anchor and lean off the boat. One day, I received an offer
+      from a friend of mine for a job as Javascript Developer based in Penang, a
+      small island off the northwest coast of Peninsular Malaysia. Perhaps
+      that's my chance for escape, I thought. I quit my job and left my research
+      assistant role without compensation and applied for the job. Given my lack
+      of suitable experience, I was offered an internship instead;- another blow
+      for my confidence.
+    &lt;/p&gt;
+    &lt;p&gt;
+      After a few weeks at the company, I still felt as if I wasn't able to
+      perform up to the standards I knew I was capable of. I still struggled
+      with crippling depression and the feeling of dying inside. I then decided
+      to gradually delete all social media and disconnect myself from many of my
+      friends. The suicide ideation in my head eventually became more strong
+      than I could ever manage, and nothing I took could stop me from feeling
+      that way. I was on my way home one evening from work and I knew exactly
+      what I had to do that night, until I didn't. I received a call from my
+      friend asking if I was alright. In spite of all the social media I had, I
+      felt as if I was screaming into a void and that there was nobody
+      listening. That call saved my life.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="a canal in Amsterdam" src="https://dontreinventbicycle.com/images/taking-a-break/amsterdam-0.jpg" /&gt;
+      &lt;img loading="lazy" alt="behind the town hall in Gouda" src="https://dontreinventbicycle.com/images/taking-a-break/gouda-1.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      The thing about a conservative society is that you never feel safe telling
+      anyone how you feel. There is no safe space for you to unwind from. In
+      that position, I did not feel as if I could seek therapy or counselling
+      because I feared being subjected to conversion therapy or something as
+      terrible of sort.
+    &lt;/p&gt;
+    &lt;p&gt;
+      I wish the story ended there, and that perhaps I had learned to accept
+      myself, transition in attempt to relieve my dysphoria. Instead, over a
+      year had gone by and I was still living with that torment over my
+      shoulders. I did try to make changes, living as a gay man instead of as a
+      transgender woman. At the same time, I still enjoyed "passing privilege"
+      as a cis-het person because I was not too outwardly gay that it was still
+      a surprise factor to people when I came out to them.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="the Victor Emmanuel II Monument" src="https://dontreinventbicycle.com/images/taking-a-break/rome-0.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      Naturally, it only became worse. Partying, travel, self-harm, and
+      substance abuse was my only remorse. My suffering was always invisible,
+      until it could no longer be. Even after that particularly amazing day in
+      Berlin where I was staring at myself in the mirror and thought that I
+      could begin loving myself, I was unable to do so once I arrived back in
+      Malaysia from my travels. The cycle and pain continued until one day when
+      I was in Vietnam, I decided to end my life.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="a view from the Vatican" src="https://dontreinventbicycle.com/images/taking-a-break/rome-1.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      By some miracle, I woke up a few hours later covered in blood. For a
+      while, I pretended like nothing happened. I was only back in Penang for a
+      few days before I returned to my hometown, Kuching, for a metal concert
+      where I told my best friends what had manifested a week before. I needed
+      ears before I could accept it for myself, knowing that at least the people
+      that meant the most to me were able to accept me.
+    &lt;/p&gt;
+    &lt;p&gt;
+      I started to socially transition then, testing the waters by going by my
+      "Kiyui" surname and they/them pronouns at the
+      &lt;a href="http://www.polyglotconference.com/"&gt;2019 Polyglot Conference&lt;/a&gt;
+      in Fukuoka. The talk, "Language, Gender, and Social Media"
+      &lt;a id="source-fukuoka" href="#note-fukuoka"&gt;[5]&lt;/a&gt;, by Abe Blackburn was
+      one talk in particular that stuck by me and reminded me of the importance
+      of pronouns and the power in a name. A week later, I attended the pride
+      parade in Taipei and had started to present as "Dafne" for the first time.
+    &lt;/p&gt;
+    &lt;p&gt;
+      &lt;img loading="lazy" alt="the Holy Trinity Cathedral of Tbilisi" src="https://dontreinventbicycle.com/images/taking-a-break/tblisi-0.jpg" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+      Many months have passed since that entire ordeal, and I'm still taking
+      things day by day; Figuring out the things in life I have put in place to
+      protect myself and the things I genuinely enjoy. I'd like to thank the
+      folks at &lt;a href="https://piktochart.com/"&gt;Piktochart&lt;/a&gt; who've been very
+      supportive throughout this process and been there for me. While I still
+      &lt;em&gt;have to&lt;/em&gt; "&lt;i id="source-boymode"&gt;boymode&lt;/i&gt;"
+      &lt;a id="source-boymode" href="#note-boymode"&gt;[6]&lt;/a&gt;
+      when going to the office and am still often misgendered with he/him
+      pronouns, it's better than I could have ever asked for.
+    &lt;/p&gt;
+    &lt;p&gt;
+      Still though, I wonder and worry for the future of Malaysia where LGBT
+      individuals continue to be silenced and prosecuted, especially those of
+      the Muslim faith. I do not know the future of myself and many others in
+      this country, where even the 2019 Women's March saw backlash
+      &lt;a id="source-women-march" href="#note-women-march"&gt;[7]&lt;/a&gt;
+      due to the involvement of LGBT folks. I cannot even personally foresee my
+      future in this country where public opinion is still fuelled by hatred,
+      intolerance, and bigotry.
+    &lt;/p&gt;
+    &lt;h2&gt;notes&lt;/h2&gt;
+    &lt;ul class="links-list"&gt;
+      &lt;li id="note-cut-hair"&gt;
+        &lt;p&gt;
+          &lt;a href="#source-cut-hair"&gt;[1]&lt;/a&gt;
+          Outside of religious exemptions such as being
+          &lt;a href="https://en.wikipedia.org/wiki/Sikhs"&gt;Sikh&lt;/a&gt;, boys had to
+          have short hair.
+        &lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li id="note-repression"&gt;
+        &lt;p&gt;
+          &lt;a href="#source-repression"&gt;[2]&lt;/a&gt;
+          To suppress or repress the feelings. In the trans community, usually
+          to hide your feelings in fear of persecution or backlash.
+        &lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li id="note-pondan"&gt;
+        &lt;p&gt;
+          &lt;a href="#source-pondan"&gt;[3]&lt;/a&gt;
+          The word "pondan" is a Malay slur for the word "faggot".
+        &lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li id="note-cishet"&gt;
+        &lt;p&gt;
+          &lt;a href="#source-cishet"&gt;[4]&lt;/a&gt;
+          A cisgender heterosexual;- "normal" person.
+        &lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li id="note-fukuoka"&gt;
+        &lt;p&gt;
+          &lt;a href="#source-fukuoka"&gt;[5]&lt;/a&gt;
+          &lt;a href="https://www.youtube.com/watch?v=PctaZZ8pkrU"&gt;[YouTube]&lt;/a&gt;.
+          Sorry, no free sources found!
+        &lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li id="note-boymode"&gt;
+        &lt;p&gt;
+          &lt;a href="#source-boymode"&gt;[6]&lt;/a&gt;
+          Present as a male or in androgynous wear
+        &lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li id="note-women-march"&gt;
+        &lt;p&gt;
+          &lt;a href="#source-women-march"&gt;[7]&lt;/a&gt;
+          Opposition to women's march:
+        &lt;/p&gt;
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;a href="https://web.archive.org/web/20200309145939/https://www.freemalaysiatoday.com/category/nation/2019/03/20/it-was-a-womens-march-not-lgbt-says-mp/"&gt;It was a women’s march, not LGBT, says MP&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a href="https://web.archive.org/web/20200309145844/https://www.thestar.com.my/news/nation/2019/03/10/womens-group-disappointed-by-govt-backlash-over-support-for-lgbt-community/"&gt;Women's group disappointed by govt backlash over support for LGBT
+              community during rally&lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a href="https://web.archive.org/web/20200309145918/https://www.nst.com.my/news/nation/2019/03/467792/uproar-malaysia-over-lgbt-groups-womens-day-march"&gt;Uproar in Malaysia over LGBT groups at Women's Day march&lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  </content><category term="off-topic"></category><category term="meta"></category><category term="personal"></category><category term="lgbt"></category></entry><entry><title>the error paradigm</title><link href="https://dontreinventbicycle.com/handling-errors.html" rel="alternate"></link><published>2019-05-01T11:39:00+08:00</published><updated>2019-05-09T00:25:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-05-01:/handling-errors.html</id><summary type="html">&lt;p&gt;The error programming paradigm comes from the recognition that errors are expected. Consider a function that is meant to parse JSON data. Naturally should the input string not be of valid JSON format, the function would error out. That is because handling invalid JSON data is out of the scope …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The error programming paradigm comes from the recognition that errors are expected. Consider a function that is meant to parse JSON data. Naturally should the input string not be of valid JSON format, the function would error out. That is because handling invalid JSON data is out of the scope of the function and the input data to the function is clearly of incorrect format.&lt;/p&gt;
+&lt;h2&gt;when to throw errors&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;handling invalid JSON data is out of the scope of the function&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In the quest of trimming down functions and not creating monolithic code, exceptions help us define the boundaries of our functions. They also help to signal failure that a given function cannot handle, or should not be responsible for handling. To make this simpler to understand, we need to go downscale to a simpler primitive, UNIX programs. Take the following C++ code for example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+
+&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;cout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If we were the compile the above code and run it, we would see that it returns a non-zero exit code of &lt;code&gt;1&lt;/code&gt;, indicating a failure in execution.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;g++ main.cpp &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; ./a.out  &lt;span class="c1"&gt;# Hello world&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;                  &lt;span class="c1"&gt;# 1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We can extend on this further by trying to chain the command with other commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./a.out &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;...succeeded&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;...failed&amp;quot;&lt;/span&gt;  &lt;span class="c1"&gt;#=&amp;gt; Hello world...failed&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We see that chaining the &lt;code&gt;echo "...succeeded"&lt;/code&gt; command failed because the command returned a non-zero exit code. In UNIX, well-behaving programs return &lt;code&gt;0&lt;/code&gt; on success and a non-zero exit code on failure, that should act as a type of error code. For example, you could have your application return &lt;code&gt;1&lt;/code&gt; on a general failure and perhaps &lt;code&gt;2&lt;/code&gt; if it encountered an issue reading your input, and so on. You can read more about exit status codes in &lt;a href="https://www.tldp.org/LDP/abs/html/exit-status.html"&gt;the following chapter&lt;/a&gt; by The Linux Documentation Project.&lt;/p&gt;
+&lt;h2&gt;exit codes are an interface&lt;/h2&gt;
+&lt;p&gt;In the shell, exit codes are the interface to communicate execution success or failure between applications in the same way &lt;a href="/the-unix-paradigm.html"&gt;pipes&lt;/a&gt; are used to communicate input and output. In the same manner, program exceptions are simply another interface by which we can determine that a method has failed. The term &lt;strong&gt;interface&lt;/strong&gt; here is important, because it tells us how we should both be handling and throwing errors.&lt;/p&gt;
+&lt;h2&gt;think of the interface of an error&lt;/h2&gt;
+&lt;p&gt;In a JavaScript &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"&gt;Promise&lt;/a&gt;, the interface for throwing an error would be to &lt;code&gt;reject&lt;/code&gt; the Promise. We wouldn't expect a failed promise to &lt;code&gt;resolve&lt;/code&gt;, lest we run into unexpected behaviours! Assuming we have the following function &lt;code&gt;getUser&lt;/code&gt; that returns a Promise, it would be logical to expect that the function should &lt;code&gt;reject&lt;/code&gt; if it fails to find a user:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;getUser&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Promise&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;UserStore&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;has&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;UserStore&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="c1"&gt;// We should reject, but we do not&lt;/span&gt;
+      &lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Where we would consume it as so:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;await&lt;/span&gt; &lt;span class="nx"&gt;getUser&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;        &lt;span class="c1"&gt;// =&amp;gt; TypeError: Cannot read property &amp;#39;name&amp;#39; of null&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is exactly why the interface matters;- People expect certain conventions of how something should behave. Now, let's try the intuition behind using interfaces to see how we should be throwing or handling errors.&lt;/p&gt;
+&lt;h2&gt;understanding error interfaces&lt;/h2&gt;
+&lt;p&gt;Let's assume we are building a &lt;a href="https://vuejs.org/"&gt;Vue.js&lt;/a&gt;-powered application, with a &lt;a href="https://vuex.vuejs.org/"&gt;Vuex&lt;/a&gt; store, and we are building a login form with a submit button that uses the following method:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;onSubmit&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;form&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$refs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;loginForm&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;form&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;form&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pass&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+  &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$store&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;login&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The part we want to focus on is the store dispatch method, &lt;code&gt;this.$store.dispatch&lt;/code&gt; because this is where our error can stem from.&lt;/p&gt;
+&lt;h3&gt;the store&lt;/h3&gt;
+&lt;p&gt;Let's start with defining the basic interface of our store action. We want a function that sends our login credentials to a server and responds with our logged-in user. As this function would require a network request, it makes sense that we should start with it returning an empty promise.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;login&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Promise&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, let's take a look at how we can craft that login request. To keep things simple, we will be making use of the &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API"&gt;fetch API&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(...)&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// Network error&lt;/span&gt;
+    &lt;span class="c1"&gt;// We should raise an exception here!&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The fetch function returns a Promise that either resolves a &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Response"&gt;Response&lt;/a&gt; or rejects when there is a network error, one area where we should raise an exception. If the response succeeded, the value of &lt;code&gt;response.ok&lt;/code&gt; should be truthy, meaning we successfully got a response from the server. If not, we can assume we have run into an error and let the consumer of the function handle that.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// Our response should be in response.body&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// We got a HTTP status code greater than 299&lt;/span&gt;
+  &lt;span class="c1"&gt;// We should raise an exception here!&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Next, we want to parse the response with an imaginary &lt;code&gt;User&lt;/code&gt; class with a static &lt;code&gt;from&lt;/code&gt; method:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="kr"&gt;static&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userString&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// This can throw an error if it&amp;#39;s not valid JSON&lt;/span&gt;
+    &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;JSON&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;parse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userString&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// Create a user and return it if data is of valid shape&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// If we reached here, assume data is invalid&lt;/span&gt;
+    &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Invalid user string provided!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You can see that since &lt;code&gt;from&lt;/code&gt; is a regular method, our interface for raising an exception is by using a &lt;code&gt;throw&lt;/code&gt; statement. As this function can also throw an error, we use it inside a &lt;code&gt;try/catch&lt;/code&gt; block inside out &lt;code&gt;if (response.ok)&lt;/code&gt; block as so:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// User.from threw an error&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally, now that we all that we have all the components to build our store action, we can piece it together! Remember, since our &lt;code&gt;login&lt;/code&gt; function returns a Promise, our interface for raising an exception is by rejecting &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;login&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Promise&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(...)&lt;/span&gt;
+      &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+          &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="c1"&gt;// Parse the user from the response body&lt;/span&gt;
+            &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+            &lt;span class="c1"&gt;// We&amp;#39;ve successfully parsed the user object&lt;/span&gt;
+            &lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+          &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="c1"&gt;// User.from threw an error&lt;/span&gt;
+            &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;There is an issue with the server response!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+          &lt;span class="p"&gt;}&lt;/span&gt; 
+        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+          &lt;span class="c1"&gt;// We got a HTTP status code greater than 299&lt;/span&gt;
+          &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sb"&gt;`There was an error with your request: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;statusText&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="p"&gt;})&lt;/span&gt;
+      &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// Network error&lt;/span&gt;
+        &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;A network error occured!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+      &lt;span class="p"&gt;})&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;the component&lt;/h3&gt;
+&lt;p&gt;Now back to our component, we can figure out how to the deal with exceptions when they occur:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$store&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;login&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// Normal use case&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// Show the error message to the user&lt;/span&gt;
+    &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;An error has occured, please try again.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// A developer would like to see this in the console&lt;/span&gt;
+    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// Catch the error for error tracking&lt;/span&gt;
+    &lt;span class="nx"&gt;captureException&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Let's take a look at the interfaces we have made use of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;To the user, they want to know when an error occurred, but not the stack trace and all that information. We make use of a simple &lt;code&gt;alert&lt;/code&gt; statement with a message.&lt;/li&gt;
+&lt;li&gt;To the developer debugging the code, they would love the see the error in their console with a simple &lt;code&gt;console.error&lt;/code&gt; statement.&lt;/li&gt;
+&lt;li&gt;To the developer debugging a bug in production, they would love to see a stack-trace of the bug, so we capture that too.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;fun-fact&lt;/h4&gt;
+&lt;p&gt;The &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject"&gt;reject&lt;/a&gt; callback for a Promise can receive anything as an argument (the argument is called the &lt;code&gt;reason&lt;/code&gt;). While you may want to use the &lt;code&gt;Error&lt;/code&gt; type so you get an entire stack-trace of the issue, you can also return an &lt;code&gt;object&lt;/code&gt; with the reason in it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(...)&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;res&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;res&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="c1"&gt;// etc&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+        &lt;span class="nx"&gt;type&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;ErrorType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ServerError&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;...&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;})&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+      &lt;span class="nx"&gt;type&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;ErrorType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;NetworkError&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;err&lt;/span&gt;
+    &lt;span class="p"&gt;})&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;finally {&lt;/h2&gt;
+&lt;p&gt;Errors are an extra dimension that we can make use of when coding and can help us achieve cleaner code, so long as we use it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;something&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// why bother?&lt;/span&gt;
+  &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="nx"&gt;err&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;finally&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// we are in the endgame&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This article is powered by the exception-free code philosophy, perhaps made popular by &lt;a href="https://google.github.io/styleguide/cppguide.html#Exceptions"&gt;Google's C++ styleguide&lt;/a&gt;, leaking into other languages like JavaScript. Also for fun, I recommend checking out &lt;a href="https://wiki.haskell.org/Exception"&gt;how Haskell implements exceptions&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;}&lt;/h2&gt;</content><category term="code"></category><category term="programming"></category><category term="unix"></category><category term="javascript"></category><category term="vue"></category></entry><entry><title>Default Title</title><link href="https://dontreinventbicycle.com/default-values.html" rel="alternate"></link><published>2019-04-27T17:51:00+08:00</published><updated>2019-04-27T22:31:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-04-27:/default-values.html</id><summary type="html">&lt;p&gt;The use of default values, also known as optional parameters is a controversial topic in programming. Languages like Go even go so far to outright disallow the possibility of using optional parameters or method overloading, emphasising simplicity instead. But what exactly are optional parameters used for?&lt;/p&gt;
+&lt;p&gt;The Wikipedia page for …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The use of default values, also known as optional parameters is a controversial topic in programming. Languages like Go even go so far to outright disallow the possibility of using optional parameters or method overloading, emphasising simplicity instead. But what exactly are optional parameters used for?&lt;/p&gt;
+&lt;p&gt;The Wikipedia page for &lt;a href="https://en.wikipedia.org/wiki/C_Sharp_4.0#Optional_parameters_and_named_arguments"&gt;C# version 4.0&lt;/a&gt; highlights many advantages of the introduction of optional parameters, on top of it being an alternative to operator overloading. Without optional parameters, the following simple class constructor;-&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Cuboid&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+    &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
+    &lt;span class="vi"&gt;@length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;volume&lt;/span&gt;
+    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="vi"&gt;@length&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;cube&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Cuboid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
+&lt;span class="n"&gt;cube&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 125&lt;/span&gt;
+
+&lt;span class="n"&gt;cuboid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Cuboid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;
+&lt;span class="n"&gt;cuboid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 200&lt;/span&gt;
+
+&lt;span class="n"&gt;long_long_man&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Cuboid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
+&lt;span class="n"&gt;long_long_man&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 1200&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;would be a lot more verbose, include unnecessary duplication, and have to be written for every possible variation!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Cuboid&lt;/span&gt;  
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+    &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+    &lt;span class="vi"&gt;@length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+    &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
+    &lt;span class="vi"&gt;@length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+    &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
+    &lt;span class="vi"&gt;@length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;
+  &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Additionally, could you imagine having to define every key-value mapping in configuration files each and every time you set something up?&lt;/p&gt;
+&lt;h2&gt;so, what's the problem?&lt;/h2&gt;
+&lt;p&gt;One of the main arguments against the use of optional parameters is that it leads to the production of inconsistent APIs. This is one such example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// ...rotation code&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotatedMatrix&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nx"&gt;itemOne&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;itemOne&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;       &lt;span class="c1"&gt;// What is the angle of the rotation?&lt;/span&gt;
+&lt;span class="nx"&gt;itemTwo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;itemTwo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;180&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;// Here, we know immediately&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The above function doesn't immediately make it clear what the resulting value of the function will be since it makes a value that should be required optional. Another such argument is that it allows for the introduction of flag-oriented programming. While that is a whole other can of hydras, the following is a classic example of flag-oriented programming:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;logNames&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;people&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;logAges&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;people&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;person&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sb"&gt;`There is a person named &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;person&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;logAges&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nx"&gt;output&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="sb"&gt;` aged &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;person&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt; years old`&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;output&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To add insult to injury, it would seem that the implementation of optional arguments isn't even consistent from one language to another! Consider how Python handles optional parameter default values:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;random&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;randint&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[]):&lt;/span&gt;
+    &lt;span class="n"&gt;random_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;randint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;seed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;random_value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;seed&lt;/span&gt;
+
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;44&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="c1"&gt;# [23, 44, 15, 16]  one value is appended to the array&lt;/span&gt;
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;             &lt;span class="c1"&gt;# [79]              as expected, an array with length 1&lt;/span&gt;
+&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;             &lt;span class="c1"&gt;# [79, 55]          wait what?? ah, python&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The following more or less exact same code in JavaScript behaves quite differently!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;seed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;randomValue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;floor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="nx"&gt;seed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;push&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;randomValue&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;seed&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;44&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;  &lt;span class="c1"&gt;// [23, 44, 15, 16]&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;              &lt;span class="c1"&gt;// [79]&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;              &lt;span class="c1"&gt;// [55]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Quick! Grab your pitchforks and put an end to the evil that is default values!&lt;/p&gt;
+&lt;h2&gt;no, your opinion is wrong&lt;/h2&gt;
+&lt;p&gt;Again, the issue here isn't that defaults are a horrible language feature, but that it is often misused. In the case of the &lt;code&gt;rotateMatrix&lt;/code&gt; example, the solution would be to simply to make the angle argument required:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// ...rotation code&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotatedMatrix&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In fact, if you do find yourself using the value &lt;code&gt;90&lt;/code&gt; as the &lt;code&gt;angle&lt;/code&gt; argument more often than not, consider using method-overloading or proxying the function:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix90&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you still aren't sure &lt;a href="/identifying-hacks.html"&gt;how to identify hacky use of optional parameters&lt;/a&gt;, here are a few good design principles:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;do not ever make core parameters optional&lt;/li&gt;
+&lt;li&gt;do not design functions with optional parameters in mind, but make them optional over time&lt;/li&gt;
+&lt;li&gt;the optional argument should not be used as a conditional for any control-flow logic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I hope this helps, and that you enjoy not having to define every single option in your editor configuration file every time.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# In a world where we don&amp;#39;t already have to do this, I alias l to ls&lt;/span&gt;
+&lt;span class="nv"&gt;LS_COLORS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;...&amp;quot;&lt;/span&gt; /usr/bin/ls .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This article was powered by the procrastination of setting up a Raspberry Pi.&lt;/p&gt;</content><category term="code"></category><category term="programming"></category><category term="improve"></category></entry><entry><title>the unix paradigm</title><link href="https://dontreinventbicycle.com/the-unix-paradigm.html" rel="alternate"></link><published>2019-04-19T15:00:00+08:00</published><updated>2019-05-01T17:56:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-04-19:/the-unix-paradigm.html</id><summary type="html">&lt;p&gt;If you're a learned programmer or computer nerd, you may have heard of the UNIX philosophy;- A set of guidelines to developing minimalist and modular software. The premise of this design pattern was fundamentally opposed to software designed in a monolithic fashion. We've all seen those crazy bash liners for …&lt;/p&gt;</summary><content type="html">&lt;p&gt;If you're a learned programmer or computer nerd, you may have heard of the UNIX philosophy;- A set of guidelines to developing minimalist and modular software. The premise of this design pattern was fundamentally opposed to software designed in a monolithic fashion. We've all seen those crazy bash liners for doing a myriad of tasks. There's even an &lt;a href="http://www.bashoneliners.com/"&gt;entire site&lt;/a&gt; dedicated to it. Here's one I have aliased and use frequently:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;fd -t f &lt;span class="m"&gt;2&lt;/span&gt;&amp;gt; /dev/null &lt;span class="p"&gt;|&lt;/span&gt; fzy &lt;span class="p"&gt;|&lt;/span&gt; xsel -b
+
+&lt;span class="c1"&gt;# fd -t f       Find all files in the current directory&lt;/span&gt;
+&lt;span class="c1"&gt;# 2&amp;gt; /dev/null  Pipe errors to /dev/null so we don&amp;#39;t see them&lt;/span&gt;
+&lt;span class="c1"&gt;# fzy           Fuzzy search program&lt;/span&gt;
+&lt;span class="c1"&gt;# xsel -b       Copy the output to clipboard&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I'm not going to go too deep into the UNIX philosophy, though if you are interested, AT&amp;amp;T has made available &lt;a href="https://www.youtube.com/watch?v=tc4ROCJYbm0"&gt;this great video&lt;/a&gt; on YouTube. The UNIX design philosophy was designed not only with composability in mind, but with the limitations that the machines had. Writing monolith software took more memory as the software had to take on more responsibilities. Software was designed to do one thing, and one thing only. We have today come to know this as "the functional approach" to programming;- Writing composable functions easy to test and piece together.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;users&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ageMoreThan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;sortByAge&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// If you think about it, pipes are all reduce statements!&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;prop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;With the &lt;a href="https://tc39.github.io/proposal-pipeline-operator/"&gt;TC39 pipeline operator&lt;/a&gt; for ECMAScript in place and libraries like RxJS introducing &lt;a href="https://github.com/ReactiveX/rxjs/blob/91088dae1df097be2370c73300ffa11b27fd0100/doc/pipeable-operators.md"&gt;pipeable operators&lt;/a&gt;, we are seeing large code ecosystems adopt ever more functional programming ideas. That said, while functional programming and composable functions are great and all, what did it mean to the original UNIX developers? What was it to this idea that was so fundamentally different? I had to see for myself;- By building a program that relies on pipes. Naturally, I settled upon writing the 2048 game, using UNIX principles.&lt;/p&gt;
+&lt;h2&gt;unix 2048&lt;/h2&gt;
+&lt;p&gt;Let's consider the components of the game 2048. It is build by a 4x4 grid as so:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;-----------------&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 0 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 0 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 0 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 0 |&lt;/span&gt;
+&lt;span class="err"&gt;-----------------&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Parsing this in an application would be hard, so let's break it down into a single 1x16 CSV string:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The game starts off with a single &lt;code&gt;2&lt;/code&gt; randomly on the board, as well as one added per move in the game. As such, we would a need a function that takes a board and replaces an empty space, represented by a &lt;code&gt;0&lt;/code&gt;, with a &lt;code&gt;2&lt;/code&gt;. I decided to go with Python for this program since it is stupidly simple programming language for getting anything done. The following details a hacked together way to add a number &lt;code&gt;2&lt;/code&gt; to an array of length 16:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add_random&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;game_board&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;random_added&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;False&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;random_added&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;add_at&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;randint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;game_board&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Replace the value if it is a 2&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;game_board&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;add_at&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;game_board&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;add_at&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+            &lt;span class="n"&gt;random_added&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;True&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;game_board&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Great! Let's call this program &lt;code&gt;add_random.py&lt;/code&gt;. It will read a board of &lt;code&gt;1x16&lt;/code&gt; from STDIN (or from a provided argument) and print out a board of &lt;code&gt;1x16&lt;/code&gt; to STDOUT with a 2 added to it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./add_random.py --help
+
+&lt;span class="c1"&gt;# usage: add_random.py [-h] [--board BOARD]&lt;/span&gt;
+&lt;span class="c1"&gt;# &lt;/span&gt;
+&lt;span class="c1"&gt;# Randomly populates an empty tile in a 2048 board string with a 2.&lt;/span&gt;
+&lt;span class="c1"&gt;# &lt;/span&gt;
+&lt;span class="c1"&gt;# optional arguments:&lt;/span&gt;
+&lt;span class="c1"&gt;#   -h, --help     show this help message and exit&lt;/span&gt;
+&lt;span class="c1"&gt;#   --board BOARD  The 2048 game board as a CSV string&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This works out to something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 &lt;span class="p"&gt;|&lt;/span&gt; ./src/add_random.py &lt;span class="c1"&gt;#=&amp;gt; 0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, we need a program to help us shift the values on the board according to the values swiped. In the game 2048, one can swipe from top to bottom, left to right, and vice-versa. For example, a swipe right on the following board:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;-----------------&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 0 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 2 | 2 | 0 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 4 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 2 | 4 | 4 |&lt;/span&gt;
+&lt;span class="err"&gt;-----------------&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;would result in the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;-----------------&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 0 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 4 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 0 | 4 |&lt;/span&gt;
+&lt;span class="err"&gt;| 0 | 0 | 2 | 8 |&lt;/span&gt;
+&lt;span class="err"&gt;-----------------&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Playing the game would do more justice than any explanation could. Values are added row by row, adding same values and shifting populated values over empty values. Simplified, this only requires that we deal with every board row by row from left to right, such as the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-----------------&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="c1"&gt;-----------------&lt;/span&gt;
+
+&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="n"&gt;th&lt;/span&gt; &lt;span class="k"&gt;row&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;right&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="k"&gt;left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="n"&gt;th&lt;/span&gt; &lt;span class="k"&gt;column&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;top&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="n"&gt;bttom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Assuming we could write a function that would shift these values in the order left to right, we could break any 4x4 matrix into a 1x4 array in any direction and have it dealt with row by row. Let's write a function in a separate program to do just that:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value_row&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;output_row&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value_row&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output_row&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;output_row&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="n"&gt;ii&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;ii&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;before&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;output_row&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ii&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;output_row&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;before&lt;/span&gt;
+                &lt;span class="n"&gt;output_row&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ii&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+                &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;before&lt;/span&gt;
+            &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;before&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;output_row&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+                &lt;span class="n"&gt;output_row&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ii&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+                &lt;span class="k"&gt;break&lt;/span&gt;
+            &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;before&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="k"&gt;break&lt;/span&gt;
+
+            &lt;span class="n"&gt;ii&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;output_row&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Putting that in a test case, we can assert that exact behaviour:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;game&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;play_game&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_slide_values&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="c1"&gt;# etc...&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="c1"&gt;# etc...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Great, now from a 1x16 CSV input, we can simply convert it into a 4x4 matrix and rotate it such that our rows can always result in a 1x4 input to be parsed by the &lt;code&gt;slide_values&lt;/code&gt; function. Packaging this as another program, we now have a &lt;code&gt;game.py&lt;/code&gt; program. We can now have the program composed as so, the first argument to &lt;code&gt;game.py&lt;/code&gt; being the direction:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./game.py --help
+
+&lt;span class="c1"&gt;# usage: game.py [-h] [--board BOARD] direction&lt;/span&gt;
+&lt;span class="c1"&gt;# &lt;/span&gt;
+&lt;span class="c1"&gt;# Creates an output 2048 board based on the provided direction and input board.&lt;/span&gt;
+&lt;span class="c1"&gt;# &lt;/span&gt;
+&lt;span class="c1"&gt;# positional arguments:&lt;/span&gt;
+&lt;span class="c1"&gt;#   direction      0: Up, 1: Down, 2: Left, 3: Right&lt;/span&gt;
+&lt;span class="c1"&gt;# &lt;/span&gt;
+&lt;span class="c1"&gt;# optional arguments:&lt;/span&gt;
+&lt;span class="c1"&gt;#   -h, --help     show this help message and exit&lt;/span&gt;
+&lt;span class="c1"&gt;#   --board BOARD  The 2048 game board as a CSV string&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Using the program works out to the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0 &lt;span class="p"&gt;|&lt;/span&gt; ./src/game.py &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;putting it all together&lt;/h2&gt;
+&lt;p&gt;The game now being composed, we can try playing it! The following details an example game-play of &lt;code&gt;unix-2048&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/add_random.py
+&lt;span class="c1"&gt;#=&amp;gt; 0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0&lt;/span&gt;
+
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/game.py &lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/add_random.py
+&lt;span class="c1"&gt;#=&amp;gt; 0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2&lt;/span&gt;
+
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,2&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/game.py &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/add_random.py
+&lt;span class="c1"&gt;#=&amp;gt; 0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,2&lt;/span&gt;
+
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,2&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/game.py &lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/add_random.py
+&lt;span class="c1"&gt;#=&amp;gt; 0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,4&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The UX of that was pretty bad, so I coded up a &lt;code&gt;view.py&lt;/code&gt; that prints a 1x16 input string as a 4x4 table. Piecing that as a script, I managed to come up with a full-on game!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="k"&gt;function&lt;/span&gt; update_view &lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    clear
+    ./src/view.py --board &lt;span class="nv"&gt;$board&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$direction&lt;/span&gt; -eq &lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Invalid direction:&amp;quot;&lt;/span&gt; 
+    &amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;w: up, a: left, s: down, r: right&amp;quot;&lt;/span&gt; 
+  &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; -z &lt;span class="nv"&gt;$board&lt;/span&gt; &lt;span class="o"&gt;]]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="nv"&gt;board&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;./src/add_random.py --board &lt;span class="s2"&gt;&amp;quot;0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+    update_view
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="nv"&gt;board&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;./src/game.py &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$direction&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; --board &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$board&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/add_random.py&lt;span class="k"&gt;)&lt;/span&gt;
+    update_view
+  &lt;span class="k"&gt;fi&lt;/span&gt;
+
+  &lt;span class="c1"&gt;# Get input&lt;/span&gt;
+  &lt;span class="nb"&gt;read&lt;/span&gt; -s -n1 key
+
+  &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$key&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; in
+    &lt;span class="s2"&gt;&amp;quot;w&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;direction&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;;&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;direction&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;;&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;s&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;direction&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;;&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;d&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;direction&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="p"&gt;;;&lt;/span&gt;
+    *&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;direction&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;;&lt;/span&gt;
+  &lt;span class="k"&gt;esac&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Check out the end result &lt;a href="https://github.com/kiyui/unix-2048"&gt;on GitHub&lt;/a&gt;. Cheers, and enjoy your musing.&lt;/p&gt;</content><category term="code"></category><category term="programming"></category><category term="unix"></category><category term="musing"></category></entry><entry><title>identifying a hack</title><link href="https://dontreinventbicycle.com/identifying-hacks.html" rel="alternate"></link><published>2019-04-02T22:26:00+08:00</published><updated>2019-04-03T22:24:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-04-02:/identifying-hacks.html</id><summary type="html">&lt;p&gt;I was one rainy evening on the way to town when I noticed that my Grab driver was sitting in a very strange position. I asked the man had they any spine condition or something of sort, and they replied no. Helpfully they added that they were leaning to the …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I was one rainy evening on the way to town when I noticed that my Grab driver was sitting in a very strange position. I asked the man had they any spine condition or something of sort, and they replied no. Helpfully they added that they were leaning to the side such that they could keep their elbow rested upon a pen pressing a button to keep the window up because the button was broken. That sure is a hack if I've ever seen one!&lt;/p&gt;
+&lt;p&gt;Hacks are all around us, and they are probably here to stay because we simply have better to do than having the leaking shower hose fixed when closing the main pipe that feeds the heater proves apt. Most hacks are inconsequential, especially in &lt;em&gt;the real life&lt;/em&gt;. However, have we considered the code we write? Code is becoming an ever more vital part of everything. We wouldn't ride a boat wherein its leaks had been patched with duct tape, apart for as a &lt;strong&gt;temporary hack&lt;/strong&gt; should the situation warrant it, would we? Why do we allow the same for code?&lt;/p&gt;
+&lt;p&gt;There are a few classes of which hacks fall into. There are the obvious hacks that we may have in place as workarounds of bugs that we cannot solve, or things that are too low on the priority list to have fixed. Here's an epic one I've had to deal with recently, GitHub issue &lt;a href="https://github.com/ReactiveX/rxjs/issues/4415"&gt;linked&lt;/a&gt;. Consider that the following code causes an error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;observableFrom&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rxjs&amp;#39;&lt;/span&gt;
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;isInteropObservable&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rxjs/internal/util/isInteropObservable&amp;#39;&lt;/span&gt;
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;xstream&amp;#39;&lt;/span&gt;
+
+&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;num$&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Is num$ an observable?&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;isInteropObservable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;num$&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;// false&lt;/span&gt;
+
+&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;adapt$&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;observableFrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;num$&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// error here&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;..and that the following code does not, simply by switching the order of import! Check out the issue if you're interested in what causes it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;xstream&amp;#39;&lt;/span&gt;
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;observableFrom&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rxjs&amp;#39;&lt;/span&gt;
+&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;isInteropObservable&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rxjs/internal/util/isInteropObservable&amp;#39;&lt;/span&gt;
+
+&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;num$&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Is num$ an observable?&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;isInteropObservable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;num$&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;// true&lt;/span&gt;
+
+&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;adapt$&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;observableFrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;num$&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// no error here&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is a hack, but it's a good hack. Or at least, it's one we haven't much control over. However, it isn't so obvious so we just need a little fixup:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;xstream&amp;#39;&lt;/span&gt; &lt;span class="c1"&gt;// HACK: KEEP THIS AS THE FIRST LINE DO NOT REMOVE&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This probably isn't the kind of hack that you have in mind. There is a class of hack that puts to crawl the skin of some programmers, see them the code. So why are there good or bad hacks? Consider the following rather trivial javascript code:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;export&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;addValues&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lhs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;rhs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;parseInt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lhs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;parseInt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;rhs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nx"&gt;addValues&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nx"&gt;addValues&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;95&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;19&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Have you noticed the hack? Instead of making sure to always pass values of the correct type to the function, the function converts the values into integers so that it can continue with the &lt;code&gt;add&lt;/code&gt; operation. Hacks like this are not only make code hard to reason about, but become completely invisible outside the scope of where the function is defined. Code like this also makes debugging issues harder.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;doSomething&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;cost&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;getCostFromNetwork&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;costWithTax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;addValues&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cost&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;cost&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mf"&gt;1.06&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="nx"&gt;addTaxxedCostToBill&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;costWithTax&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// Works fine&lt;/span&gt;
+  &lt;span class="nx"&gt;addCostToBill&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;cost&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// Throws an error because cost is a string&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If one were to encounter the above code, they'd naturally think that the issue is in the function &lt;code&gt;addCostToBill&lt;/code&gt; since that's where the error is and since &lt;code&gt;addTaxxedCostToBill&lt;/code&gt; is clearly working just fine. Hacks can waste a great amount of time, and you wouldn't want to be on the receiving end of debugging an issue caused by a hack. Considering this, why do people hack in the first place?&lt;/p&gt;
+&lt;h3&gt;why do people hack in the first place?&lt;/h3&gt;
+&lt;p&gt;Afamiliarity with the codebase? Laziness? It is easy to dismiss someone for being symptomatic of these, or for just being good 'ol Randy the intern.&lt;/p&gt;
+&lt;p&gt;Sometimes hacking is necessary. I call to your attention the &lt;code&gt;subscribeAction&lt;/code&gt; method in &lt;a href="https://vuex.vuejs.org"&gt;vuex&lt;/a&gt; for listening to Vuex store actions, to complement the &lt;code&gt;subscribe&lt;/code&gt; action for listening to &lt;code&gt;mutations&lt;/code&gt;. The original API that released in version 2.5.0 looked something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;store&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;subscribeAction&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nx"&gt;action&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;state&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// noop&lt;/span&gt;
+&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In version 3.1.0 however, after &lt;a href="https://github.com/vuejs/vuex/pull/1115"&gt;the following PR&lt;/a&gt;, an improvement was made making the following also possible under the same method name:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;store&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;subscribeAction&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+  &lt;span class="nx"&gt;before&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;action&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;state&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// noop&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt;
+  &lt;span class="nx"&gt;after&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;action&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;state&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// noop&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Predicting what people want of a library is hard, especially when you've got yourselves so many users! Renaming &lt;code&gt;subscribe&lt;/code&gt; to &lt;code&gt;subscribeMutations&lt;/code&gt; would be a breaking change, as would changing the API of &lt;code&gt;subscribeAction&lt;/code&gt; to only support the &lt;code&gt;{ before, after }&lt;/code&gt; syntax.&lt;/p&gt;
+&lt;h3&gt;some people do not know what a hack is&lt;/h3&gt;
+&lt;p&gt;But what about Randy? Randy does not know what a &lt;em&gt;bad hack&lt;/em&gt; is. To Randy, code is code as long as it works. It's also tough to argue with the guy. After all, their code works, the tests all seem to pass, and their hack isn't related to some data structure that we would have to maintain 5 years down the line. What is there to complain about? Can you tell Randy why code that works isn't good enough?&lt;/p&gt;
+&lt;p&gt;You probably can't, and there's a reason for that. The reality is that there are no bad hacks. Hacks exist only because we have standards about how things should be. If the first boat had been invented with holes through it patched with duct tape, that would be the norm! The same is true with code. Hacks tend to be contextual. Consider the following code that is used to parse data received from a GraphQL backend:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;sanitiseUserObject&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;sanitisedUser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="k"&gt;typeof&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;===&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;string&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;sanitisedUser&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;sanitisedUser&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;generateNameFromValue&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// Edge case, only 3% of users will face this&lt;/span&gt;
+    &lt;span class="nx"&gt;sanitisedUser&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Emma&amp;#39;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+
+  &lt;span class="c1"&gt;// a million other crazy sanitisation operations here&lt;/span&gt;
+
+  &lt;span class="c1"&gt;// by this point, we&amp;#39;re tired of all the crazy things we&lt;/span&gt;
+  &lt;span class="c1"&gt;// need to go just to sanitise the data and just hack&lt;/span&gt;
+  &lt;span class="nx"&gt;sanitisedUser&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;maiden_name_in_french&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;maiden_name_in_french&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;croissant lah&amp;#39;&lt;/span&gt;
+
+  &lt;span class="c1"&gt;// screw it, let&amp;#39;s use default values for the rest&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="nx"&gt;defaultUser&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="nx"&gt;sanitisedUser&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Because of the context of the code, not handling every aspect of it is not considered a hack.&lt;/p&gt;
+&lt;h3&gt;there are no bad hacks&lt;/h3&gt;
+&lt;p&gt;Bad hacks come about only because someone is writing unmaintainable, spaghetti code. To stop bad hacks from happening, you're going to have to lay standards about how code should be written in your codebase. Nobody really wants to write bad code; They just sometimes do not know better. If you write bad hacks, it isn't necessarily because you're a bad programmer. Learning good code is something that takes time.&lt;/p&gt;
+&lt;h3&gt;the only way to stop bad hacks is via good standards&lt;/h3&gt;
+&lt;p&gt;Make sure problems or difficulties faced in the codebase are brought up and conventions are formed about dealing with certain issues so that people can learn to empathise with one another. If the code was difficult enough to warrant a bad hack, perhaps that's what was needed after all. However, if Randy still hacks after months &amp;amp; management doesn't seem to care, consider that you may be the wrong or that Randy is simply an asshole and find someplace better. I hope that helps!&lt;/p&gt;
+&lt;p&gt;This article was powered by the listenfuel of Kings of Leon &amp;amp; Nirvana.&lt;/p&gt;</content><category term="code"></category><category term="programming"></category><category term="improve"></category></entry><entry><title>saluton</title><link href="https://dontreinventbicycle.com/saluton.html" rel="alternate"></link><published>2019-04-02T21:00:00+08:00</published><updated>2019-04-13T15:13:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-04-02:/saluton.html</id><summary type="html">&lt;p&gt;This blog has been a long time coming, having been pestered many times by friends &amp;amp; colleagues.&lt;/p&gt;
+&lt;p&gt;I was intrigued by a Kazakh colleague of mine learning that in Russian, the phrase "do not reinvent the wheel" basically is literally "do not reinvent the bicycle". I naturally found that cruelly ironic …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This blog has been a long time coming, having been pestered many times by friends &amp;amp; colleagues.&lt;/p&gt;
+&lt;p&gt;I was intrigued by a Kazakh colleague of mine learning that in Russian, the phrase "do not reinvent the wheel" basically is literally "do not reinvent the bicycle". I naturally found that cruelly ironic and took it upon myself to buy such ridiculous a domain.&lt;/p&gt;
+&lt;p&gt;This is a problem many programmers have. In the same manner, starting this site the first thing I did was start writing a build system to compile template files to generate a static site before I went, "wait a minute, surely &lt;strong&gt;this&lt;/strong&gt; is the whole point of starting this blog!".&lt;/p&gt;
+&lt;p&gt;Before all that, I'm Timur Kiyui. I've been a long-time computer nerd having received my first computer when I was 6. I wrote my dad a letter thanking him for buying me a free computer. By 10 or 11, I was introduced to GNU/Linux by a father of a friend.&lt;/p&gt;
+&lt;p&gt;Compulsory related xkcd:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="xkcd 456" src="https://imgs.xkcd.com/comics/cautionary.png"&gt;&lt;/p&gt;
+&lt;p&gt;I started hacking batch scripts before I was able to properly read, also around the age of 10. I attribute much of what I have learned in life to &lt;em&gt;the machine&lt;/em&gt; and the ability to just hack in my past-time. I cannot thank enough the introduction of computers to my life, as perhaps many can relate to!&lt;/p&gt;
+&lt;p&gt;Now at age 23, having been professionally employed for about 3 years in a collaborative environment, I find often myself baffled by coding styles or paradigms that others employ in their code. While I know this isn't something taught in universities, it clearly is at the same time not something learnt by years of coding, being junior to many others I'm surrounded with (I am the youngest programmer of my colleagues)! Hence, I have decided that my first article should be on &lt;a href="/identifying-hacks.html"&gt;identifying hacks&lt;/a&gt;. Do enjoy.&lt;/p&gt;
+&lt;p&gt;Thanks for reading; This took me approximately 2 vinyls to write.&lt;/p&gt;</content><category term="off-topic"></category><category term="meta"></category></entry></feed>
