@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = 'Dafne Kiyui'
 DEADNAME = 'Timur Kiyui'
 SITENAME = 'dont reinvent велосипед'
-SITEURL = ''
+SITEURL = 'https://dontreinventbicycle.com'
 SITE_DESCRIPTION = 'dont reinvent bicycle - programming practices and musings'
 SITE_KEYWORDS = ['programming', 'practice', 'standards', 'hacking', 'musing']
 
@@ -30,7 +30,7 @@ SITEMAP = {
 
 # Compilation settings
 PATH = 'content'
-RELATIVE_URLS = True
+RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
 
 # Static content
