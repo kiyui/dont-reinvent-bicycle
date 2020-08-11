@@ -1,7 +1,7 @@
 Title: saluton
 Author: Timur Kiyui
 Date: 2019-04-02 21:00
-Modified: 2019-04-13 15:13
+Modified: 2020-08-11
 Tags: meta
 Slug: saluton
 Description: rencana pertama
