@@ -65,7 +65,9 @@ FEED_ALL_RSS = 'feeds/all.rss.xml'
 DEFAULT_PAGINATION = 10
 
 # Blogroll
-LINKS = (('GNOME Extensions',
+LINKS = (('Resume',
+          'https://registry.jsonresume.org/kiyui'),
+         ('GNOME Extensions',
           'https://extensions.gnome.org/accounts/profile/TimurKiyivinski'),)
 
 # Social widget
