@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
         <title>
-dont reinvent велосипед - saluton      </title>
+dont reinvent велосипед - batch renaming numbered files      </title>
       <meta charset="utf-8" />
-      <meta name="description" content="rencana pertama"/>
-      <meta name="keywords" content="programming,practice,standards,hacking,musing,meta">
+      <meta name="description" content="just a quick tip for performing batch renames with perl-rename"/>
+      <meta name="keywords" content="programming,practice,standards,hacking,musing,linux,perl">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
       <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css" >
@@ -13,13 +13,14 @@ dont reinvent велосипед - saluton      </title>
         <link href="https://dontreinventbicycle.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
         <link href="https://dontreinventbicycle.com/feeds/atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
         <link href="https://dontreinventbicycle.com/feeds/all.xml" type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
-        <link href="https://dontreinventbicycle.com/feeds/personal.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+        <link href="https://dontreinventbicycle.com/feeds/tips.atom.xml" type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
 
 
 
-    <meta name="description" content="rencana pertama" />
+    <meta name="description" content="just a quick tip for performing batch renames with perl-rename" />
 
-    <meta name="tags" content="meta" />
+    <meta name="tags" content="linux" />
+    <meta name="tags" content="perl" />
 
   </head>
 
@@ -39,12 +40,12 @@ dont reinvent велосипед - saluton      </title>
             code
           </a>
         </li>
-        <li class="active">
+        <li>
           <a href="https://dontreinventbicycle.com/category/personal.html">
             personal
           </a>
         </li>
-        <li>
+        <li class="active">
           <a href="https://dontreinventbicycle.com/category/tips.html">
             tips
           </a>
@@ -56,44 +57,54 @@ dont reinvent велосипед - saluton      </title>
 <section id="content" class="body">
   <header>
     <h2 class="entry-title">
-      <a href="https://dontreinventbicycle.com/saluton.html" rel="bookmark"
-         title="Permalink to saluton">saluton</a></h2>
+      <a href="https://dontreinventbicycle.com/batch-renames.html" rel="bookmark"
+         title="Permalink to batch renaming numbered files">batch renaming numbered files</a></h2>
  
   </header>
   <footer class="post-info">
     <div>
       published:
-      <time class="published" datetime="2019-04-02T21:00:00+08:00">
-        Tue 02 April 2019
-      </time>
-    </div>
-    <div>
-      modified:
-      <time class="modified" datetime="2020-08-11T00:00:00+08:00">
-        Tue 11 August 2020
+      <time class="published" datetime="2020-08-16T00:00:00+08:00">
+        Sun 16 August 2020
       </time>
     </div>
     <address class="vcard author">
-      by           <a class="url fn" href="https://dontreinventbicycle.com/author/timur-kiyui.html">Timur Kiyui</a>
+      by           <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">Dafne Kiyui</a>
     </address>
     <div class="category">
-        category: <a href="https://dontreinventbicycle.com/category/personal.html">personal</a>
+        category: <a href="https://dontreinventbicycle.com/category/tips.html">tips</a>
     </div>
     <div class="tags">
         tags:
-            <a href="https://dontreinventbicycle.com/tag/meta.html">meta</a>
+            <a href="https://dontreinventbicycle.com/tag/linux.html">linux</a>
+            <a href="https://dontreinventbicycle.com/tag/perl.html">perl</a>
     </div>
   </footer><!-- /.post-info -->
   <div class="entry-content">
-    <p>This blog has been a long time coming, having been pestered many times by friends &amp; colleagues.</p>
-<p>I was intrigued by a Kazakh colleague of mine learning that in Russian, the phrase "do not reinvent the wheel" basically is literally "do not reinvent the bicycle". I naturally found that cruelly ironic and took it upon myself to buy such ridiculous a domain.</p>
-<p>This is a problem many programmers have. In the same manner, starting this site the first thing I did was start writing a build system to compile template files to generate a static site before I went, "wait a minute, surely <strong>this</strong> is the whole point of starting this blog!".</p>
-<p>Before all that, I'm Timur Kiyui. I've been a long-time computer nerd having received my first computer when I was 6. I wrote my dad a letter thanking him for buying me a free computer. By 10 or 11, I was introduced to GNU/Linux by a father of a friend.</p>
-<p>Compulsory related xkcd:</p>
-<p><img alt="xkcd 456" src="https://imgs.xkcd.com/comics/cautionary.png"></p>
-<p>I started hacking batch scripts before I was able to properly read, also around the age of 10. I attribute much of what I have learned in life to <em>the machine</em> and the ability to just hack in my past-time. I cannot thank enough the introduction of computers to my life, as perhaps many can relate to!</p>
-<p>Now at age 23, having been professionally employed for about 3 years in a collaborative environment, I find often myself baffled by coding styles or paradigms that others employ in their code. While I know this isn't something taught in universities, it clearly is at the same time not something learnt by years of coding, being junior to many others I'm surrounded with (I am the youngest programmer of my colleagues)! Hence, I have decided that my first article should be on <a href="/identifying-hacks.html">identifying hacks</a>. Do enjoy.</p>
-<p>Thanks for reading; This took me approximately 2 vinyls to write.</p>
+    <p>The year is 2009 and your minimalist CD ripper, let's say <code>goobox</code> hasn't multi-CD support. The ripped content of both CD 1 &amp; 2 are numbered incrementally from <code>01</code> onwards, which isn't a problem if you organised your library by CD 1/2/etc, but you're rather flatten the directory because you used <code>mongodb</code> once.</p>
+<p>The following is a shorthand for incrementing the numbers on disc 2 by <code>12</code>:</p>
+<div class="highlight"><pre><span></span><code>perl-rename -n <span class="s1">&#39;s/(\d+)/($1 + 12)/e&#39;</span> *.ogg
+</code></pre></div>
+
+
+<p>The <code>-n</code> here makes it a dry run, which outputs the following for you to confirm:</p>
+<div class="highlight"><pre><span></span><code><span class="err">01. Slave to Your Mind.ogg -&gt; 13. Slave to Your Mind.ogg</span>
+<span class="err">02. Shortcut to Salvation.ogg -&gt; 14. Shortcut to Salvation.ogg</span>
+<span class="err">03. The Man in the Iron Cage.ogg -&gt; 15. The Man in the Iron Cage.ogg</span>
+<span class="err">04. The Road Called Home.ogg -&gt; 16. The Road Called Home.ogg</span>
+<span class="err">05. Sloth.ogg -&gt; 17. Sloth.ogg</span>
+<span class="err">06. Freedom Song.ogg -&gt; 18. Freedom Song.ogg</span>
+<span class="err">07. I m Running.ogg -&gt; 19. I m Running.ogg</span>
+<span class="err">08. The Mask.ogg -&gt; 20. The Mask.ogg</span>
+<span class="err">09. Confrontation.ogg -&gt; 21. Confrontation.ogg</span>
+<span class="err">10. The Battle.ogg -&gt; 22. The Battle.ogg</span>
+<span class="err">11. Broken Sky Long Day (Reprise).ogg -&gt; 23. Broken Sky Long Day (Reprise).ogg</span>
+</code></pre></div>
+
+
+<p>Prima! Just drop the <code>-n</code> option to have it actually perform the operation on your files.</p>
+<h2>note</h2>
+<p><code>perl-rename</code> is not to be confused with <code>rename</code> from <code>util-linux</code>, so make sure you have the right one installed.</p>
   </div><!-- /.entry-content -->
 </section>
     </div>
