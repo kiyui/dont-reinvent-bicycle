@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед - tips</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/tips.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-08-16T00:00:00+08:00</updated><entry><title>batch renaming numbered files</title><link href="https://dontreinventbicycle.com/batch-renames.html" rel="alternate"></link><published>2020-08-16T00:00:00+08:00</published><updated>2020-08-16T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-08-16:/batch-renames.html</id><summary type="html">&lt;p&gt;The year is 2009 and your minimalist CD ripper, let's say &lt;code&gt;goobox&lt;/code&gt; hasn't multi-CD support. The ripped content of both CD 1 &amp;amp; 2 are numbered incrementally from &lt;code&gt;01&lt;/code&gt; onwards, which isn't a problem if you organised your library by CD 1/2/etc, but you're rather flatten the directory because …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The year is 2009 and your minimalist CD ripper, let's say &lt;code&gt;goobox&lt;/code&gt; hasn't multi-CD support. The ripped content of both CD 1 &amp;amp; 2 are numbered incrementally from &lt;code&gt;01&lt;/code&gt; onwards, which isn't a problem if you organised your library by CD 1/2/etc, but you're rather flatten the directory because you used &lt;code&gt;mongodb&lt;/code&gt; once.&lt;/p&gt;
+&lt;p&gt;The following is a shorthand for incrementing the numbers on disc 2 by &lt;code&gt;12&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;perl-rename -n &lt;span class="s1"&gt;&amp;#39;s/(\d+)/($1 + 12)/e&amp;#39;&lt;/span&gt; *.ogg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;code&gt;-n&lt;/code&gt; here makes it a dry run, which outputs the following for you to confirm:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;01. Slave to Your Mind.ogg -&amp;gt; 13. Slave to Your Mind.ogg&lt;/span&gt;
+&lt;span class="err"&gt;02. Shortcut to Salvation.ogg -&amp;gt; 14. Shortcut to Salvation.ogg&lt;/span&gt;
+&lt;span class="err"&gt;03. The Man in the Iron Cage.ogg -&amp;gt; 15. The Man in the Iron Cage.ogg&lt;/span&gt;
+&lt;span class="err"&gt;04. The Road Called Home.ogg -&amp;gt; 16. The Road Called Home.ogg&lt;/span&gt;
+&lt;span class="err"&gt;05. Sloth.ogg -&amp;gt; 17. Sloth.ogg&lt;/span&gt;
+&lt;span class="err"&gt;06. Freedom Song.ogg -&amp;gt; 18. Freedom Song.ogg&lt;/span&gt;
+&lt;span class="err"&gt;07. I m Running.ogg -&amp;gt; 19. I m Running.ogg&lt;/span&gt;
+&lt;span class="err"&gt;08. The Mask.ogg -&amp;gt; 20. The Mask.ogg&lt;/span&gt;
+&lt;span class="err"&gt;09. Confrontation.ogg -&amp;gt; 21. Confrontation.ogg&lt;/span&gt;
+&lt;span class="err"&gt;10. The Battle.ogg -&amp;gt; 22. The Battle.ogg&lt;/span&gt;
+&lt;span class="err"&gt;11. Broken Sky Long Day (Reprise).ogg -&amp;gt; 23. Broken Sky Long Day (Reprise).ogg&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Prima! Just drop the &lt;code&gt;-n&lt;/code&gt; option to have it actually perform the operation on your files.&lt;/p&gt;
+&lt;h2&gt;note&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;perl-rename&lt;/code&gt; is not to be confused with &lt;code&gt;rename&lt;/code&gt; from &lt;code&gt;util-linux&lt;/code&gt;, so make sure you have the right one installed.&lt;/p&gt;</content><category term="tips"></category><category term="linux"></category><category term="perl"></category></entry></feed>
