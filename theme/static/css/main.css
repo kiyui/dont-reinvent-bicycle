@@ -68,6 +68,13 @@ body {
   display: inline;
 }
 
+.entry-content dl {
+  background: #e8dced;
+  border-left: 5px solid #b62fef;
+  margin: 0px;
+  padding: 2px 10px;
+}
+
 #contentinfo .title {
   display: inline;
 }
