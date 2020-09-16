@@ -1,5 +1,5 @@
 Title: "debounce" in gjs
-Date: 2020-09-13
+Date: 2020-09-16
 Tags: gnome-shell, gjs, gtk
 Slug: gjs-debounce
 Description: creating a simple "debounce" function in gjs
