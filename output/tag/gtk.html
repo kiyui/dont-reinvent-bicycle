@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
       <title>
-dont reinvent велосипед - javascript tag      </title>
+dont reinvent велосипед - gtk tag      </title>
       <meta charset="utf-8" />
       <meta name="description" content="dont reinvent bicycle - programming practices and musings"/>
       <meta name="keywords" content="programming,practice,standards,hacking,musing">
@@ -46,9 +46,44 @@ dont reinvent велосипед - javascript tag      </title>
 
     <div class="body">
 <section id="content">
-<h2>javascript ∈ article.tags</h2>
+<h2>gtk ∈ article.tags</h2>
 
   <ol id="post-list">
+    <li>
+      <article class="hentry">
+        <header>
+          <h2 class="entry-title">
+            <a
+              href="https://dontreinventbicycle.com/gjs-debounce.html"
+              rel="bookmark"
+              title="Permalink to "debounce" in gjs"
+              >"debounce" in gjs</a
+            >
+          </h2>
+        </header>
+        <footer class="post-info">
+          <time class="published" datetime="2020-09-16T00:00:00+08:00">
+            Wed 16 September 2020
+          </time>
+          <address class="vcard author">
+            by             <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">
+                Dafne Kiyui
+            </a>
+          </address>
+        </footer>
+        <!-- /.post-info -->
+        <div class="entry-content"><p>The following code is licensed under the <a href="https://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License v3.0 or later</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/* exported debounce */</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">GLib</span><span class="p">}</span> <span class="o">=</span> <span class="nx">imports</span><span class="p">.</span><span class="nx">gi</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Copyright 2020 Dafne Kiyui</span>
+<span class="cm"> *</span>
+<span class="cm"> * This program is free software: you can redistribute it and/or modify</span>
+<span class="cm"> * it under the terms of the GNU Lesser General Public License as …</span></code></pre></div></div>
+        <!-- /.entry-content -->
+      </article>
+    </li>
     <li>
       <article class="hentry">
         <header>
@@ -73,63 +108,6 @@ dont reinvent велосипед - javascript tag      </title>
         </footer>
         <!-- /.post-info -->
         <div class="entry-content"><p>The <a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.timeout_add">GLib.timeout_add</a> function is the GJS equivalent to both <code>setTimeout</code> and <code>setInterval</code>. It calls a given function repeatedly (such as <code>func</code>) at given intervals until it returns a falsy value. It returns a <a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source">GLib Source</a> id, which just like <code>clearTimeout</code> or <code>clearInterval</code> can be removed with the static <a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source#function-remove">GLib …</a></p></div>
-        <!-- /.entry-content -->
-      </article>
-    </li>
-    <li>
-      <article class="hentry">
-        <header>
-          <h2 class="entry-title">
-            <a
-              href="https://dontreinventbicycle.com/canvas-thumbnail.html"
-              rel="bookmark"
-              title="Permalink to generating video thumbnails in js"
-              >generating video thumbnails in js</a
-            >
-          </h2>
-        </header>
-        <footer class="post-info">
-          <time class="published" datetime="2020-08-03T03:50:00+08:00">
-            Mon 03 August 2020
-          </time>
-          <address class="vcard author">
-            by             <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">
-                Dafne Kiyui
-            </a>
-          </address>
-        </footer>
-        <!-- /.post-info -->
-        <div class="entry-content"><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement">HTMLCanvasElement</a>s are amazing for all kinds of things. Paired with the <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D">CanvasRenderingContext2D</a>'s <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage">drawImage</a> method, generating video thumbnails on browsers are incredibly easy. The interface for the method is as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="err">void ctx.drawImage(image, dx, dy);</span>
-<span class="err">void ctx.drawImage(image, dx, dy, dWidth, dHeight);</span>
-<span class="err">void ctx.drawImage(image …</span></code></pre></div></div>
-        <!-- /.entry-content -->
-      </article>
-    </li>
-    <li>
-      <article class="hentry">
-        <header>
-          <h2 class="entry-title">
-            <a
-              href="https://dontreinventbicycle.com/handling-errors.html"
-              rel="bookmark"
-              title="Permalink to the error paradigm"
-              >the error paradigm</a
-            >
-          </h2>
-        </header>
-        <footer class="post-info">
-          <time class="published" datetime="2019-05-01T11:39:00+08:00">
-            Wed 01 May 2019
-          </time>
-          <address class="vcard author">
-            by             <a class="url fn" href="https://dontreinventbicycle.com/author/timur-kiyui.html">
-                <del>Timur Kiyui</del> Dafne Kiyui
-            </a>
-          </address>
-        </footer>
-        <!-- /.post-info -->
-        <div class="entry-content"><p>The error programming paradigm comes from the recognition that errors are expected. Consider a function that is meant to parse JSON data. Naturally should the input string not be of valid JSON format, the function would error out. That is because handling invalid JSON data is out of the scope …</p></div>
         <!-- /.entry-content -->
       </article>
     </li>
