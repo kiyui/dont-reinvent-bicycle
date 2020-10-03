@@ -1175,4 +1175,200 @@ class Extension {
 }
 ```
 
+### bugs into a week of use
+
+~~Thus concludes the night light slider rewrite.~~
+
+Alas, even the best developers write bugs. Terrible developers such as myself however even more.
+
+```
+JS ERROR: Error: Argument 'instance' (type interface) may not be null
+_init/GObject.Object.prototype.block_signal_handler@resource:///org/gnome/gjs/modules/core/overrides/GObject.js:574:24
+_changeSlider@/home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:129:22
+__sync@/home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:150:22
+debouncedFunc@/home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/convenience.js:9:18
+Object .Gjs_ui_popupMenu_PopupBaseMenuItem (0x55ef4c229600), has been already deallocated — impossible to set any property on it. This might be caused by the object having been destroyed from C code using something such as destroy(), dispose(), or remove() vfuncs.
+== Stack trace for context 0x55ef489dd8d0 ==
+#0   55ef530c7160 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:141 (1b4d10eab3d0 @ 150)
+#1   7ffd6c54c4a0 b   self-hosted:1007 (223d2c49e790 @ 492)
+#2   55ef530c70c8 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/convenience.js:9 (1b4d10eabf10 @ 39)
+== Stack trace for context 0x55ef489dd8d0 ==
+#0   55ef530c72d0 i   resource:///org/gnome/gjs/modules/core/overrides/GObject.js:574 (1dadea7b6cb8 @ 25)
+#1   55ef530c7238 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:129 (1b4d10eab2e0 @ 31)
+#2   55ef530c7160 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:150 (1b4d10eab3d0 @ 319)
+Object .Gjs_ui_slider_Slider (0x55ef4c212210), has been already deallocated — impossible to access it. This might be caused by the object having been destroyed from C code using something such as destroy(), dispose(), or remove() vfuncs.
+#3   7ffd6c54c4a0 b   self-hosted:1007 (223d2c49e790 @ 492)
+#4   55ef530c70c8 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/convenience.js:9 (1b4d10eabf10 @ 39)
+```
+
+This was apparently caused because I had not properly disconnected the `g-properties-changed` signal from the `ColorProxy` when destroying the `Indicator`. I also had to make sure I was removing all references to the indicator when the extension was disabled, such as at `panel.statusArea.aggregateMenu`.
+
+Also revising [the guide](https://wiki.gnome.org/Projects/GnomeShell/Extensions/Writing) (on the 30th of September, I cannot for the life of me figure out how to resubmit a page to be re-archived 🤦), I come across the following comment that was not present [before](https://web.archive.org/web/20200707175025/https://wiki.gnome.org/Projects/GnomeShell/Extensions/Writing):
+
+> Because PanelMenu.Button is a ClutterActor, overriding the destroy()
+> method directly is bad idea. Instead PanelMenu.Button connects to
+> the signal, so we can override that callback and chain-up.
+
+With `PanelMenu.SystemIndicator` also being a `ClutterActor`, I also followed suit to replace `destroy` with a `_onDestroy` method instead:
+
+```diff
+@@ -111,6 +111,11 @@ class Indicator extends PanelMenu.SystemIndicator {
+         this._indicatorScrollId = this._indicator.connect('scroll-event', (actor, event) => {
+             return this._slider.emit('scroll-event', event);
+         });
++
++        // Because SystemIndicator is a ClutterActor, overriding the destroy()
++        // method directly is bad idea. Instead PanelMenu.Button connects to
++        // the signal, so we can override that callback and chain-up.
++        this.connect('destroy', this._onDestroy.bind(this));
+     }
+
+     _sliderChanged() {
+@@ -161,11 +166,21 @@ class Indicator extends PanelMenu.SystemIndicator {
+         }
+     }
+
+-    destroy() {
++    _onDestroy() {
++        // Unassign DBus proxies
++        this._proxy.disconnect(this._proxyChangedId);
++        this._proxy = null;
++        this._brightnessProxy = null;
++
++        // Delete top-level items
++        this._item.destroy();
++        this._slider = null;
++        this._slider_icon = null;
++        this._item = null;
++
++        // Disconnect external signals
+         this._indicator.disconnect(this._indicatorShowId);
+         this._indicator.disconnect(this._indicatorScrollId);
+-        this._item.destroy();
+-        super.destroy();
+     }
+ });
+
+@@ -279,6 +294,7 @@ class Extension {
+     disable() {
+         this._nightLight.destroy();
+         this._nightLight = null;
++        panel.statusArea.aggregateMenu._nightLightSlider = null;
+         this._scheduler.disableTimer();
+     }
+ }
+```
+
+The next issue I found was that the slider would wiggle a little upon updates:
+
+![The slider moves ever so slightly upon letting go of it]({static}/images/rewriting-night-light/slider-wiggle.gif)
+
+With some logging enabled, I noticed that the `__sync` function was still being called by the `ColorProxy`:
+
+```
+_sliderChanged temperature: 2163.5719046208533
+_sliderChanged temperature (uint): 2163
+__sync temperature: 2181.3250236714307
+__sync temperature: 2171.299908991444
+...etc
+_sliderChanged temperature: 3283.7099192831756
+_sliderChanged temperature (uint): 3283
+__sync temperature: 3302.9502637814326
+__sync temperature: 3292.842247173721
+```
+
+This is expected because the debounced `_sync` function should still proxy updates called after the 500ms interval to `__sync`. What is observed however is that the final "Temperature" reported by the proxy will always fall within a delta (`2171 - 2163`, `3292 - 3283`) of the set value instead of actually reaching the intended value 🤔.
+
+Revisiting <code id="gsd-night-light">plugins/color/gsd-night-light.c</code> in the [gnome-settings-daemon repository](https://gitlab.gnome.org/GNOME/gnome-settings-daemon/), we see that this is intended behaviour where the proxy stops notifying of updates if they fall within the `GSD_TEMPERATURE_MAX_DELTA` delta of `10.f`.
+
+```c
+static void
+gsd_night_light_set_temperature_internal (GsdNightLight *self, gdouble temperature)
+{
+        if (ABS (self->cached_temperature - temperature) <= GSD_TEMPERATURE_MAX_DELTA)
+                return;
+        self->cached_temperature = temperature;
+        g_object_notify (G_OBJECT (self), "temperature");
+}
+```
+
+The following is a representation of how the "Temperature" value updates over time when the slider is moved where,
+
+- The first `x` is the initial D-Bus value
+- The second `x` is the first value the proxy reports
+- The third `x` is the final value the proxy reports
+
+![A line graph spanning from 3540 to 1818 with 3 cross marks at 3538, 3521, and 1820]({static}/images/rewriting-night-light/temperature-graph.svg)
+
+<!--
+    # Code for the above graph
+    import matplotlib.pyplot as plt
+    import numpy as np
+    initial_gsettings = 3540
+    initial_dbus = 3538.605778952489
+    intended_gsettings = 1818
+    temperatures = [3521.2472754909486, 3486.815109868534, 3436.0434127289154, 3370.301985261057, 3291.3987858106343, 3201.499948253913, 3102.872727242798, 2998.226010997963, 2890.1942591264665, 2781.172903541932, 2673.426025610568, 2569.007934538799, 2469.663703748485, 2376.8587117047746, 2291.5387581344876, 2214.4505313280097, 2145.770472052127, 2085.687260144818, 2033.8907925183844, 1989.913881260548, 1953.1444933604507, 1922.8694509867412, 1898.3057326648855, 1878.5053263629798, 1862.967715866815, 1850.966246204948, 1840.8430899988189, 1830.8366744248362, 1820.7987570188332]
+    gsettings_spread = [initial_gsettings, initial_dbus] + temperatures + [intended_gsettings]
+    temperature_spread = [np.nan, np.nan] + temperatures + [np.nan]
+    plt.plot(gsettings_spread, marker='x', markevery=[1])
+    plt.plot(temperature_spread, marker='x', markevery=[2, 30])
+    plt.show()
+-->
+
+The unmarked head and tail span of the line is the actual system GSettings value, showing that the value reported by D-Bus is never exactly the same as that value. One solution would be to duplicate the delta check with something like `:::javascript Math.abs(this._proxy.Temperature - this._settings.get_uint('night-light-temperature'))`, but this feels like a hack.
+
+In the <a href="#gsd-night-light">same file</a>, we also see that the night light temperature is actually smeared over a span of `GSD_NIGHT_LIGHT_SMOOTH_SMEAR`:
+
+```c
+static gboolean
+gsd_night_light_smooth_cb (gpointer user_data)
+{
+        GsdNightLight *self = GSD_NIGHT_LIGHT (user_data);
+        gdouble tmp;
+        gdouble frac;
+
+        /* find fraction */
+        frac = g_timer_elapsed (self->smooth_timer, NULL) / GSD_NIGHT_LIGHT_SMOOTH_SMEAR;
+        if (frac >= 1.f) {
+                gsd_night_light_set_temperature_internal (self,
+                                                          self->smooth_target_temperature);
+                self->smooth_id = 0;
+                return G_SOURCE_REMOVE;
+        }
+
+        /* set new temperature step using log curve */
+        tmp = self->smooth_target_temperature - self->cached_temperature;
+        tmp *= frac;
+        tmp += self->cached_temperature;
+        gsd_night_light_set_temperature_internal (self, tmp);
+
+        return G_SOURCE_CONTINUE;
+}
+```
+
+Since we can identify the smear spread of `GSD_NIGHT_LIGHT_SMOOTH_SMEAR`, all we have to do is ignore updates from `ColorProxy` over that duration, like so:
+
+```diff
+@@ -124,6 +124,13 @@ class Indicator extends PanelMenu.SystemIndicator {
+             ? 1 - this._slider.value
+             : this._slider.value;
+         const temperature = percent * (maximum - minimum) + minimum;
++
++        // Block updates from ColorProxy over the 5s smear duration
++        this._proxy.block_signal_handler(this._proxyChangedId);
++        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 5000,
++            () => this._proxy.unblock_signal_handler(this._proxyChangedId));
++
++        // Update GSettings
+         this._settings.set_uint('night-light-temperature', temperature);
+
+         if (brightnessSync && this._brightnessProxy.Brightness >= 0)
+```
+
+### Copy of Copy of Final final asdasda Copy (3).psd
+
 Thus concludes the night light slider rewrite. The PR for the entire rewrite is available [on GitHub](https://github.com/kiyui/gnome-shell-night-light-slider-extension/pull/68) to review and test, or available to download as a ZIP from [here]({static}/download/rewriting-night-light/night-light-slider.timur@linux.com.zip).
+
+It feels like it's about time to push the updates as is, especially considering that the new [GNOME 3.38 release](https://www.gnome.org/news/2020/09/gnome-3-38-released/) would hit distribution repositories soon.
+
+This article would have to be followed up separately to see the preferences panel be updated!
