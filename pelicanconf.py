@@ -34,7 +34,8 @@ RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
 MARKDOWN = {
     'extensions': [
-        'pymdownx.tilde'
+        'pymdownx.tilde',
+        'pymdownx.inlinehilite',
     ],
     'extension_configs': {
         'markdown.extensions.codehilite': {'css_class': 'highlight'},

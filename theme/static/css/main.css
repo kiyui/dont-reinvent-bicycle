@@ -21,6 +21,11 @@ body {
   margin-block: auto;
 }
 
+p .highlight {
+  background: none;
+  padding: inherit;
+}
+
 .links {
   display: inline;
   list-style: none;
