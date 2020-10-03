@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block title %}{{ SITENAME }} - {{ category }} category{% endblock %}
-{% block description %}{{ SITENAME }} - articles under the {{ category }} category{% endblock %}
+{% block description %}{{ category }} articles, page {{ articles_page.number }}{% endblock %}
 
 {% block content_title %}
 <h2>[ x for x in articles if "{{ category }}" in x.categories ]</h2>
