@@ -1,12 +1,12 @@
 {% extends "index.html" %}
 
 {% block title %}{{ SITENAME }} - Articles by {{ author }}{% endblock %}
+{% block description %}Articles by {{ author }}, page {{ articles_page.number }}{% endblock %}
 
 {% block content_title %}
-    {%if author == DEADNAME %}
-        <h2>SELECT ARTICLE WHERE ARTICLE.DEADNAME = "{{ author }}";</h2>
-    {% else %}
-        <h2>SELECT ARTICLE WHERE ARTICLE.AUTHOR = "{{ author }}";</h2>
-    {% endif %}
+{%if author == DEADNAME %}
+<h2>SELECT ARTICLE WHERE ARTICLE.DEADNAME = "{{ author }}";</h2>
+{% else %}
+<h2>SELECT ARTICLE WHERE ARTICLE.AUTHOR = "{{ author }}";</h2>
+{% endif %}
 {% endblock %}
-

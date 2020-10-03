@@ -9,20 +9,16 @@
 {% block keywords %}{{ ARTICLE_TAGS | unique | join(',') }}{% endblock %}
 
 {% block head %}
-  {{ super() }}
+{{ super() }}
 
-  {% import 'translations.html' as translations with context %}
-  {% if translations.entry_hreflang(article) %}
-    {{ translations.entry_hreflang(article) }}
-  {% endif %}
+{% import 'translations.html' as translations with context %}
+{% if translations.entry_hreflang(article) %}
+{{ translations.entry_hreflang(article) }}
+{% endif %}
 
-  {% if article.description %}
-    <meta name="description" content="{{article.description}}" />
-  {% endif %}
-
-  {% for tag in article.tags %}
-    <meta name="tags" content="{{tag}}" />
-  {% endfor %}
+{% for tag in article.tags %}
+<meta name="tags" content="{{tag}}" />
+{% endfor %}
 
 {% endblock %}
 
@@ -31,9 +27,9 @@
   <header>
     <h2 class="entry-title">
       <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
-         title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2>
- {% import 'translations.html' as translations with context %}
- {{ translations.translations_for(article) }}
+        title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2>
+    {% import 'translations.html' as translations with context %}
+    {{ translations.translations_for(article) }}
   </header>
   <footer class="post-info">
     <div>
@@ -53,21 +49,21 @@
     {% if article.authors %}
     <address class="vcard author">
       by {% for author in article.authors %}
-          <a class="url fn" href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>
-        {% endfor %}
+      <a class="url fn" href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>
+      {% endfor %}
     </address>
     {% endif %}
     {% if article.category %}
     <div class="category">
-        category: <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
+      category: <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
     </div>
     {% endif %}
     {% if article.tags %}
     <div class="tags">
-        tags:
-        {% for tag in article.tags %}
-            <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
-        {% endfor %}
+      tags:
+      {% for tag in article.tags %}
+      <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
+      {% endfor %}
     </div>
     {% endif %}
     {% if article.trigger_warnings %}

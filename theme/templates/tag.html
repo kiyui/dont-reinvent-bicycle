@@ -1,6 +1,7 @@
 {% extends "index.html" %}
 
 {% block title %}{{ SITENAME }} - {{ tag }} tag{% endblock %}
+{% block description %}articles tagged with {{ tag }}, page {{ articles_page.number }}{% endblock %}
 
 {% block content_title %}
 <h2>{{ tag }} ∈ article.tags</h2>

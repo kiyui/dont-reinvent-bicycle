@@ -2,6 +2,7 @@ Title: setTimeout and setInterval in gjs
 Date: 2020-09-16
 Tags: gnome-shell, gjs, gtk, javascript
 Slug: gjs-set-timeout-interval
+Description: setTimeout and setInterval in gjs
 
 The [GLib.timeout_add](https://gjs-docs.gnome.org/glib20~2.64.1/glib.timeout_add) function is the GJS equivalent to both `setTimeout` and `setInterval`. It calls a given function repeatedly (such as `func`) at given intervals until it returns a falsy value. It returns a [GLib Source](https://gjs-docs.gnome.org/glib20~2.64.1/glib.source) id, which just like `clearTimeout` or `clearInterval` can be removed with the static [GLib.Source.remove](https://gjs-docs.gnome.org/glib20~2.64.1/glib.source#function-remove) function.
 
