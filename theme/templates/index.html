@@ -10,12 +10,8 @@
       <article class="hentry">
         <header>
           <h2 class="entry-title">
-            <a
-              href="{{ SITEURL }}/{{ article.url }}"
-              rel="bookmark"
-              title="Permalink to {{ article.title|striptags }}"
-              >{{ article.title }}</a
-            >
+            <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark"
+              title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
           </h2>
         </header>
         <footer class="post-info">
@@ -26,9 +22,9 @@
             by {% for author in article.authors %}
             <a class="url fn" href="{{ SITEURL }}/{{ author.url }}">
               {%if author == DEADNAME %}
-                <del>{{ author }}</del> {{ AUTHOR }}
+              <del>{{ author }}</del> {{ AUTHOR }}
               {% else %}
-                {{ author }}
+              {{ author }}
               {% endif %}
             </a>
             {% endfor %}
@@ -43,7 +39,7 @@
   </ol>
   <!-- /#posts-list -->
   {% if articles_page.has_other_pages() %}
-    {% include 'pagination.html' %}
+  {% include 'pagination.html' %}
   {% endif %}
 </section>
 <!-- /#content -->

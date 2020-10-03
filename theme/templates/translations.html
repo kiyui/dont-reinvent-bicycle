@@ -9,8 +9,8 @@ Translations:
 
 {% macro entry_hreflang(entry) %}
 {% if entry.translations %}
-  {% for translation in entry.translations %}
-    <link rel="alternate" hreflang="{{ translation.lang }}" href="{{ SITEURL }}/{{ translation.url }}">
-  {% endfor %}
+{% for translation in entry.translations %}
+<link rel="alternate" hreflang="{{ translation.lang }}" href="{{ SITEURL }}/{{ translation.url }}">
+{% endfor %}
 {% endif %}
 {% endmacro %}
