@@ -185,16 +185,16 @@ self->settings_display = g_settings_new (DISPLAY_SCHEMA);
 
 This is why we can use `dconf` to inspect the values:
 
-```bash
-dconf dump "/org/gnome/settings-daemon/plugins/color/"
+```console
+[dafne@localhost]% dconf dump "/org/gnome/settings-daemon/plugins/color/"
 
-# [/]
-# night-light-enabled=
-# night-light-last-coordinates=
-# night-light-schedule-automatic=
-# night-light-schedule-from=
-# night-light-schedule-to=
-# night-light-temperature=
+[/]
+night-light-enabled=
+night-light-last-coordinates=
+night-light-schedule-automatic=
+night-light-schedule-from=
+night-light-schedule-to=
+night-light-temperature=
 ```
 
 Here is where I realized that `/org/gnome/settings-daemon/plugins/color/` is just our system settings and that `org.gnome.SettingsDaemon.Color` was instead the path to the D-Bus object!
@@ -492,7 +492,9 @@ function getSettings() {
 }
 ```
 
-I think like many other extension writers we just copied from one another. Well, it turns out that this function has already been [vendored](https://web.archive.org/web/20200916121616/https://gitlab.gnome.org/GNOME/gnome-shell/-/commit/93425b05004094520790b12953bc3aa50f85367c) in GNOME a whole 2 years ago!
+I think like many other extension writers we just copied from one another. Well, it turns out that this function has already been [vendored](https://web.archive.org/web/20200916121616/https://gitlab.gnome.org/GNOME/gnome-shell/-/commit/93425b05004094520790b12953bc3aa50f85367c) in GNOME a whole 2 years ago! This is even stated in the [official guide](https://web.archive.org/web/20200707175025/https://wiki.gnome.org/Projects/GnomeShell/Extensions/Writing)!
+
+> Long ago, Giovanni Campagna (aka gcampax) wrote a small helper script for Gettext translations and GSettings called `convenience.js`. This script was used so widely by extension authors that they were merged in GNOME Shell in version 3.32.
 
 Since we've already defined the `settings-schema` key in the <a href="#metadata-file">metadata.json</a> and verified that this path is correct, reading our preferences is as simple as using the `ExtensionUtils.getSettings()` utility!
 
@@ -870,7 +872,7 @@ At this point, we already have a pretty functional slider and have delivered upo
 - Ability to have the night light sync up with the system brightness;
 - Ability to define the minimum and maximum temperature of the slider;
 
-Where the undelivered requiments can basically be split into:
+Where the undelivered requirements can basically be split into:
 
 - Indicator features
     - Scrolling on the indicator should change the night light temperature;
@@ -922,10 +924,10 @@ Next, we would need to update the constructor for the `Indicator` such that we c
 -    _init(options) {
 +    _init(indicator, options) {
          super._init();
- 
+
          // Decorate _sync method
          this._sync = debounce(this.__sync.bind(this), 500);
- 
+
 +        // Hijacked indicator instance
 +        this._indicator = indicator;
 +
