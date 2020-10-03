@@ -101,7 +101,7 @@ dont reinvent велосипед - the unix paradigm      </title>
 
 <p>I'm not going to go too deep into the UNIX philosophy, though if you are interested, AT&amp;T has made available <a href="https://www.youtube.com/watch?v=tc4ROCJYbm0">this great video</a> on YouTube. The UNIX design philosophy was designed not only with composability in mind, but with the limitations that the machines had. Writing monolith software took more memory as the software had to take on more responsibilities. Software was designed to do one thing, and one thing only. We have today come to know this as "the functional approach" to programming;- Writing composable functions easy to test and piece together.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">users</span>
-  <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">ageMoreThan</span><span class="p">(</span><span class="mi">18</span><span class="p">))</span>
+  <span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">ageMoreThan</span><span class="p">(</span><span class="mf">18</span><span class="p">))</span>
   <span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="nx">sortByAge</span><span class="p">)</span> <span class="c1">// If you think about it, pipes are all reduce statements!</span>
   <span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
 </code></pre></div>

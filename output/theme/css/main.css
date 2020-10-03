@@ -21,6 +21,11 @@ body {
   margin-block: auto;
 }
 
+p .highlight {
+  background: none;
+  padding: inherit;
+}
+
 .links {
   display: inline;
   list-style: none;
@@ -66,6 +71,13 @@ body {
 
 .entry-content blockquote p {
   display: inline;
+}
+
+.entry-content dl {
+  background: #e8dced;
+  border-left: 5px solid #b62fef;
+  margin: 0px;
+  padding: 2px 10px;
 }
 
 #contentinfo .title {
@@ -128,4 +140,30 @@ body {
 
 #post-list {
   padding-left: 1em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 4px;
+}
+
+th {
+  background-color: #c18a6e;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #EDE4DC;
+}
+
+tr:hover {
+  background-color: #eddcdd;
 }

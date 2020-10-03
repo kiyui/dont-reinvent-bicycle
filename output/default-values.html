@@ -138,13 +138,13 @@ dont reinvent велосипед - Default Title      </title>
 <p>Additionally, could you imagine having to define every key-value mapping in configuration files each and every time you set something up?</p>
 <h2>so, what's the problem?</h2>
 <p>One of the main arguments against the use of optional parameters is that it leads to the production of inconsistent APIs. This is one such example:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">rotateMatrix</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">,</span> <span class="nx">angle</span> <span class="o">=</span> <span class="mi">90</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">rotateMatrix</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">,</span> <span class="nx">angle</span> <span class="o">=</span> <span class="mf">90</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// ...rotation code</span>
   <span class="k">return</span> <span class="nx">rotatedMatrix</span>
 <span class="p">}</span>
 
 <span class="nx">itemOne</span><span class="p">.</span><span class="nx">matrix</span> <span class="o">=</span> <span class="nx">rotateMatrix</span><span class="p">(</span><span class="nx">itemOne</span><span class="p">.</span><span class="nx">matrix</span><span class="p">)</span>       <span class="c1">// What is the angle of the rotation?</span>
-<span class="nx">itemTwo</span><span class="p">.</span><span class="nx">matrix</span> <span class="o">=</span> <span class="nx">rotateMatrix</span><span class="p">(</span><span class="nx">itemTwo</span><span class="p">.</span><span class="nx">matrix</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>  <span class="c1">// Here, we know immediately</span>
+<span class="nx">itemTwo</span><span class="p">.</span><span class="nx">matrix</span> <span class="o">=</span> <span class="nx">rotateMatrix</span><span class="p">(</span><span class="nx">itemTwo</span><span class="p">.</span><span class="nx">matrix</span><span class="p">,</span> <span class="mf">180</span><span class="p">)</span>  <span class="c1">// Here, we know immediately</span>
 </code></pre></div>
 
 
@@ -178,12 +178,12 @@ dont reinvent велосипед - Default Title      </title>
 
 <p>The following more or less exact same code in JavaScript behaves quite differently!</p>
 <div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">withRandom</span><span class="p">(</span><span class="nx">seed</span><span class="o">=</span><span class="p">[])</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">randomValue</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">randomValue</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100</span><span class="p">)</span>
   <span class="nx">seed</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">randomValue</span><span class="p">)</span>
   <span class="k">return</span> <span class="nx">seed</span>
 <span class="p">}</span>
 
-<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">withRandom</span><span class="p">([</span><span class="mi">23</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>  <span class="c1">// [23, 44, 15, 16]</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">withRandom</span><span class="p">([</span><span class="mf">23</span><span class="p">,</span> <span class="mf">44</span><span class="p">,</span> <span class="mf">15</span><span class="p">])</span>  <span class="c1">// [23, 44, 15, 16]</span>
 <span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">withRandom</span><span class="p">()</span>              <span class="c1">// [79]</span>
 <span class="kd">let</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">withRandom</span><span class="p">()</span>              <span class="c1">// [55]</span>
 </code></pre></div>
@@ -201,7 +201,7 @@ dont reinvent велосипед - Default Title      </title>
 
 <p>In fact, if you do find yourself using the value <code>90</code> as the <code>angle</code> argument more often than not, consider using method-overloading or proxying the function:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">rotateMatrix90</span> <span class="p">(</span><span class="nx">matrix</span><span class="p">,</span> <span class="nx">angle</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">rotateMatrix</span><span class="p">(</span><span class="nx">matrix</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">rotateMatrix</span><span class="p">(</span><span class="nx">matrix</span><span class="p">,</span> <span class="mf">90</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 

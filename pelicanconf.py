@@ -32,6 +32,18 @@ SITEMAP = {
 PATH = 'content'
 RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
+MARKDOWN = {
+    'extensions': [
+        'pymdownx.tilde',
+        'pymdownx.inlinehilite',
+    ],
+    'extension_configs': {
+        'markdown.extensions.codehilite': {'css_class': 'highlight'},
+        'markdown.extensions.extra': {},
+        'markdown.extensions.meta': {},
+    },
+    'output_format': 'html5',
+}
 
 # Static content
 ARTICLE_EXCLUDES = ['extra', 'images', 'demos']
