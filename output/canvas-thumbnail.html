@@ -128,7 +128,7 @@ dont reinvent велосипед - generating video thumbnails in js      </titl
 <div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;canvas&quot;</span><span class="p">);</span>
 <span class="nx">canvas</span>
   <span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
+  <span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
 </code></pre></div>
 
 
@@ -146,7 +146,7 @@ dont reinvent велосипед - generating video thumbnails in js      </titl
 
 <p>Next, if we wanted to generate the video thumbnail on the frontend and perhaps save that as a file we'd probably use something along the lines of:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// ...to get the raw pixel data</span>
-<span class="kr">const</span> <span class="p">{</span> <span class="nx">data</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">getImageData</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
+<span class="kr">const</span> <span class="p">{</span> <span class="nx">data</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">getImageData</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
 
 <span class="c1">// ...to generate a blob</span>
 <span class="nx">canvas</span><span class="p">.</span><span class="nx">toBlob</span><span class="p">(</span><span class="nx">blob</span> <span class="p">=&gt;</span> <span class="p">{</span> <span class="cm">/* etc */</span> <span class="p">},</span> <span class="s2">&quot;image/png&quot;</span><span class="p">);</span>
@@ -184,7 +184,7 @@ dont reinvent велосипед - generating video thumbnails in js      </titl
   <span class="c1">// Draw the thumbnail</span>
   <span class="nx">canvas</span>
     <span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&quot;2d&quot;</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
+    <span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">,</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">);</span>
   <span class="kr">const</span> <span class="nx">imageUrl</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">toDataURL</span><span class="p">(</span><span class="s2">&quot;image/png&quot;</span><span class="p">);</span>
   <span class="k">return</span> <span class="nx">imageUrl</span><span class="p">;</span>
 <span class="p">}</span>
