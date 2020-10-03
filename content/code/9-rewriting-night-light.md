@@ -1,8 +1,9 @@
 Title: rewriting "night light slider"
-Date: 2020-09-17
+Date: 2020-10-03
 Tags: gnome-shell, gnome-shell-extension, gjs, gtk
 Slug: rewriting-night-light
 Description: rewriting my gnome shell night light slider extension
+Status: draft
 
 I'm the author of the [Night Light Slider extension](https://extensions.gnome.org/extension/1276/night-light-slider/) for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests later however, we have the following preferences menu:
 
