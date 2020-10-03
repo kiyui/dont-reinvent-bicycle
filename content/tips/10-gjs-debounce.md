@@ -1,8 +1,8 @@
-Title: "debounce" in gjs
+Title: &quot;debounce&quot; in gjs
 Date: 2020-09-16
 Tags: gnome-shell, gjs, gtk
 Slug: gjs-debounce
-Description: creating a simple "debounce" function in gjs
+Description: creating a simple &quot;debounce&quot; function in gjs
 
 The following code is licensed under the [GNU Lesser General Public License v3.0 or later](https://www.gnu.org/licenses/lgpl-3.0.txt):
 
