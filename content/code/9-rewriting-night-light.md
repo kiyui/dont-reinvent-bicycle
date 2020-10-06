@@ -1,9 +1,8 @@
 Title: rewriting "night light slider"
-Date: 2020-10-03
+Date: 2020-10-06
 Tags: gnome-shell, gnome-shell-extension, gjs, gtk
 Slug: rewriting-night-light
 Description: rewriting my gnome shell night light slider extension
-Status: draft
 
 I'm the author of the [Night Light Slider extension](https://extensions.gnome.org/extension/1276/night-light-slider/) for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests later however, we have the following preferences menu:
 
@@ -1368,10 +1367,25 @@ Since we can identify the smear spread of `GSD_NIGHT_LIGHT_SMOOTH_SMEAR`, all we
          if (brightnessSync && this._brightnessProxy.Brightness >= 0)
 ```
 
+A final bug I discovered while rewriting the preferences panel was that the `show-status-icon` preference would not take effect immediately. This was luckily an easy fix:
+
+```diff
+@@ -167,9 +167,8 @@ class Indicator extends PanelMenu.SystemIndicator {
+         this._options[option] = value;
+         switch (option) {
+         case 'showAlways':
+-            return this._sync();
+         case 'showStatusIcon':
+-            return this._updateIndicatorVisibility();
++            return this._sync();
+         }
+     }
+```
+
 ### Copy of Copy of Final final asdasda Copy (3).psd
 
-Thus concludes the night light slider rewrite. The PR for the entire rewrite is available [on GitHub](https://github.com/kiyui/gnome-shell-night-light-slider-extension/pull/68) to review and test, or available to download as a ZIP from [here]({static}/download/rewriting-night-light/night-light-slider.timur@linux.com.zip).
+Thus concludes the night light slider rewrite. With the [GNOME 3.38 release](https://www.gnome.org/news/2020/09/gnome-3-38-released/) came the habitual ["Not working with $version" report](https://github.com/kiyui/gnome-shell-night-light-slider-extension/issues/70) and thus a rush for me to complete all bug fixes and the preferences panel.
 
-It feels like it's about time to push the updates as is, especially considering that the new [GNOME 3.38 release](https://www.gnome.org/news/2020/09/gnome-3-38-released/) would hit distribution repositories soon.
+The PR for the entire rewrite (including the preferences panel) is available [on GitHub](https://github.com/kiyui/gnome-shell-night-light-slider-extension/pull/68) or to download as a ZIP from [here]({static}/download/rewriting-night-light/night-light-slider.timur@linux.com.zip).
 
-This article would have to be followed up separately to see the preferences panel be updated!
+This article would be followed up by a write-up of the preferences panel rewrite.
