@@ -1,5 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед - code</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/code.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-10-06T00:00:00+08:00</updated><entry><title>rewriting "night light slider"</title><link href="https://dontreinventbicycle.com/rewriting-night-light.html" rel="alternate"></link><published>2020-10-06T00:00:00+08:00</published><updated>2020-10-06T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-10-06:/rewriting-night-light.html</id><summary type="html">&lt;p&gt;I'm the author of the &lt;a href="https://extensions.gnome.org/extension/1276/night-light-slider/"&gt;Night Light Slider extension&lt;/a&gt; for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'm the author of the &lt;a href="https://extensions.gnome.org/extension/1276/night-light-slider/"&gt;Night Light Slider extension&lt;/a&gt; for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests later however, we have the following preferences menu:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед - code</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/code.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-10-11T00:00:00+08:00</updated><entry><title>rewriting "gnome screenshot locations"</title><link href="https://dontreinventbicycle.com/rewriting-screenshot-locations.html" rel="alternate"></link><published>2020-10-11T00:00:00+08:00</published><updated>2020-10-11T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-10-11:/rewriting-screenshot-locations.html</id><summary type="html">&lt;p&gt;I know I previously said that I'd follow up my &lt;a href="/rewriting-night-light.html"&gt;rewriting "night light slider"&lt;/a&gt; article with that detailing the write up of the preferences panel,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This article would be followed up by a write-up of the preferences panel rewrite&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;...but I am a true open source developer that lacks accountability …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I know I previously said that I'd follow up my &lt;a href="/rewriting-night-light.html"&gt;rewriting "night light slider"&lt;/a&gt; article with that detailing the write up of the preferences panel,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This article would be followed up by a write-up of the preferences panel rewrite&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;...but I am a true open source developer that lacks accountability! And lack accountability, I do. My last "Screenshot Locations" &lt;a href="https://extensions.gnome.org/review/7669"&gt;update&lt;/a&gt; was on the 14th of November 2017, and even that was but a metadata bump to support &lt;a href="https://www.gnome.org/news/2017/09/gnome-3-26-released/"&gt;GNOME 3.26&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Even the repository had moved since!&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# remote: This repository moved. Please use the new location:&lt;/span&gt;
+&lt;span class="c1"&gt;# remote:   git@github.com:kiyui/gnome-shell-screenshotlocations-extension.git&lt;/span&gt;
+&lt;span class="c1"&gt;# remote:&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;a href="https://extensions.gnome.org/extension/1179/screenshot-locations/"&gt;Screenshot Locations&lt;/a&gt; extension works (or rather worked) by remapping GNOME's default screenshot keys to calls to &lt;a href="https://gitlab.gnome.org/GNOME/gnome-screenshot/"&gt;GNOME screenshot&lt;/a&gt;, which should respect the value set at &lt;code&gt;/org/gnome/gnome-screenshot/auto-save-directory&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;screenshotKeys&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+  &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;area-screenshot&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nx"&gt;shortcut&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;Shift&amp;gt;Print&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nx"&gt;command&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;gnome-screenshot -a&amp;#39;&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt;
+  &lt;span class="c1"&gt;// etc&lt;/span&gt;
+  &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;window-screenshot-clip&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nx"&gt;shortcut&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;Ctrl&amp;gt;&amp;lt;Alt&amp;gt;Print&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nx"&gt;command&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;gnome-screenshot -w -c&amp;#39;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The extension does so because curiously, GNOME Shell does not actually use GNOME Screenshot to create screenshots. Instead, referring to the &lt;a href="https://gitlab.gnome.org/GNOME/gnome-shell"&gt;gnome-shell repository&lt;/a&gt;, we find a &lt;code&gt;ScreenshotService&lt;/code&gt; defined at &lt;code&gt;js/ui/screenshot.js&lt;/code&gt;. In both GNOME 3.36 and 3.38, a &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"&gt;generator function&lt;/a&gt; called &lt;code&gt;__resolveRelativeFilename&lt;/code&gt; is used to generate file names for the stream of screenshots that will be created.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilename&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sr"&gt;/\.png$/&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get_user_special_dir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;UserDirectory&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;DIRECTORY_PICTURES&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+        &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get_home_dir&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+    &lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="nx"&gt;find&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;p&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;file_test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;FileTest&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;EXISTS&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="nx"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="nx"&gt;Gio&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;new_for_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;build_filenamev&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="nx"&gt;path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;filename&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;.png`&lt;/span&gt;&lt;span class="p"&gt;]));&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nx"&gt;idx&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="nx"&gt;Gio&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;new_for_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+            &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;build_filenamev&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="nx"&gt;path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;filename&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;-&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;idx&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;.png`&lt;/span&gt;&lt;span class="p"&gt;]));&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This can be confirmed by running the following code in &lt;a href="https://wiki.gnome.org/Projects/GnomeShell/LookingGlass"&gt;Looking Glass&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;imports&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ui&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilename&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;screenshot.png&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nx"&gt;r&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;next&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get_path&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c1"&gt;// Notice how this appends a number after the first invocation&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Or visually,&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Trying out the resolveRelativeFilename generator in Looking Glass" src="https://dontreinventbicycle.com/images/rewriting-screenshot-locations/visually.jpg"&gt;&lt;/p&gt;
+&lt;h2&gt;the rewrite&lt;/h2&gt;
+&lt;p&gt;The approach for the extension this time is to override the &lt;code&gt;_resolveRelativeFilename&lt;/code&gt; generator, injecting a user-provided directory instead of defaulting to the hard-coded values set by GNOME. I opted for writing my own schema instead of reusing the value from GNOME Screenshot at &lt;code&gt;/org/gnome/gnome-screenshot/auto-save-directory&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;&amp;lt;schemalist&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;schema&lt;/span&gt; &lt;span class="na"&gt;id=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;org.gnome.shell.extensions.screenshotlocations&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;path=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/org/gnome/shell/extensions/screenshotlocations/&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;save-directory&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;default&amp;gt;&lt;/span&gt;&amp;#39;&amp;#39;&lt;span class="nt"&gt;&amp;lt;/default&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;summary&amp;gt;&lt;/span&gt;Screenshot directory&lt;span class="nt"&gt;&amp;lt;/summary&amp;gt;&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;lt;description&amp;gt;&lt;/span&gt;Manage where screenshots are saved&lt;span class="nt"&gt;&amp;lt;/description&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;lt;/schema&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/schemalist&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Patching the generator is as simple as adding the &lt;code&gt;save-directory&lt;/code&gt; value to the list of seek-paths in the generator,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;     let path = [
+&lt;span class="gi"&gt;+        this._preferences.get_string(&amp;#39;save-directory&amp;#39;),&lt;/span&gt;
+         GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES),
+         GLib.get_home_dir(),
+     ].find(p =&amp;gt; GLib.file_test(p, GLib.FileTest.EXISTS));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;..where the main function of the extension is to just perform this override:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;Extension&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;constructor&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_preferences&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;ExtensionUtils&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;getSettings&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;enable&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_original_resolveRelativeFilename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilename&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilenameOverride&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;disable&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_original_resolveRelativeFilename&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;delete&lt;/span&gt; &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_original_resolveRelativeFilename&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilenameOverride&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// etc&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Except that did not work.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="GNOME Extensions reporting that imports.ui.main.shellDBusService is null" src="https://dontreinventbicycle.com/images/rewriting-screenshot-locations/that-didnt-work.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Digging into the &lt;a href="https://gitlab.gnome.org/GNOME/gnome-shell"&gt;gnome-shell repository&lt;/a&gt;, we find that the &lt;code&gt;_initializeUI&lt;/code&gt; function, which in turn initializes all extensions, is called before the &lt;code&gt;shellDBusService&lt;/code&gt; is even initialized.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;_initializeUI&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="c1"&gt;// etc&lt;/span&gt;
+&lt;span class="nx"&gt;shellDBusService&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;ShellDBus&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;GnomeShell&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The correct way to detect when &lt;code&gt;shellDBusService&lt;/code&gt; is initialized would to over-engineer a solution, so instead I used a hack that ever JavaScript developer loves, &lt;a href="/gjs-set-timeout-interval.html"&gt;setTimeout&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;enable&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;timeout_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;PRIORITY_DEFAULT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_original_resolveRelativeFilename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilename&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="nx"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;shellDBusService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_screenshotService&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_resolveRelativeFilenameOverride&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The amazing thing here is that because everything is run on a single thread, even a timeout of &lt;code&gt;0&lt;/code&gt; would suffice to make sure that &lt;code&gt;shellDBusService&lt;/code&gt; is initialized.&lt;/p&gt;
+&lt;h2&gt;done&lt;/h2&gt;
+&lt;p&gt;The result is a much simpler extension that should hopefully be easier to maintain. The entire rewrite is available &lt;a href="https://github.com/kiyui/gnome-shell-screenshotlocations-extension/pull/11"&gt;on GitHub&lt;/a&gt;, including an updated preferences panel that makes use of &lt;a href="https://developer.puri.sm/projects/libhandy/unstable/"&gt;libhandy&lt;/a&gt;.&lt;/p&gt;</content><category term="code"></category><category term="gnome-shell"></category><category term="gnome-shell-extension"></category><category term="gjs"></category><category term="gtk"></category></entry><entry><title>rewriting "night light slider"</title><link href="https://dontreinventbicycle.com/rewriting-night-light.html" rel="alternate"></link><published>2020-10-06T00:00:00+08:00</published><updated>2020-10-06T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-10-06:/rewriting-night-light.html</id><summary type="html">&lt;p&gt;I'm the author of the &lt;a href="https://extensions.gnome.org/extension/1276/night-light-slider/"&gt;Night Light Slider extension&lt;/a&gt; for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'm the author of the &lt;a href="https://extensions.gnome.org/extension/1276/night-light-slider/"&gt;Night Light Slider extension&lt;/a&gt; for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests later however, we have the following preferences menu:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Night Light Slider preferences" src="https://dontreinventbicycle.com/images/rewriting-night-light/preferences.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;Not only are the options rather obscured, they don't make too much sense either:&lt;/p&gt;
 &lt;ul&gt;
