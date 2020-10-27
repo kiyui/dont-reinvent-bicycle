@@ -102,8 +102,12 @@
         {% if FEED_RSS %}
         <li><a href="{{ SITEURL }}/{{ FEED_RSS }}" rel="alternate">rss feed</a></li>
         {% endif %}
-        {% for name, link in SOCIAL %}
+        {% for name, link, rel in SOCIAL %}
+        {% if rel %}
+        <li><a rel="{{ rel }}" href="{{ link }}">{{ name }}</a></li>
+        {% else %}
         <li><a href="{{ link }}">{{ name }}</a></li>
+        {% endif %}
         {% endfor %}
       </ul>
     </div>

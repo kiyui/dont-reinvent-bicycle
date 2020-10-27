@@ -88,8 +88,11 @@ LINKS = (('Resume',
 
 # Social widget
 SOCIAL = (('GitHub',
-           'https://github.com/kiyui'),
+           'https://github.com/kiyui',
+           None),
           ('Mastodon',
-           'https://queer.chat/@dafne'),
+           'https://koyu.space/@dafne',
+           'me'),
           ('LinkedIn',
-           'https://www.linkedin.com/in/dafnelately/'),)
+           'https://www.linkedin.com/in/dafnelately/',
+           None),)
