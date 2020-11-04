@@ -57,22 +57,6 @@ p .highlight {
   padding: 2px 10px;
 }
 
-.entry-content blockquote:before {
-  color: #c18a6e;
-  content: open-quote;
-  font-size: 20px;
-}
-
-.entry-content blockquote:after {
-  color: #c18a6e;
-  content: close-quote;
-  font-size: 20px;
-}
-
-.entry-content blockquote p {
-  display: inline;
-}
-
 .entry-content dl {
   background: #e8dced;
   border-left: 5px solid #b62fef;
