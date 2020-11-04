@@ -87,7 +87,10 @@ LINKS = (('Resume',
           'https://extensions.gnome.org/accounts/profile/TimurKiyivinski'),)
 
 # Social widget
-SOCIAL = (('GitHub',
+SOCIAL = (('Codeberg',
+           'https://codeberg.org/kiyui',
+           None),
+          ('GitHub',
            'https://github.com/kiyui',
            None),
           ('Mastodon',

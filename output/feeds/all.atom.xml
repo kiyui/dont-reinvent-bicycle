@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/all.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-10-11T00:00:00+08:00</updated><entry><title>rewriting "gnome screenshot locations"</title><link href="https://dontreinventbicycle.com/rewriting-screenshot-locations.html" rel="alternate"></link><published>2020-10-11T00:00:00+08:00</published><updated>2020-10-11T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-10-11:/rewriting-screenshot-locations.html</id><summary type="html">&lt;p&gt;I know I previously said that I'd follow up my &lt;a href="/rewriting-night-light.html"&gt;rewriting "night light slider"&lt;/a&gt; article with that detailing the write up of the preferences panel,&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/all.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-11-04T00:00:00+08:00</updated><entry><title>how to migrate your GitHub repository to Codeberg</title><link href="https://dontreinventbicycle.com/github-to-codeberg-howto.html" rel="alternate"></link><published>2020-11-04T00:00:00+08:00</published><updated>2020-11-04T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-11-04:/github-to-codeberg-howto.html</id><summary type="html">&lt;p&gt;The easiest way to migrate repositories is to simply change where your local repository remote points to. In a locally cloned repository, assert that you should have a git remote (usually named &lt;code&gt;origin&lt;/code&gt;) by running &lt;code&gt;git remote -v&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;origin  git@github.com:username/repository.git (fetch)&lt;/span&gt;
+&lt;span class="err"&gt;origin  git@github.com …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;The easiest way to migrate repositories is to simply change where your local repository remote points to. In a locally cloned repository, assert that you should have a git remote (usually named &lt;code&gt;origin&lt;/code&gt;) by running &lt;code&gt;git remote -v&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;origin  git@github.com:username/repository.git (fetch)&lt;/span&gt;
+&lt;span class="err"&gt;origin  git@github.com:username/repository.git (push)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;On your &lt;a href="https://codeberg.org/"&gt;Codeberg&lt;/a&gt; dashboard, create a new repository (&lt;a href="https://docs.codeberg.org/getting-started/first-repository/"&gt;guide&lt;/a&gt;) and copy its upstream URL. You can then simply update the remote by running,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git remote set-url origin git@codeberg.org:username/repository.git
+git push -u origin master &lt;span class="c1"&gt;# Or whatever other branch&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;maintaining a mirror&lt;/h3&gt;
+&lt;p&gt;If you're not interested in fully migrating your repository over to Codeberg and would rather maintain a mirror, you can simply set up an additional remote as so,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# You can name the remote something other than codeberg&lt;/span&gt;
+git remote add codeberg git@codeberg.org:username/repository.git
+git push codeberg master &lt;span class="c1"&gt;# Or whatever other branch&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This of course means that in addition to just running &lt;code class="highlight"&gt;git push&lt;/code&gt; to push to a branch's regular upstream, you'd have to run &lt;code class="highlight"&gt;git push codeberg&lt;/code&gt; as well.&lt;/p&gt;
+&lt;h3&gt;using the Gitea migration feature&lt;/h3&gt;
+&lt;p&gt;Codeberg also offers a &lt;a href="https://docs.gitea.io/en-us/migrations-interfaces/"&gt;migration interface&lt;/a&gt; that can import Issues, Pull Requests, Releases, and more (&lt;a href="https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension/issues/76"&gt;an example imported issue&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;To do this, you'll want to create a new &lt;a href="https://github.com/settings/tokens"&gt;personal access token&lt;/a&gt; by visiting &lt;a href="https://github.com/settings/tokens/new"&gt;this link&lt;/a&gt;. Under the &lt;strong&gt;“select scopes”&lt;/strong&gt; header, you'll want to make sure you check the &lt;strong&gt;“repo”&lt;/strong&gt; scope, giving it access to your repositories. You can read more on how to do this under the &lt;a href="https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token"&gt;official GitHub documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Next, you'll want to visit the Codeberg &lt;a href="https://codeberg.org/repo/migrate"&gt;“New Migration”&lt;/a&gt; page. This can also be done by clicking the “New Migration” option under the same menu on the top right where you'd regularly create a new repository.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="The Codeberg new repository dropdown, with “New migration” listed as one of the options" src="https://dontreinventbicycle.com/images/github-to-codeberg-howto/codeberg-new-repo.png"&gt;&lt;/p&gt;
+&lt;p&gt;On the &lt;a href="https://codeberg.org/repo/migrate"&gt;“New Migration”&lt;/a&gt; page, you should be greeted with a form split into 2 sections. Under the first section,&lt;/p&gt;
+&lt;p&gt;You'll want to populate the “Migrate/Clone From URL” input with your &lt;strong&gt;GitHub HTTPS clone URL&lt;/strong&gt;. This is important such that other items would be made available under the “Migration Items” section.&lt;/p&gt;
+&lt;p&gt;Under “Clone Authorization”, you'll want to have your username filled as usual but have the &lt;strong&gt;GitHub access token set as the password&lt;/strong&gt;. ⚠️  Do not use your actual password here!&lt;/p&gt;
+&lt;p&gt;The rest, such as the “Repository Name”, “Visibility”, “Migration Items”, and “Description” can be filled to your discretion. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="The Codeberg migration interface, with “https://github.com/username/repository.git” as the “Migrate/Clone From URL”, the username &amp;amp; password filled under “Clone Authorization”, and in a separate section all the import details such as the “Repository Name”, “Visibility”, “Migration Items” (consisting of checkboxes for “Wiki“, “Milestones“, “Labels“, “Issues“, “Pull Requests“, and “Releases“), and the “Description”" src="https://dontreinventbicycle.com/images/github-to-codeberg-howto/codeberg-migration.png"&gt;&lt;/p&gt;
+&lt;p&gt;Clicking the “Migrate Repository” should redirect you to a loading screen, and finally the brand new repository. Et voilà!&lt;/p&gt;</content><category term="tips"></category><category term="hosting"></category><category term="git"></category></entry><entry><title>rewriting "gnome screenshot locations"</title><link href="https://dontreinventbicycle.com/rewriting-screenshot-locations.html" rel="alternate"></link><published>2020-10-11T00:00:00+08:00</published><updated>2020-11-04T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-10-11:/rewriting-screenshot-locations.html</id><summary type="html">&lt;p&gt;I know I previously said that I'd follow up my &lt;a href="/rewriting-night-light.html"&gt;rewriting "night light slider"&lt;/a&gt; article with that detailing the write up of the preferences panel,&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This article would be followed up by a write-up of the preferences panel rewrite&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -131,7 +164,7 @@
 
 &lt;p&gt;The amazing thing here is that because everything is run on a single thread, even a timeout of &lt;code&gt;0&lt;/code&gt; would suffice to make sure that &lt;code&gt;shellDBusService&lt;/code&gt; is initialized.&lt;/p&gt;
 &lt;h2&gt;done&lt;/h2&gt;
-&lt;p&gt;The result is a much simpler extension that should hopefully be easier to maintain. The entire rewrite is available &lt;a href="https://github.com/kiyui/gnome-shell-screenshotlocations-extension/pull/11"&gt;on GitHub&lt;/a&gt;, including an updated preferences panel that makes use of &lt;a href="https://developer.puri.sm/projects/libhandy/unstable/"&gt;libhandy&lt;/a&gt;.&lt;/p&gt;</content><category term="code"></category><category term="gnome-shell"></category><category term="gnome-shell-extension"></category><category term="gjs"></category><category term="gtk"></category></entry><entry><title>rewriting "night light slider"</title><link href="https://dontreinventbicycle.com/rewriting-night-light.html" rel="alternate"></link><published>2020-10-06T00:00:00+08:00</published><updated>2020-10-06T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-10-06:/rewriting-night-light.html</id><summary type="html">&lt;p&gt;I'm the author of the &lt;a href="https://extensions.gnome.org/extension/1276/night-light-slider/"&gt;Night Light Slider extension&lt;/a&gt; for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'm the author of the &lt;a href="https://extensions.gnome.org/extension/1276/night-light-slider/"&gt;Night Light Slider extension&lt;/a&gt; for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests later however, we have the following preferences menu:&lt;/p&gt;
+&lt;p&gt;The result is a much simpler extension that should hopefully be easier to maintain. The entire rewrite is available on &lt;del&gt;GitHub&lt;/del&gt; &lt;a href="https://codeberg.org/kiyui/gnome-shell-screenshotlocations-extension/pulls/11"&gt;Codeberg&lt;/a&gt;, including an updated preferences panel that makes use of &lt;a href="https://developer.puri.sm/projects/libhandy/unstable/"&gt;libhandy&lt;/a&gt;.&lt;/p&gt;</content><category term="code"></category><category term="gnome-shell"></category><category term="gnome-shell-extension"></category><category term="gjs"></category><category term="gtk"></category></entry><entry><title>rewriting "night light slider"</title><link href="https://dontreinventbicycle.com/rewriting-night-light.html" rel="alternate"></link><published>2020-10-06T00:00:00+08:00</published><updated>2020-11-04T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-10-06:/rewriting-night-light.html</id><summary type="html">&lt;p&gt;I'm the author of the &lt;a href="https://extensions.gnome.org/extension/1276/night-light-slider/"&gt;Night Light Slider extension&lt;/a&gt; for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'm the author of the &lt;a href="https://extensions.gnome.org/extension/1276/night-light-slider/"&gt;Night Light Slider extension&lt;/a&gt; for GNOME Shell. When I originally authored the extension in late 2017, my intention was to simply add a slider, kin to the brightness slider, to manage the temperature of the GNOME Shell "Night Light" feature. A couple of feature requests later however, we have the following preferences menu:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Night Light Slider preferences" src="https://dontreinventbicycle.com/images/rewriting-night-light/preferences.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;Not only are the options rather obscured, they don't make too much sense either:&lt;/p&gt;
 &lt;ul&gt;
@@ -142,7 +175,7 @@
 &lt;li&gt;"Show in submenu" would have the slider appear in the night light submenu instead of besides the brightness slider;&lt;/li&gt;
 &lt;li&gt;Two input fields "Minimum value" and "Maximum value" would allow you to override the default minimum and maximum temperatures for the night light;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Not only am I a master of bad UX, but I've committed some &lt;b id="pretty-terrible-code"&gt;pretty terrible code&lt;/b&gt;. My &lt;a href="https://github.com/kiyui/gnome-shell-night-light-slider-extension/commit/ed57dcb4ee3f42ede85d1addac1e3986925fd834#diff-493871bb0b725f5b874574677c336d1aR217"&gt;latest commit&lt;/a&gt; included the following bit of code:&lt;/p&gt;
+&lt;p&gt;Not only am I a master of bad UX, but I've committed some &lt;b id="pretty-terrible-code"&gt;pretty terrible code&lt;/b&gt;. My &lt;a href="https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension/commit/ed57dcb4ee3f42ede85d1addac1e3986925fd834#diff-493871bb0b725f5b874574677c336d1aR217"&gt;latest commit&lt;/a&gt; included the following bit of code:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_hackyShowCallback&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_icon&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;show&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;_icon&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;hide&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="p"&gt;});&lt;/span&gt;
@@ -1417,8 +1450,8 @@ the signal, so we can override that callback and chain-up.&lt;/p&gt;
 
 
 &lt;h3&gt;Copy of Copy of Final final asdasda Copy (3).psd&lt;/h3&gt;
-&lt;p&gt;Thus concludes the night light slider rewrite. With the &lt;a href="https://www.gnome.org/news/2020/09/gnome-3-38-released/"&gt;GNOME 3.38 release&lt;/a&gt; came the habitual &lt;a href="https://github.com/kiyui/gnome-shell-night-light-slider-extension/issues/70"&gt;"Not working with $version" report&lt;/a&gt; and thus a rush for me to complete all bug fixes and the preferences panel.&lt;/p&gt;
-&lt;p&gt;The PR for the entire rewrite (including the preferences panel) is available &lt;a href="https://github.com/kiyui/gnome-shell-night-light-slider-extension/pull/68"&gt;on GitHub&lt;/a&gt; or to download as a ZIP from &lt;a href="https://dontreinventbicycle.com/download/rewriting-night-light/night-light-slider.timur@linux.com.zip"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Thus concludes the night light slider rewrite. With the &lt;a href="https://www.gnome.org/news/2020/09/gnome-3-38-released/"&gt;GNOME 3.38 release&lt;/a&gt; came the habitual &lt;a href="https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension/issues/70"&gt;"Not working with $version" report&lt;/a&gt; and thus a rush for me to complete all bug fixes and the preferences panel.&lt;/p&gt;
+&lt;p&gt;The PR for the entire rewrite (including the preferences panel) is available on &lt;del&gt;GitHub&lt;/del&gt; &lt;a href="https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension/pulls/68"&gt;Codeberg&lt;/a&gt; or to download as a ZIP from &lt;a href="https://dontreinventbicycle.com/download/rewriting-night-light/night-light-slider.timur@linux.com.zip"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This article would be followed up by a write-up of the preferences panel rewrite.&lt;/p&gt;</content><category term="code"></category><category term="gnome-shell"></category><category term="gnome-shell-extension"></category><category term="gjs"></category><category term="gtk"></category></entry><entry><title>"debounce" in gjs</title><link href="https://dontreinventbicycle.com/gjs-debounce.html" rel="alternate"></link><published>2020-09-16T00:00:00+08:00</published><updated>2020-09-16T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-09-16:/gjs-debounce.html</id><summary type="html">&lt;p&gt;The following code is licensed under the &lt;a href="https://www.gnu.org/licenses/lgpl-3.0.txt"&gt;GNU Lesser General Public License v3.0 or later&lt;/a&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* exported debounce */&lt;/span&gt;
 &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;imports&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;gi&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -2425,136 +2458,4 @@ the signal, so we can override that callback and chain-up.&lt;/p&gt;
 
 
 &lt;p&gt;This article is powered by the exception-free code philosophy, perhaps made popular by &lt;a href="https://google.github.io/styleguide/cppguide.html#Exceptions"&gt;Google's C++ styleguide&lt;/a&gt;, leaking into other languages like JavaScript. Also for fun, I recommend checking out &lt;a href="https://wiki.haskell.org/Exception"&gt;how Haskell implements exceptions&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;}&lt;/h2&gt;</content><category term="code"></category><category term="programming"></category><category term="unix"></category><category term="javascript"></category><category term="vue"></category></entry><entry><title>Default Title</title><link href="https://dontreinventbicycle.com/default-values.html" rel="alternate"></link><published>2019-04-27T17:51:00+08:00</published><updated>2019-04-27T22:31:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-04-27:/default-values.html</id><summary type="html">&lt;p&gt;The use of default values, also known as optional parameters is a controversial topic in programming. Languages like Go even go so far to outright disallow the possibility of using optional parameters or method overloading, emphasising simplicity instead. But what exactly are optional parameters used for?&lt;/p&gt;
-&lt;p&gt;The Wikipedia page for …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The use of default values, also known as optional parameters is a controversial topic in programming. Languages like Go even go so far to outright disallow the possibility of using optional parameters or method overloading, emphasising simplicity instead. But what exactly are optional parameters used for?&lt;/p&gt;
-&lt;p&gt;The Wikipedia page for &lt;a href="https://en.wikipedia.org/wiki/C_Sharp_4.0#Optional_parameters_and_named_arguments"&gt;C# version 4.0&lt;/a&gt; highlights many advantages of the introduction of optional parameters, on top of it being an alternative to operator overloading. Without optional parameters, the following simple class constructor;-&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Cuboid&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
-    &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
-    &lt;span class="vi"&gt;@length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;volume&lt;/span&gt;
-    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="vi"&gt;@length&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="n"&gt;cube&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Cuboid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;
-&lt;span class="n"&gt;cube&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 125&lt;/span&gt;
-
-&lt;span class="n"&gt;cuboid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Cuboid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;
-&lt;span class="n"&gt;cuboid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 200&lt;/span&gt;
-
-&lt;span class="n"&gt;long_long_man&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Cuboid&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;
-&lt;span class="n"&gt;long_long_man&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 1200&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;would be a lot more verbose, include unnecessary duplication, and have to be written for every possible variation!&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Cuboid&lt;/span&gt;  
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
-    &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
-    &lt;span class="vi"&gt;@length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
-    &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
-    &lt;span class="vi"&gt;@length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="vi"&gt;@width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
-    &lt;span class="vi"&gt;@height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
-    &lt;span class="vi"&gt;@length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;
-  &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Additionally, could you imagine having to define every key-value mapping in configuration files each and every time you set something up?&lt;/p&gt;
-&lt;h2&gt;so, what's the problem?&lt;/h2&gt;
-&lt;p&gt;One of the main arguments against the use of optional parameters is that it leads to the production of inconsistent APIs. This is one such example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// ...rotation code&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotatedMatrix&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="nx"&gt;itemOne&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;itemOne&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;       &lt;span class="c1"&gt;// What is the angle of the rotation?&lt;/span&gt;
-&lt;span class="nx"&gt;itemTwo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;itemTwo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;180&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;// Here, we know immediately&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The above function doesn't immediately make it clear what the resulting value of the function will be since it makes a value that should be required optional. Another such argument is that it allows for the introduction of flag-oriented programming. While that is a whole other can of hydras, the following is a classic example of flag-oriented programming:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;logNames&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;people&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;logAges&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="nx"&gt;people&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;person&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sb"&gt;`There is a person named &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;person&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;logAges&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="nx"&gt;output&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="sb"&gt;` aged &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;person&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt; years old`&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-
-    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;output&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;To add insult to injury, it would seem that the implementation of optional arguments isn't even consistent from one language to another! Consider how Python handles optional parameter default values:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;random&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;randint&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[]):&lt;/span&gt;
-    &lt;span class="n"&gt;random_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;randint&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;seed&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;random_value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;seed&lt;/span&gt;
-
-&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;44&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="c1"&gt;# [23, 44, 15, 16]  one value is appended to the array&lt;/span&gt;
-&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;             &lt;span class="c1"&gt;# [79]              as expected, an array with length 1&lt;/span&gt;
-&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;             &lt;span class="c1"&gt;# [79, 55]          wait what?? ah, python&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The following more or less exact same code in JavaScript behaves quite differently!&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;seed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;randomValue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;floor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mf"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="nx"&gt;seed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;push&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;randomValue&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;seed&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mf"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;44&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;15&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;  &lt;span class="c1"&gt;// [23, 44, 15, 16]&lt;/span&gt;
-&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;              &lt;span class="c1"&gt;// [79]&lt;/span&gt;
-&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;              &lt;span class="c1"&gt;// [55]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Quick! Grab your pitchforks and put an end to the evil that is default values!&lt;/p&gt;
-&lt;h2&gt;no, your opinion is wrong&lt;/h2&gt;
-&lt;p&gt;Again, the issue here isn't that defaults are a horrible language feature, but that it is often misused. In the case of the &lt;code&gt;rotateMatrix&lt;/code&gt; example, the solution would be to simply to make the angle argument required:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// ...rotation code&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotatedMatrix&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;In fact, if you do find yourself using the value &lt;code&gt;90&lt;/code&gt; as the &lt;code&gt;angle&lt;/code&gt; argument more often than not, consider using method-overloading or proxying the function:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix90&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;If you still aren't sure &lt;a href="/identifying-hacks.html"&gt;how to identify hacky use of optional parameters&lt;/a&gt;, here are a few good design principles:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;do not ever make core parameters optional&lt;/li&gt;
-&lt;li&gt;do not design functions with optional parameters in mind, but make them optional over time&lt;/li&gt;
-&lt;li&gt;the optional argument should not be used as a conditional for any control-flow logic&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I hope this helps, and that you enjoy not having to define every single option in your editor configuration file every time.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# In a world where we don&amp;#39;t already have to do this, I alias l to ls&lt;/span&gt;
-&lt;span class="nv"&gt;LS_COLORS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;...&amp;quot;&lt;/span&gt; /usr/bin/ls .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This article was powered by the procrastination of setting up a Raspberry Pi.&lt;/p&gt;</content><category term="code"></category><category term="programming"></category><category term="improve"></category></entry></feed>
+&lt;h2&gt;}&lt;/h2&gt;</content><category term="code"></category><category term="programming"></category><category term="unix"></category><category term="javascript"></category><category term="vue"></category></entry></feed>
