@@ -1,7 +1,7 @@
 Title: the unix paradigm
 Author: Timur Kiyui
 Date: 2019-04-19 15:00
-Modified: 2019-05-01 17:56
+Modified: 2020-11-04
 Tags: programming, unix, musing
 Slug: the-unix-paradigm
 Description: how was software for the UNIX paradigm written?
@@ -210,4 +210,4 @@ do
   esac
 done
 ```
-Check out the end result [on GitHub](https://github.com/kiyui/unix-2048). Cheers, and enjoy your musing.
+Check out the end result on ~~GitHub~~ [Codeberg](https://codeberg.org/kiyui/unix-2048). Cheers, and enjoy your musing.

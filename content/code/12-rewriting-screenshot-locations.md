@@ -1,5 +1,6 @@
 Title: rewriting "gnome screenshot locations"
 Date: 2020-10-11
+Modified: 2020-11-04
 Tags: gnome-shell, gnome-shell-extension, gjs, gtk
 Slug: rewriting-screenshot-locations
 Description: rewriting my gnome screenshot locations extension
@@ -148,4 +149,4 @@ The amazing thing here is that because everything is run on a single thread, eve
 
 ## done
 
-The result is a much simpler extension that should hopefully be easier to maintain. The entire rewrite is available [on GitHub](https://github.com/kiyui/gnome-shell-screenshotlocations-extension/pull/11), including an updated preferences panel that makes use of [libhandy](https://developer.puri.sm/projects/libhandy/unstable/).
+The result is a much simpler extension that should hopefully be easier to maintain. The entire rewrite is available on ~~GitHub~~ [Codeberg](https://codeberg.org/kiyui/gnome-shell-screenshotlocations-extension/pulls/11), including an updated preferences panel that makes use of [libhandy](https://developer.puri.sm/projects/libhandy/unstable/).

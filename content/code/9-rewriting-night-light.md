@@ -1,5 +1,6 @@
 Title: rewriting "night light slider"
 Date: 2020-10-06
+Modified: 2020-11-04
 Tags: gnome-shell, gnome-shell-extension, gjs, gtk
 Slug: rewriting-night-light
 Description: rewriting my gnome shell night light slider extension
@@ -17,7 +18,7 @@ Not only are the options rather obscured, they don't make too much sense either:
 - "Show in submenu" would have the slider appear in the night light submenu instead of besides the brightness slider;
 - Two input fields "Minimum value" and "Maximum value" would allow you to override the default minimum and maximum temperatures for the night light;
 
-Not only am I a master of bad UX, but I've committed some <b id="pretty-terrible-code">pretty terrible code</b>. My [latest commit](https://github.com/kiyui/gnome-shell-night-light-slider-extension/commit/ed57dcb4ee3f42ede85d1addac1e3986925fd834#diff-493871bb0b725f5b874574677c336d1aR217) included the following bit of code:
+Not only am I a master of bad UX, but I've committed some <b id="pretty-terrible-code">pretty terrible code</b>. My [latest commit](https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension/commit/ed57dcb4ee3f42ede85d1addac1e3986925fd834#diff-493871bb0b725f5b874574677c336d1aR217) included the following bit of code:
 
 ```javascript
 this._hackyShowCallback = this._icon.connect("show", () => {
@@ -1384,8 +1385,8 @@ A final bug I discovered while rewriting the preferences panel was that the `sho
 
 ### Copy of Copy of Final final asdasda Copy (3).psd
 
-Thus concludes the night light slider rewrite. With the [GNOME 3.38 release](https://www.gnome.org/news/2020/09/gnome-3-38-released/) came the habitual ["Not working with $version" report](https://github.com/kiyui/gnome-shell-night-light-slider-extension/issues/70) and thus a rush for me to complete all bug fixes and the preferences panel.
+Thus concludes the night light slider rewrite. With the [GNOME 3.38 release](https://www.gnome.org/news/2020/09/gnome-3-38-released/) came the habitual ["Not working with $version" report](https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension/issues/70) and thus a rush for me to complete all bug fixes and the preferences panel.
 
-The PR for the entire rewrite (including the preferences panel) is available [on GitHub](https://github.com/kiyui/gnome-shell-night-light-slider-extension/pull/68) or to download as a ZIP from [here]({static}/download/rewriting-night-light/night-light-slider.timur@linux.com.zip).
+The PR for the entire rewrite (including the preferences panel) is available on ~~GitHub~~ [Codeberg](https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension/pulls/68) or to download as a ZIP from [here]({static}/download/rewriting-night-light/night-light-slider.timur@linux.com.zip).
 
 This article would be followed up by a write-up of the preferences panel rewrite.
