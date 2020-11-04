@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>dont reinvent велосипед - migrating from GitHub to Codeberg</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="A criticism of GitHub beyond just the DMCA takedown, and hopefully a new paradigm in where we develop our software" />
+  <meta name="keywords" content="programming,practice,standards,hacking,musing,hosting,git">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+  <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css">
+  <link
+    href="https://dontreinventbicycle.com/feeds/all.atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/all.rss.xml"
+    type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/all.xml"
+    type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+  <link
+    href="https://dontreinventbicycle.com/feeds/code.atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+<meta name="tags" content="hosting" />
+<meta name="tags" content="git" />
+
+</head>
+
+<body id="index" class="home">
+  <header id="banner" class="body">
+    <h1>
+      <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+    </h1>
+  </header>
+
+  <nav id="menu" class="body">
+    <ul>
+
+
+      <li  class="active" >
+        <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/personal.html">personal</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/tips.html">tips</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/drafts/github-to-codeberg.html" rel="bookmark"
+        title="Permalink to migrating from GitHub to Codeberg">migrating from GitHub to Codeberg</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2020-11-05T00:00:00+08:00">
+        Thu 05 November 2020
+      </time>
+    </div>
+    <address class="vcard author">
+      by       <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">Dafne Kiyui</a>
+    </address>
+    <div class="category">
+      category: <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+    </div>
+    <div class="tags">
+      tags:
+      <a href="https://dontreinventbicycle.com/tag/hosting.html">hosting</a>
+      <a href="https://dontreinventbicycle.com/tag/git.html">git</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p>The news that <a href="https://youtube-dl.org/">youtube-dl</a> had been struck by DMCA takedown notice by RIAA has been circulating about in many tech circles such as <a href="https://news.ycombinator.com/item?id=24872911">Hacker News</a>, inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to <a href="https://news.ycombinator.com/item?id=17221527">when Microsoft acquired GitHub</a> or when <a href="https://news.ycombinator.com/item?id=20542731">GitHub banned users in Iran</a> (among other countries), there was an influx of people criticising GitHub and <a href="https://twitter.com/gitlabstatus/status/1003887898142367744">reactionarily hopping onto GitLab</a>, which ironically is affected by the same sanctions, instead.</p>
+<blockquote>
+<p><strong>Repository unavailable due to DMCA takedown.</strong></p>
+<p>This repository is currently disabled due to a DMCA takedown notice. We have disabled public access to the repository. The notice has been <a href="https://github.com/github/dmca/blob/master/2020/10/2020-10-23-RIAA.md">publicly posted</a>.</p>
+<p>If you are the repository owner, and you believe that your repository was disabled as a result of mistake or misidentification, you have the right to file a counter notice and have the repository reinstated. Our help articles provide more details on our <a href="https://docs.github.com/articles/dmca-takedown-policy">DMCA takedown</a> policy and <a href="https://docs.github.com/articles/guide-to-submitting-a-dmca-counter-notice">how to file a counter notice</a>. If you have any questions about the process or the risks in filing a counter notice, we suggest that you consult with a lawyer.</p>
+</blockquote>
+<p>I'd like to discuss and propose a different reason to "jump to GitLab" however. I received the book <cite>Working in Public: The Making and Maintenance of Open Source Software</cite> by Nadia Eghbal in the mail a few weeks ago from an anonymous sender 😱, where it discusses how GitHub had essentially become the de-facto platform for hosting open source code:</p>
+<blockquote>
+<p>Although there's no requirement that developers must use GitHub to write open source software, GitHub is by far the dominant code-hosting platform today <em>(page 21)</em></p>
+</blockquote>
+<p>An irony, considering that GitHub is a proprietary service. Also cited in the book is that large open source projects such as Python and the <a href="https://github.blog/2019-04-29-apache-joins-github-community/">Apache Software Foundation have moved to GitHub</a>. In discussing <a href="https://snarky.ca/the-history-behind-the-decision-to-move-python-to-github/">the history behind the decision to move Python to GitHub</a>, Brett Cannon said:</p>
+<blockquote>
+<p>...there was no killer feature that GitLab had. Now some would argue that the fact GitLab is open source is its killer feature. But to me, the development process is more important than worrying whether a cloud-based service publishes its source code.</p>
+</blockquote>
+<p>To echo the sentiment of user <em>gyka</em> on the <a href="https://news.ycombinator.com/item?id=13615139">Hacker News discussion thread</a>, <em>I really dislike the trend of open-source software centralising around GitHub</em>, I too dislike GitHub becoming a central authority in the development of open source software, but I do not think that jumping to GitLab is the solution. GitHub owes its success to introducing the notion of "social coding" and main-streaming the development process for developers worldwide. This has made it easier for developers to get their projects discovered and have users report bugs with relatively little friction. GitLab, while maintaining an open source community edition, does not do much to set itself apart to the larger free and open source (FOSS) community. <em>Side note: It is however a great tool for the DevOps &amp; GitOps workflow.</em></p>
+<p>When thinking of both GitHub and GitLab as platforms, rather than self-hosted GitLab - the software, the important distinction to the FOSS community is its commitment to the maintenance of such software. There is a difference between the FOSS community and the larger "GitHub generation of developers", as <em>Working in Public</em> highlights,</p>
+<blockquote>
+<p>Both free and early open source advocates were preoccupied with evangelizing the idea of open source...but today's developers hardly even notice "open source" as a concept anymore. They just want to write and publish their code, and GitHub is the platform that makes it easy to do that. <em>(page 28)</em></p>
+<p>To early free and open source developers, the move towards standard tools and workflows, shepherded by a single company like GitHub (acquired by Microsoft in 2018), represented a backslide against everything they had been fighting for since the 1980s. Code collaboration wasn't supposed to belong to anyone, and especially not to a multibillion-dollar company making proprietary software. <em>(page 30)</em></p>
+<p>But the GitHub generation of open source developers doesn't see it that way, because they prioritise convenience over freedom (unlike free software advocates) or openness (unlike early open source advocates). <em>(page 30)</em></p>
+</blockquote>
+<p>This is where <a href="https://codeberg.org/">Codeberg</a> differs. Codeberg is a non-profit launched to give open source software a home, with <a href="https://blog.codeberg.org/codebergorg-launched.html">a clear mission statement</a>:</p>
+<blockquote>
+<p>The mission of the Codeberg e.V. is to build and maintain a free collaboration platform for creating, archiving, and preserving code and to document its development process.</p>
+</blockquote>
+<p>This distinction matters to me, and is why I opted to also provide a source download for my <a href="/rewriting-night-light.html">night light slider rewrite</a> instead of only just linking to the GitHub pull request. Accessibility matters, and for individuals that may want to avoid using GitHub or non-free software altogether, <a href="https://codeberg.org/">Codeberg</a> is a great alternative, which is why I've decided to move and start developing my FOSS software there instead, starting with my GNOME extensions:</p>
+<ul>
+<li><a href="https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension">gnome-shell-night-light-slider-extension</a></li>
+<li><a href="https://codeberg.org/kiyui/gnome-shell-screenshotlocations-extension">gnome-shell-screenshotlocations-extension</a></li>
+</ul>
+<p>The migration was relatively simple, especially with the <a href="https://docs.gitea.io/en-us/migrations-interfaces/">migration feature</a> which even imports old pull requests and issues. I have a tutorial on doing just that <a href="/github-to-codeberg-howto.html">here</a>. Regardless, I invite more thought on this subject and can only wonder where the FOSS community goes with this in the future.</p>
+<h3>closing notes</h3>
+<p>I do not see myself moving away from GitHub permanently as it continues to play a vital role in how and where software is developed (and my employer uses it 🤷). This site is, and continues to be, hosted on <a href="https://pages.github.com/">GitHub pages</a> because convenience triumphs and it's <em>free</em>.</p>
+<p>I do hope that recruiters <a href="https://news.ycombinator.com/item?id=19413348">stop requiring that a GitHub profile be linked</a> however because it's an awfully superficial way to judge the quality of a candidate.</p>
+<h3>citation</h3>
+<p>I quoted the book <cite>Working in Public: The Making and Maintenance of Open Source Software</cite> by Nadia Eghbal (Stripe Press), quite a bit and can very much vouch to it being a great read. It's available for purchase <a href="https://www.amazon.com/dp/0578675862/">on Amazon</a> (and hopefully elsewhere).</p>
+  </div><!-- /.entry-content -->
+</section>
+  </div>
+
+  <footer id="contentinfo" class="body">
+    <div>
+      <h4 class="title">social:</h4>
+      <ul class="links">
+        <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+        <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+        <li><a href="https://codeberg.org/kiyui">Codeberg</a></li>
+        <li><a href="https://github.com/kiyui">GitHub</a></li>
+        <li><a rel="me" href="https://koyu.space/@dafne">Mastodon</a></li>
+        <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="title">projects:</h4>
+      <ul class="links">
+        <li><a href="https://represent.io/kiyui">Resume</a></li>
+        <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+      </ul>
+    </div>
+    <address id="about" class="vcard body">
+      Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+      which takes great advantage of <a href="http://python.org">Python</a>.
+    </address>
+  </footer>
+</body>
+
+</html>
