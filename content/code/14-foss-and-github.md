@@ -1,11 +1,10 @@
-Title: migrating from GitHub to Codeberg
+Title: Free and open source software and GitHub
 Date: 2020-11-05
 Tags: hosting, git
-Slug: github-to-codeberg
+Slug: foss-and-github
 Description: A criticism of GitHub beyond just the DMCA takedown, and hopefully a new paradigm in where we develop our software
-Status: draft
 
-The news that [youtube-dl](https://youtube-dl.org/) had been struck by DMCA takedown notice by RIAA has been circulating about in many tech circles such as [Hacker News](https://news.ycombinator.com/item?id=24872911), inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to [when Microsoft acquired GitHub](https://news.ycombinator.com/item?id=17221527) or when [GitHub banned users in Iran](https://news.ycombinator.com/item?id=20542731) (among other countries), there was an influx of people criticising GitHub and [reactionarily hopping onto GitLab](https://twitter.com/gitlabstatus/status/1003887898142367744), which ironically is affected by the same sanctions, instead.
+The news that [youtube-dl](https://youtube-dl.org/) had been struck by DMCA takedown notice by RIAA has been circulating in many tech circles such as [Hacker News](https://news.ycombinator.com/item?id=24872911), inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to [when Microsoft acquired GitHub](https://news.ycombinator.com/item?id=17221527) or when [GitHub banned users in Iran](https://news.ycombinator.com/item?id=20542731) (among other countries), there was an influx of people criticising GitHub and [reactionarily hopping onto GitLab](https://twitter.com/gitlabstatus/status/1003887898142367744), which ironically is affected by the same sanctions, instead.
 
 > **Repository unavailable due to DMCA takedown.**
 
@@ -13,7 +12,7 @@ The news that [youtube-dl](https://youtube-dl.org/) had been struck by DMCA take
 
 > If you are the repository owner, and you believe that your repository was disabled as a result of mistake or misidentification, you have the right to file a counter notice and have the repository reinstated. Our help articles provide more details on our [DMCA takedown](https://docs.github.com/articles/dmca-takedown-policy) policy and [how to file a counter notice](https://docs.github.com/articles/guide-to-submitting-a-dmca-counter-notice). If you have any questions about the process or the risks in filing a counter notice, we suggest that you consult with a lawyer.
 
-I'd like to discuss and propose a different reason to "jump to GitLab" however. I received the book <cite>Working in Public: The Making and Maintenance of Open Source Software</cite> by Nadia Eghbal in the mail a few weeks ago from an anonymous sender 😱, where it discusses how GitHub had essentially become the de-facto platform for hosting open source code:
+I'd like to discuss and propose a different reason to "jump to GitLab" however. I received the book <cite>Working in Public: The Making and Maintenance of Open Source Software</cite> by Nadia Eghbal in the mail a few weeks ago from an anonymous sender 😱, where it discusses how GitHub had become the de-facto platform for hosting open source code:
 
 > Although there's no requirement that developers must use GitHub to write open source software, GitHub is by far the dominant code-hosting platform today *(page 21)*
 
@@ -35,7 +34,7 @@ This is where [Codeberg](https://codeberg.org/) differs. Codeberg is a non-profi
 
 > The mission of the Codeberg e.V. is to build and maintain a free collaboration platform for creating, archiving, and preserving code and to document its development process.
 
-This distinction matters to me, and is why I opted to also provide a source download for my [night light slider rewrite](/rewriting-night-light.html) instead of only just linking to the GitHub pull request. Accessibility matters, and for individuals that may want to avoid using GitHub or non-free software altogether, [Codeberg](https://codeberg.org/) is a great alternative, which is why I've decided to move and start developing my FOSS software there instead, starting with my GNOME extensions:
+This distinction matters to me and is why I opted to also provide a source download for my [night light slider rewrite](/rewriting-night-light.html) instead of only just linking to the GitHub pull request. Accessibility matters, and for individuals that may want to avoid using GitHub or non-free software altogether, [Codeberg](https://codeberg.org/) is a great alternative, which is why I've decided to move and start developing my FOSS software there instead, starting with my GNOME extensions:
 
 - [gnome-shell-night-light-slider-extension](https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension)
 - [gnome-shell-screenshotlocations-extension](https://codeberg.org/kiyui/gnome-shell-screenshotlocations-extension)
