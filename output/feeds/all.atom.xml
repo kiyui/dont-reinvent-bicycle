@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/all.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-11-04T00:00:00+08:00</updated><entry><title>how to migrate your GitHub repository to Codeberg</title><link href="https://dontreinventbicycle.com/github-to-codeberg-howto.html" rel="alternate"></link><published>2020-11-04T00:00:00+08:00</published><updated>2020-11-04T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-11-04:/github-to-codeberg-howto.html</id><summary type="html">&lt;p&gt;The easiest way to migrate repositories is to simply change where your local repository remote points to. In a locally cloned repository, assert that you should have a git remote (usually named &lt;code&gt;origin&lt;/code&gt;) by running &lt;code&gt;git remote -v&lt;/code&gt;:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/all.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-11-05T00:00:00+08:00</updated><entry><title>Free and open source software and GitHub</title><link href="https://dontreinventbicycle.com/foss-and-github.html" rel="alternate"></link><published>2020-11-05T00:00:00+08:00</published><updated>2020-11-05T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-11-05:/foss-and-github.html</id><summary type="html">&lt;p&gt;The news that &lt;a href="https://youtube-dl.org/"&gt;youtube-dl&lt;/a&gt; had been struck by DMCA takedown notice by RIAA has been circulating in many tech circles such as &lt;a href="https://news.ycombinator.com/item?id=24872911"&gt;Hacker News&lt;/a&gt;, inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to &lt;a href="https://news.ycombinator.com/item?id=17221527"&gt;when Microsoft acquired GitHub&lt;/a&gt; or when &lt;a href="https://news.ycombinator.com/item?id=20542731"&gt;GitHub banned users in Iran&lt;/a&gt; (among …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The news that &lt;a href="https://youtube-dl.org/"&gt;youtube-dl&lt;/a&gt; had been struck by DMCA takedown notice by RIAA has been circulating in many tech circles such as &lt;a href="https://news.ycombinator.com/item?id=24872911"&gt;Hacker News&lt;/a&gt;, inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to &lt;a href="https://news.ycombinator.com/item?id=17221527"&gt;when Microsoft acquired GitHub&lt;/a&gt; or when &lt;a href="https://news.ycombinator.com/item?id=20542731"&gt;GitHub banned users in Iran&lt;/a&gt; (among other countries), there was an influx of people criticising GitHub and &lt;a href="https://twitter.com/gitlabstatus/status/1003887898142367744"&gt;reactionarily hopping onto GitLab&lt;/a&gt;, which ironically is affected by the same sanctions, instead.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Repository unavailable due to DMCA takedown.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This repository is currently disabled due to a DMCA takedown notice. We have disabled public access to the repository. The notice has been &lt;a href="https://github.com/github/dmca/blob/master/2020/10/2020-10-23-RIAA.md"&gt;publicly posted&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you are the repository owner, and you believe that your repository was disabled as a result of mistake or misidentification, you have the right to file a counter notice and have the repository reinstated. Our help articles provide more details on our &lt;a href="https://docs.github.com/articles/dmca-takedown-policy"&gt;DMCA takedown&lt;/a&gt; policy and &lt;a href="https://docs.github.com/articles/guide-to-submitting-a-dmca-counter-notice"&gt;how to file a counter notice&lt;/a&gt;. If you have any questions about the process or the risks in filing a counter notice, we suggest that you consult with a lawyer.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I'd like to discuss and propose a different reason to "jump to GitLab" however. I received the book &lt;cite&gt;Working in Public: The Making and Maintenance of Open Source Software&lt;/cite&gt; by Nadia Eghbal in the mail a few weeks ago from an anonymous sender 😱, where it discusses how GitHub had become the de-facto platform for hosting open source code:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Although there's no requirement that developers must use GitHub to write open source software, GitHub is by far the dominant code-hosting platform today &lt;em&gt;(page 21)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;An irony, considering that GitHub is a proprietary service. Also cited in the book is that large open source projects such as Python and the &lt;a href="https://github.blog/2019-04-29-apache-joins-github-community/"&gt;Apache Software Foundation have moved to GitHub&lt;/a&gt;. In discussing &lt;a href="https://snarky.ca/the-history-behind-the-decision-to-move-python-to-github/"&gt;the history behind the decision to move Python to GitHub&lt;/a&gt;, Brett Cannon said:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;...there was no killer feature that GitLab had. Now some would argue that the fact GitLab is open source is its killer feature. But to me, the development process is more important than worrying whether a cloud-based service publishes its source code.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To echo the sentiment of user &lt;em&gt;gyka&lt;/em&gt; on the &lt;a href="https://news.ycombinator.com/item?id=13615139"&gt;Hacker News discussion thread&lt;/a&gt;, &lt;em&gt;I really dislike the trend of open-source software centralising around GitHub&lt;/em&gt;, I too dislike GitHub becoming a central authority in the development of open source software, but I do not think that jumping to GitLab is the solution. GitHub owes its success to introducing the notion of "social coding" and main-streaming the development process for developers worldwide. This has made it easier for developers to get their projects discovered and have users report bugs with relatively little friction. GitLab, while maintaining an open source community edition, does not do much to set itself apart to the larger free and open source (FOSS) community. &lt;em&gt;Side note: It is however a great tool for the DevOps &amp;amp; GitOps workflow.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;When thinking of both GitHub and GitLab as platforms, rather than self-hosted GitLab - the software, the important distinction to the FOSS community is its commitment to the maintenance of such software. There is a difference between the FOSS community and the larger "GitHub generation of developers", as &lt;em&gt;Working in Public&lt;/em&gt; highlights,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Both free and early open source advocates were preoccupied with evangelizing the idea of open source...but today's developers hardly even notice "open source" as a concept anymore. They just want to write and publish their code, and GitHub is the platform that makes it easy to do that. &lt;em&gt;(page 28)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;To early free and open source developers, the move towards standard tools and workflows, shepherded by a single company like GitHub (acquired by Microsoft in 2018), represented a backslide against everything they had been fighting for since the 1980s. Code collaboration wasn't supposed to belong to anyone, and especially not to a multibillion-dollar company making proprietary software. &lt;em&gt;(page 30)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;But the GitHub generation of open source developers doesn't see it that way, because they prioritise convenience over freedom (unlike free software advocates) or openness (unlike early open source advocates). &lt;em&gt;(page 30)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This is where &lt;a href="https://codeberg.org/"&gt;Codeberg&lt;/a&gt; differs. Codeberg is a non-profit launched to give open source software a home, with &lt;a href="https://blog.codeberg.org/codebergorg-launched.html"&gt;a clear mission statement&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The mission of the Codeberg e.V. is to build and maintain a free collaboration platform for creating, archiving, and preserving code and to document its development process.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This distinction matters to me and is why I opted to also provide a source download for my &lt;a href="/rewriting-night-light.html"&gt;night light slider rewrite&lt;/a&gt; instead of only just linking to the GitHub pull request. Accessibility matters, and for individuals that may want to avoid using GitHub or non-free software altogether, &lt;a href="https://codeberg.org/"&gt;Codeberg&lt;/a&gt; is a great alternative, which is why I've decided to move and start developing my FOSS software there instead, starting with my GNOME extensions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension"&gt;gnome-shell-night-light-slider-extension&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://codeberg.org/kiyui/gnome-shell-screenshotlocations-extension"&gt;gnome-shell-screenshotlocations-extension&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The migration was relatively simple, especially with the &lt;a href="https://docs.gitea.io/en-us/migrations-interfaces/"&gt;migration feature&lt;/a&gt; which even imports old pull requests and issues. I have a tutorial on doing just that &lt;a href="/github-to-codeberg-howto.html"&gt;here&lt;/a&gt;. Regardless, I invite more thought on this subject and can only wonder where the FOSS community goes with this in the future.&lt;/p&gt;
+&lt;h3&gt;closing notes&lt;/h3&gt;
+&lt;p&gt;I do not see myself moving away from GitHub permanently as it continues to play a vital role in how and where software is developed (and my employer uses it 🤷). This site is, and continues to be, hosted on &lt;a href="https://pages.github.com/"&gt;GitHub pages&lt;/a&gt; because convenience triumphs and it's &lt;em&gt;free&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;I do hope that recruiters &lt;a href="https://news.ycombinator.com/item?id=19413348"&gt;stop requiring that a GitHub profile be linked&lt;/a&gt; however because it's an awfully superficial way to judge the quality of a candidate.&lt;/p&gt;
+&lt;h3&gt;citation&lt;/h3&gt;
+&lt;p&gt;I quoted the book &lt;cite&gt;Working in Public: The Making and Maintenance of Open Source Software&lt;/cite&gt; by Nadia Eghbal (Stripe Press), quite a bit and can very much vouch to it being a great read. It's available for purchase &lt;a href="https://www.amazon.com/dp/0578675862/"&gt;on Amazon&lt;/a&gt; (and hopefully elsewhere).&lt;/p&gt;</content><category term="code"></category><category term="hosting"></category><category term="git"></category></entry><entry><title>how to migrate your GitHub repository to Codeberg</title><link href="https://dontreinventbicycle.com/github-to-codeberg-howto.html" rel="alternate"></link><published>2020-11-04T00:00:00+08:00</published><updated>2020-11-04T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-11-04:/github-to-codeberg-howto.html</id><summary type="html">&lt;p&gt;The easiest way to migrate repositories is to simply change where your local repository remote points to. In a locally cloned repository, assert that you should have a git remote (usually named &lt;code&gt;origin&lt;/code&gt;) by running &lt;code&gt;git remote -v&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;origin  git@github.com:username/repository.git (fetch)&lt;/span&gt;
 &lt;span class="err"&gt;origin  git@github.com …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;The easiest way to migrate repositories is to simply change where your local repository remote points to. In a locally cloned repository, assert that you should have a git remote (usually named &lt;code&gt;origin&lt;/code&gt;) by running &lt;code&gt;git remote -v&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;origin  git@github.com:username/repository.git (fetch)&lt;/span&gt;
@@ -2248,214 +2283,4 @@ the signal, so we can override that callback and chain-up.&lt;/p&gt;
         &lt;/ul&gt;
       &lt;/li&gt;
     &lt;/ul&gt;
-  </content><category term="personal"></category><category term="meta"></category><category term="personal"></category><category term="lgbt"></category></entry><entry><title>the error paradigm</title><link href="https://dontreinventbicycle.com/handling-errors.html" rel="alternate"></link><published>2019-05-01T11:39:00+08:00</published><updated>2019-05-09T00:25:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-05-01:/handling-errors.html</id><summary type="html">&lt;p&gt;The error programming paradigm comes from the recognition that errors are expected. Consider a function that is meant to parse JSON data. Naturally should the input string not be of valid JSON format, the function would error out. That is because handling invalid JSON data is out of the scope …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The error programming paradigm comes from the recognition that errors are expected. Consider a function that is meant to parse JSON data. Naturally should the input string not be of valid JSON format, the function would error out. That is because handling invalid JSON data is out of the scope of the function and the input data to the function is clearly of incorrect format.&lt;/p&gt;
-&lt;h2&gt;when to throw errors&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;handling invalid JSON data is out of the scope of the function&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;In the quest of trimming down functions and not creating monolithic code, exceptions help us define the boundaries of our functions. They also help to signal failure that a given function cannot handle, or should not be responsible for handling. To make this simpler to understand, we need to go downscale to a simpler primitive, UNIX programs. Take the following C++ code for example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
-
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;cout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;EXIT_FAILURE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;If we were the compile the above code and run it, we would see that it returns a non-zero exit code of &lt;code&gt;1&lt;/code&gt;, indicating a failure in execution.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;g++ main.cpp &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; ./a.out  &lt;span class="c1"&gt;# Hello world&lt;/span&gt;
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;                  &lt;span class="c1"&gt;# 1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;We can extend on this further by trying to chain the command with other commands:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./a.out &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;...succeeded&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;...failed&amp;quot;&lt;/span&gt;  &lt;span class="c1"&gt;#=&amp;gt; Hello world...failed&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;We see that chaining the &lt;code&gt;echo "...succeeded"&lt;/code&gt; command failed because the command returned a non-zero exit code. In UNIX, well-behaving programs return &lt;code&gt;0&lt;/code&gt; on success and a non-zero exit code on failure, that should act as a type of error code. For example, you could have your application return &lt;code&gt;1&lt;/code&gt; on a general failure and perhaps &lt;code&gt;2&lt;/code&gt; if it encountered an issue reading your input, and so on. You can read more about exit status codes in &lt;a href="https://www.tldp.org/LDP/abs/html/exit-status.html"&gt;the following chapter&lt;/a&gt; by The Linux Documentation Project.&lt;/p&gt;
-&lt;h2&gt;exit codes are an interface&lt;/h2&gt;
-&lt;p&gt;In the shell, exit codes are the interface to communicate execution success or failure between applications in the same way &lt;a href="/the-unix-paradigm.html"&gt;pipes&lt;/a&gt; are used to communicate input and output. In the same manner, program exceptions are simply another interface by which we can determine that a method has failed. The term &lt;strong&gt;interface&lt;/strong&gt; here is important, because it tells us how we should both be handling and throwing errors.&lt;/p&gt;
-&lt;h2&gt;think of the interface of an error&lt;/h2&gt;
-&lt;p&gt;In a JavaScript &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"&gt;Promise&lt;/a&gt;, the interface for throwing an error would be to &lt;code&gt;reject&lt;/code&gt; the Promise. We wouldn't expect a failed promise to &lt;code&gt;resolve&lt;/code&gt;, lest we run into unexpected behaviours! Assuming we have the following function &lt;code&gt;getUser&lt;/code&gt; that returns a Promise, it would be logical to expect that the function should &lt;code&gt;reject&lt;/code&gt; if it fails to find a user:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;getUser&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Promise&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;UserStore&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;has&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;UserStore&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userId&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="c1"&gt;// We should reject, but we do not&lt;/span&gt;
-      &lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Where we would consume it as so:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;await&lt;/span&gt; &lt;span class="nx"&gt;getUser&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;        &lt;span class="c1"&gt;// =&amp;gt; TypeError: Cannot read property &amp;#39;name&amp;#39; of null&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This is exactly why the interface matters;- People expect certain conventions of how something should behave. Now, let's try the intuition behind using interfaces to see how we should be throwing or handling errors.&lt;/p&gt;
-&lt;h2&gt;understanding error interfaces&lt;/h2&gt;
-&lt;p&gt;Let's assume we are building a &lt;a href="https://vuejs.org/"&gt;Vue.js&lt;/a&gt;-powered application, with a &lt;a href="https://vuex.vuejs.org/"&gt;Vuex&lt;/a&gt; store, and we are building a login form with a submit button that uses the following method:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;onSubmit&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;form&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$refs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;loginForm&lt;/span&gt;
-  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;form&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;form&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pass&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-
-  &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$store&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;login&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The part we want to focus on is the store dispatch method, &lt;code&gt;this.$store.dispatch&lt;/code&gt; because this is where our error can stem from.&lt;/p&gt;
-&lt;h3&gt;the store&lt;/h3&gt;
-&lt;p&gt;Let's start with defining the basic interface of our store action. We want a function that sends our login credentials to a server and responds with our logged-in user. As this function would require a network request, it makes sense that we should start with it returning an empty promise.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;login&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Promise&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now, let's take a look at how we can craft that login request. To keep things simple, we will be making use of the &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API"&gt;fetch API&lt;/a&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(...)&lt;/span&gt;
-  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// Network error&lt;/span&gt;
-    &lt;span class="c1"&gt;// We should raise an exception here!&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The fetch function returns a Promise that either resolves a &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Response"&gt;Response&lt;/a&gt; or rejects when there is a network error, one area where we should raise an exception. If the response succeeded, the value of &lt;code&gt;response.ok&lt;/code&gt; should be truthy, meaning we successfully got a response from the server. If not, we can assume we have run into an error and let the consumer of the function handle that.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// Our response should be in response.body&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// We got a HTTP status code greater than 299&lt;/span&gt;
-  &lt;span class="c1"&gt;// We should raise an exception here!&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Next, we want to parse the response with an imaginary &lt;code&gt;User&lt;/code&gt; class with a static &lt;code&gt;from&lt;/code&gt; method:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="kr"&gt;static&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userString&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// This can throw an error if it&amp;#39;s not valid JSON&lt;/span&gt;
-    &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;JSON&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;parse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;userString&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="c1"&gt;// Create a user and return it if data is of valid shape&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;age&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="c1"&gt;// If we reached here, assume data is invalid&lt;/span&gt;
-    &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Invalid user string provided!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;You can see that since &lt;code&gt;from&lt;/code&gt; is a regular method, our interface for raising an exception is by using a &lt;code&gt;throw&lt;/code&gt; statement. As this function can also throw an error, we use it inside a &lt;code&gt;try/catch&lt;/code&gt; block inside out &lt;code&gt;if (response.ok)&lt;/code&gt; block as so:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// User.from threw an error&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt; 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Finally, now that we all that we have all the components to build our store action, we can piece it together! Remember, since our &lt;code&gt;login&lt;/code&gt; function returns a Promise, our interface for raising an exception is by rejecting &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;login&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Promise&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(...)&lt;/span&gt;
-      &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-          &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="c1"&gt;// Parse the user from the response body&lt;/span&gt;
-            &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-            &lt;span class="c1"&gt;// We&amp;#39;ve successfully parsed the user object&lt;/span&gt;
-            &lt;span class="nx"&gt;resolve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-          &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="c1"&gt;// User.from threw an error&lt;/span&gt;
-            &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;There is an issue with the server response!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-          &lt;span class="p"&gt;}&lt;/span&gt; 
-        &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-          &lt;span class="c1"&gt;// We got a HTTP status code greater than 299&lt;/span&gt;
-          &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sb"&gt;`There was an error with your request: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;statusText&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-      &lt;span class="p"&gt;})&lt;/span&gt;
-      &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="c1"&gt;// Network error&lt;/span&gt;
-        &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;A network error occured!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-      &lt;span class="p"&gt;})&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;the component&lt;/h3&gt;
-&lt;p&gt;Now back to our component, we can figure out how to the deal with exceptions when they occur:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$store&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;login&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
-  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// Normal use case&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// Show the error message to the user&lt;/span&gt;
-    &lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;alert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;An error has occured, please try again.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="c1"&gt;// A developer would like to see this in the console&lt;/span&gt;
-    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="c1"&gt;// Catch the error for error tracking&lt;/span&gt;
-    &lt;span class="nx"&gt;captureException&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Let's take a look at the interfaces we have made use of:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;To the user, they want to know when an error occurred, but not the stack trace and all that information. We make use of a simple &lt;code&gt;alert&lt;/code&gt; statement with a message.&lt;/li&gt;
-&lt;li&gt;To the developer debugging the code, they would love the see the error in their console with a simple &lt;code&gt;console.error&lt;/code&gt; statement.&lt;/li&gt;
-&lt;li&gt;To the developer debugging a bug in production, they would love to see a stack-trace of the bug, so we capture that too.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;fun-fact&lt;/h4&gt;
-&lt;p&gt;The &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/reject"&gt;reject&lt;/a&gt; callback for a Promise can receive anything as an argument (the argument is called the &lt;code&gt;reason&lt;/code&gt;). While you may want to use the &lt;code&gt;Error&lt;/code&gt; type so you get an entire stack-trace of the issue, you can also return an &lt;code&gt;object&lt;/code&gt; with the reason in it:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(...)&lt;/span&gt;
-  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;then&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;res&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;res&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="c1"&gt;// etc&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
-        &lt;span class="nx"&gt;type&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;ErrorType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ServerError&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nb"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;...&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="p"&gt;})&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;reject&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
-      &lt;span class="nx"&gt;type&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;ErrorType&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;NetworkError&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;err&lt;/span&gt;
-    &lt;span class="p"&gt;})&lt;/span&gt;
-  &lt;span class="p"&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;finally {&lt;/h2&gt;
-&lt;p&gt;Errors are an extra dimension that we can make use of when coding and can help us achieve cleaner code, so long as we use it.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="nx"&gt;something&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// why bother?&lt;/span&gt;
-  &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="nx"&gt;err&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;finally&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="c1"&gt;// we are in the endgame&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This article is powered by the exception-free code philosophy, perhaps made popular by &lt;a href="https://google.github.io/styleguide/cppguide.html#Exceptions"&gt;Google's C++ styleguide&lt;/a&gt;, leaking into other languages like JavaScript. Also for fun, I recommend checking out &lt;a href="https://wiki.haskell.org/Exception"&gt;how Haskell implements exceptions&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;}&lt;/h2&gt;</content><category term="code"></category><category term="programming"></category><category term="unix"></category><category term="javascript"></category><category term="vue"></category></entry></feed>
+  </content><category term="personal"></category><category term="meta"></category><category term="personal"></category><category term="lgbt"></category></entry></feed>
