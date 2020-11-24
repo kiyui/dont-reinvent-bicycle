@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед - Dafne Kiyui</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/dafne-kiyui.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-11-05T00:00:00+08:00</updated><entry><title>Free and open source software and GitHub</title><link href="https://dontreinventbicycle.com/foss-and-github.html" rel="alternate"></link><published>2020-11-05T00:00:00+08:00</published><updated>2020-11-05T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-11-05:/foss-and-github.html</id><summary type="html">&lt;p&gt;The news that &lt;a href="https://youtube-dl.org/"&gt;youtube-dl&lt;/a&gt; had been struck by DMCA takedown notice by RIAA has been circulating in many tech circles such as &lt;a href="https://news.ycombinator.com/item?id=24872911"&gt;Hacker News&lt;/a&gt;, inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to &lt;a href="https://news.ycombinator.com/item?id=17221527"&gt;when Microsoft acquired GitHub&lt;/a&gt; or when &lt;a href="https://news.ycombinator.com/item?id=20542731"&gt;GitHub banned users in Iran&lt;/a&gt; (among …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The news that &lt;a href="https://youtube-dl.org/"&gt;youtube-dl&lt;/a&gt; had been struck by DMCA takedown notice by RIAA has been circulating in many tech circles such as &lt;a href="https://news.ycombinator.com/item?id=24872911"&gt;Hacker News&lt;/a&gt;, inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to &lt;a href="https://news.ycombinator.com/item?id=17221527"&gt;when Microsoft acquired GitHub&lt;/a&gt; or when &lt;a href="https://news.ycombinator.com/item?id=20542731"&gt;GitHub banned users in Iran&lt;/a&gt; (among other countries), there was an influx of people criticising GitHub and &lt;a href="https://twitter.com/gitlabstatus/status/1003887898142367744"&gt;reactionarily hopping onto GitLab&lt;/a&gt;, which ironically is affected by the same sanctions, instead.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед - Dafne Kiyui</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/dafne-kiyui.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2020-11-24T00:00:00+08:00</updated><entry><title>how to use a valid email when signing up for Sephora</title><link href="https://dontreinventbicycle.com/sephora-email-compliance.html" rel="alternate"></link><published>2020-11-24T00:00:00+08:00</published><updated>2020-11-24T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-11-24:/sephora-email-compliance.html</id><summary type="html">&lt;p&gt;&lt;em&gt;Please don't take anything in this article seriously.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://gmail.com/"&gt;Gmail&lt;/a&gt;, &lt;a href="https://outlook.com/"&gt;Outlook&lt;/a&gt;, and &lt;a href="https://mail.yahoo.com/"&gt;Yahoo! Mail&lt;/a&gt; are popular options for creating incredible email addresses that will be compliant with most software and are allowed to bypass sophisticated spam filters as the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;endsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sender&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
+    &lt;span class="nx"&gt;endsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sender&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;yahoo.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
+    &lt;span class="nx"&gt;endsWith …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;&lt;em&gt;Please don't take anything in this article seriously.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://gmail.com/"&gt;Gmail&lt;/a&gt;, &lt;a href="https://outlook.com/"&gt;Outlook&lt;/a&gt;, and &lt;a href="https://mail.yahoo.com/"&gt;Yahoo! Mail&lt;/a&gt; are popular options for creating incredible email addresses that will be compliant with most software and are allowed to bypass sophisticated spam filters as the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;endsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sender&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
+    &lt;span class="nx"&gt;endsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sender&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;yahoo.com&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
+    &lt;span class="nx"&gt;endsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sender&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;yahoo.co.uk&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
+    &lt;span class="nx"&gt;endsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sender&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;hotmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt;
+    &lt;span class="nx"&gt;endsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sender&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;live.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="o"&gt;||&lt;/span&gt;
+    &lt;span class="nx"&gt;endsWith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$sender&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;hotmail.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;exec&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;echo &lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="si"&gt;$emailContent&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt; | mail -s Fwd &lt;/span&gt;&lt;span class="si"&gt;$receiver&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// T0DO reports the error&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I use &lt;a href="https://protonmail.com/"&gt;Protonmail&lt;/a&gt; with a custom domain, so I've become accustomed to having my email not be accepted by most websites. Even regular Protonmail addresses ending with &lt;code&gt;protonmail.ch&lt;/code&gt; instead of &lt;code&gt;protonmail.com&lt;/code&gt; are regularly blocked by websites because whitelist code the developer copied from &lt;a href="https://stackoverflow.com/"&gt;StackOverflow&lt;/a&gt; was not up to date. Therefore, I was not at all surprised to see the following error when trying to sign in to Sephora:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="The Sephora login form with the error messages “We're sorry, there is an error with your email and/or password. Remember passwords are 4 to 12 characters (letters or numbers) long. Please try again.” and “Please enter an e-mail address in the format username@domain.com.”" src="https://dontreinventbicycle.com/images/sephora-email-compliance/login-error.png"&gt;&lt;/p&gt;
+&lt;p&gt;The key here is that I was &lt;em&gt;signing in&lt;/em&gt;, not signing up for an account. In fact, I have been signing into the mobile app just fine. Additionally, the “Continue” button did not trigger any requests, leading me to think that the restriction is indeed only on the frontend.&lt;/p&gt;
+&lt;p&gt;With a little digging, I was able to source their email validation function. It appears that they are using a modified version of the RFC-5322 specification.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;span class="cm"&gt; * Note that our test for validity is much stricter than RFC-5322&amp;#39;s definition&lt;/span&gt;
+&lt;span class="cm"&gt; * @param el&lt;/span&gt;
+&lt;span class="cm"&gt; * @returns {boolean}&lt;/span&gt;
+&lt;span class="cm"&gt; */&lt;/span&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;isValidEmailAddress&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;login&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;pattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sr"&gt;/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;login&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Well there's your problem! The regex restricts the email top-level-domain to 2 to 4 characters only, which is why my email at &lt;code&gt;dafne.rocks&lt;/code&gt; did not work! This simple patch should surely fix it now:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt; function isValidEmailAddress (login) {
+&lt;span class="gd"&gt;-  var pattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i;&lt;/span&gt;
+&lt;span class="gi"&gt;+  var pattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/i;&lt;/span&gt;
+   return pattern.test(login);
+ },
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This new specification is available as Dafne Kiyui's modification to Sephora's RFC-5322 specification modification.&lt;/p&gt;</content><category term="joke"></category><category term="javascript"></category><category term="php"></category><category term="regex"></category></entry><entry><title>Free and open source software and GitHub</title><link href="https://dontreinventbicycle.com/foss-and-github.html" rel="alternate"></link><published>2020-11-05T00:00:00+08:00</published><updated>2020-11-05T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-11-05:/foss-and-github.html</id><summary type="html">&lt;p&gt;The news that &lt;a href="https://youtube-dl.org/"&gt;youtube-dl&lt;/a&gt; had been struck by DMCA takedown notice by RIAA has been circulating in many tech circles such as &lt;a href="https://news.ycombinator.com/item?id=24872911"&gt;Hacker News&lt;/a&gt;, inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to &lt;a href="https://news.ycombinator.com/item?id=17221527"&gt;when Microsoft acquired GitHub&lt;/a&gt; or when &lt;a href="https://news.ycombinator.com/item?id=20542731"&gt;GitHub banned users in Iran&lt;/a&gt; (among …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The news that &lt;a href="https://youtube-dl.org/"&gt;youtube-dl&lt;/a&gt; had been struck by DMCA takedown notice by RIAA has been circulating in many tech circles such as &lt;a href="https://news.ycombinator.com/item?id=24872911"&gt;Hacker News&lt;/a&gt;, inviting regular criticism of GitHub and the volatility of software hosting platforms. Akin to &lt;a href="https://news.ycombinator.com/item?id=17221527"&gt;when Microsoft acquired GitHub&lt;/a&gt; or when &lt;a href="https://news.ycombinator.com/item?id=20542731"&gt;GitHub banned users in Iran&lt;/a&gt; (among other countries), there was an influx of people criticising GitHub and &lt;a href="https://twitter.com/gitlabstatus/status/1003887898142367744"&gt;reactionarily hopping onto GitLab&lt;/a&gt;, which ironically is affected by the same sanctions, instead.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Repository unavailable due to DMCA takedown.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;This repository is currently disabled due to a DMCA takedown notice. We have disabled public access to the repository. The notice has been &lt;a href="https://github.com/github/dmca/blob/master/2020/10/2020-10-23-RIAA.md"&gt;publicly posted&lt;/a&gt;.&lt;/p&gt;
@@ -1974,313 +2022,4 @@ the signal, so we can override that callback and chain-up.&lt;/p&gt;
     cursor: pointer;
     background-color: #ccbbab;
   }
-&lt;/style&gt;</content><category term="code"></category><category term="css"></category><category term="a11y"></category></entry><entry><title>on taking a break</title><link href="https://dontreinventbicycle.com/taking-a-break.html" rel="alternate"></link><published>2020-03-19T15:00:00+08:00</published><updated>2020-08-11T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-03-19:/taking-a-break.html</id><summary type="html">
-    &lt;p&gt;
-      It is almost poetic justice that the last time I wrote was on Labour Day,
-      2019. Not long thereafter, I went on a slurry of vacations from Bangkok
-      for 2 bachelor parties, Georgia for a wedding, a multitude of places for
-      Europe, finally ending my streak by attending the Pride …&lt;/p&gt;</summary><content type="html">
-    &lt;p&gt;
-      It is almost poetic justice that the last time I wrote was on Labour Day,
-      2019. Not long thereafter, I went on a slurry of vacations from Bangkok
-      for 2 bachelor parties, Georgia for a wedding, a multitude of places for
-      Europe, finally ending my streak by attending the Pride parade in Taipei
-      🏳‍🌈
-    &lt;/p&gt;
-    &lt;aside&gt;
-      &lt;p&gt;
-        I have included some photos of my travels in this blog. All photos are
-        licensed CC-BY 4.0.
-        &lt;br /&gt;
-        &lt;a rel="license" href="http://creativecommons.org/licenses/by/4.0/"&gt;
-          &lt;img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /&gt;
-        &lt;/a&gt;
-      &lt;/p&gt;
-    &lt;/aside&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="pride flag painted on the road in Taipei" src="https://dontreinventbicycle.com/images/taking-a-break/taipei-0.jpg" /&gt;
-      &lt;img loading="lazy" alt="a view of the Taipei 101" src="https://dontreinventbicycle.com/images/taking-a-break/taipei-1.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      During this time, many things had happened but most notably that when I
-      was in Berlin, I had decided to transition; I am transgender. This post
-      will get pretty personal, but serves as a reminder that queer people do
-      exist and highlights some of the struggles we go through. Hopefully it
-      will serve as an inspiration for other queer people that are still going
-      through something similar.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="the Berlin Cathedral" src="https://dontreinventbicycle.com/images/taking-a-break/berlin-0.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      The earliest times I can recall feelings of gender dysphoria was when I
-      started to attend secondary school, age 13. Not understanding what I was
-      going through, I looked up the symptoms and wondered if it had simply to
-      do with me undergoing puberty. I was an already in-denial homosexual,
-      knowing that I had guy crushes that I had to suppress and going out with
-      girls under the peer-pressure of my friends. At the time, what I was going
-      through was still called gender identity disorder.
-    &lt;/p&gt;
-    &lt;p&gt;
-      Asian society is highly conformist and collectivist, with deviance being
-      punished. I grew up in such a household as an Evangelical Christian and
-      attended an all-boys school with a Christian background. It doesn't help
-      that I live in Malaysia;- a country while progressive for being an Islamic
-      country, is otherwise very socially backwards. This meant that there was
-      no room for questioning or being open about oneself. When I first started
-      going through these feelings in my head, I thought I would test my
-      boundaries. Scene/emo fashion seemed to be something I could resonate with
-      while being very NGC (non-gender-conforming), and allowed for a space
-      where people could share how they felt. I was able to get by wearing tight
-      jeans and shirts with tonnes of accessories but for my entirety of high
-      school had a problem of "misbehaviour" because I refused to cut my hair
-      &lt;a id="source-cut-hair" href="#note-cut-hair"&gt;[1]&lt;/a&gt;. I'd have my hair
-      cut by teachers every other school assembly and resent seeing a
-      hairdresser. I soon discovered the boundaries to which I could safely
-      stretch when I coloured my nails. First with liquid correction fluid, and
-      later actual nail polish during school break. I got called out by someone
-      I knew through my church youth group during a church event and felt
-      greatly embarrassed by it.
-    &lt;/p&gt;
-    &lt;p&gt;I remember thinking,&lt;/p&gt;
-    &lt;blockquote&gt;
-      &lt;p&gt;How did I allow these feelings to get so out of hand?&lt;/p&gt;
-    &lt;/blockquote&gt;
-    &lt;p&gt;
-      This triggered my first wave of "repression"
-      &lt;a id="source-repression" href="#note-repression"&gt;[2]&lt;/a&gt;, conformity. I'd
-      be lying if I said I enjoyed my time alive then. I was able to keep happy
-      on the surface, presenting as the best version of myself there had ever
-      been. I started getting good at my grades, being actively involved in the
-      debate club, and began actively participating in church activities. For
-      some time I even gave my brother my computer, refusing to use it any more.
-      The computer meant community, games, coding, and actively keeping myself
-      happy. I wanted to withdraw from those feelings.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="the Hohensalzburg Castle" src="https://dontreinventbicycle.com/images/taking-a-break/salzburg-0.jpg" /&gt;
-      &lt;img loading="lazy" alt="Munich new town hall" src="https://dontreinventbicycle.com/images/taking-a-break/munich-1.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      Some time later, for
-      &lt;a href="https://en.wikipedia.org/wiki/Gawai_Dayak"&gt;Gawai&lt;/a&gt;, my dad
-      gifted me with my first laptop/tablet. I was able to geek out again! For a
-      while, I was able to distract myself from my dysphoria, ignoring it. Those
-      feelings became harder to ignore when I started developing feelings for
-      another person at school that also turned out to be queer. Through them, I
-      started opening up again, feeling safe to do so. I started meeting other
-      queer people and felt less alone, not that I had ever truly been;- I just
-      did not want to out myself by associating with the school "pondans"
-      &lt;a id="source-pondan" href="#note-pondan"&gt;[3]&lt;/a&gt;. I started dressing and
-      feeling like me again, albeit this time in more colour.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="Gouda town hall" src="https://dontreinventbicycle.com/images/taking-a-break/gouda-0.jpg" /&gt;
-      &lt;img loading="lazy" alt="a canal in Venice" src="https://dontreinventbicycle.com/images/taking-a-break/venice-0.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      This period did not last long, but took years to slowly die out starting
-      when I entered a cis-het relationship
-      &lt;a id="source-cishet" href="#note-cishet"&gt;[4]&lt;/a&gt;. I recall telling her
-      that she "had cured me of the gay", and I went through the process of
-      trying to be normal. It was around this time that I entered university
-      confused and not knowing what I was doing. The relationship was unhealthy
-      and eventually fell apart, and I completely let myself go. I was lucky
-      enough to be able to go through university without paying much attention
-      to classes because I had already spent half my life being a computer nerd.
-      I exposed myself to extra stress but at the very least some exposure by
-      doing various gigs while at the university. I completed my final year
-      project quite easily and landed my first steady income at a part-time job
-      while also working as a part-time research assistant at the university
-      continuing to work on my final year project.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="a church in Munich" src="https://dontreinventbicycle.com/images/taking-a-break/munich-0.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      A funny thing about the human mind is that we seem to desire a belief
-      system or ideology to lean upon. For me, it had always been free software
-      but this being around the time of cryptocurrency's boom, it became much
-      more than that. I started getting involved in far more than I could handle
-      and tried to distract myself from whatever underlying problems I had. The
-      combinations of all these things did lend to me having quite a bit of
-      money, but it also meant I was able to sustain heavy substance abuse. At
-      some point I was smuggling a bottle of liquor a day to get through my work
-      in the research lab.
-    &lt;/p&gt;
-    &lt;p&gt;
-      The research lab is interesting, and what I was working on was also an
-      interesting domain. I was surrounded by webcams and CCTVs. If you know
-      anything about gender dysphoria, this already sounds like a terrible
-      setup. I was constantly seeing myself on every screen and constantly
-      resenting my existence. I tried to persist this for months until I reached
-      a point where I was no longer able to work. I had to run away or stop
-      existing.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="Saint Mark's Basilica" src="https://dontreinventbicycle.com/images/taking-a-break/venice-1.jpg" /&gt;
-      &lt;img loading="lazy" alt="the Grand Place in Brussels" src="https://dontreinventbicycle.com/images/taking-a-break/brussels-0.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      One persistent dream I always had was to sail out on a boat to sea, far
-      away from the sight of land and I'd drown myself. I'd wrap myself in the
-      chains of an anchor and lean off the boat. One day, I received an offer
-      from a friend of mine for a job as Javascript Developer based in Penang, a
-      small island off the northwest coast of Peninsular Malaysia. Perhaps
-      that's my chance for escape, I thought. I quit my job and left my research
-      assistant role without compensation and applied for the job. Given my lack
-      of suitable experience, I was offered an internship instead;- another blow
-      for my confidence.
-    &lt;/p&gt;
-    &lt;p&gt;
-      After a few weeks at the company, I still felt as if I wasn't able to
-      perform up to the standards I knew I was capable of. I still struggled
-      with crippling depression and the feeling of dying inside. I then decided
-      to gradually delete all social media and disconnect myself from many of my
-      friends. The suicide ideation in my head eventually became more strong
-      than I could ever manage, and nothing I took could stop me from feeling
-      that way. I was on my way home one evening from work and I knew exactly
-      what I had to do that night, until I didn't. I received a call from my
-      friend asking if I was alright. In spite of all the social media I had, I
-      felt as if I was screaming into a void and that there was nobody
-      listening. That call saved my life.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="a canal in Amsterdam" src="https://dontreinventbicycle.com/images/taking-a-break/amsterdam-0.jpg" /&gt;
-      &lt;img loading="lazy" alt="behind the town hall in Gouda" src="https://dontreinventbicycle.com/images/taking-a-break/gouda-1.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      The thing about a conservative society is that you never feel safe telling
-      anyone how you feel. There is no safe space for you to unwind from. In
-      that position, I did not feel as if I could seek therapy or counselling
-      because I feared being subjected to conversion therapy or something as
-      terrible of sort.
-    &lt;/p&gt;
-    &lt;p&gt;
-      I wish the story ended there, and that perhaps I had learned to accept
-      myself, transition in attempt to relieve my dysphoria. Instead, over a
-      year had gone by and I was still living with that torment over my
-      shoulders. I did try to make changes, living as a gay man instead of as a
-      transgender woman. At the same time, I still enjoyed "passing privilege"
-      as a cis-het person because I was not too outwardly gay that it was still
-      a surprise factor to people when I came out to them.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="the Victor Emmanuel II Monument" src="https://dontreinventbicycle.com/images/taking-a-break/rome-0.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      Naturally, it only became worse. Partying, travel, self-harm, and
-      substance abuse was my only remorse. My suffering was always invisible,
-      until it could no longer be. Even after that particularly amazing day in
-      Berlin where I was staring at myself in the mirror and thought that I
-      could begin loving myself, I was unable to do so once I arrived back in
-      Malaysia from my travels. The cycle and pain continued until one day when
-      I was in Vietnam, I decided to end my life.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="a view from the Vatican" src="https://dontreinventbicycle.com/images/taking-a-break/rome-1.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      By some miracle, I woke up a few hours later covered in blood. For a
-      while, I pretended like nothing happened. I was only back in Penang for a
-      few days before I returned to my hometown, Kuching, for a metal concert
-      where I told my best friends what had manifested a week before. I needed
-      ears before I could accept it for myself, knowing that at least the people
-      that meant the most to me were able to accept me.
-    &lt;/p&gt;
-    &lt;p&gt;
-      I started to socially transition then, testing the waters by going by my
-      "Kiyui" surname and they/them pronouns at the
-      &lt;a href="http://www.polyglotconference.com/"&gt;2019 Polyglot Conference&lt;/a&gt;
-      in Fukuoka. The talk, "Language, Gender, and Social Media"
-      &lt;a id="source-fukuoka" href="#note-fukuoka"&gt;[5]&lt;/a&gt;, by Abe Blackburn was
-      one talk in particular that stuck by me and reminded me of the importance
-      of pronouns and the power in a name. A week later, I attended the pride
-      parade in Taipei and had started to present as "Dafne" for the first time.
-    &lt;/p&gt;
-    &lt;p&gt;
-      &lt;img loading="lazy" alt="the Holy Trinity Cathedral of Tbilisi" src="https://dontreinventbicycle.com/images/taking-a-break/tblisi-0.jpg" /&gt;
-    &lt;/p&gt;
-    &lt;p&gt;
-      Many months have passed since that entire ordeal, and I'm still taking
-      things day by day; Figuring out the things in life I have put in place to
-      protect myself and the things I genuinely enjoy. I'd like to thank the
-      folks at &lt;a href="https://piktochart.com/"&gt;Piktochart&lt;/a&gt; who've been very
-      supportive throughout this process and been there for me. While I still
-      &lt;em&gt;have to&lt;/em&gt; "&lt;i id="source-boymode"&gt;boymode&lt;/i&gt;"
-      &lt;a id="source-boymode" href="#note-boymode"&gt;[6]&lt;/a&gt;
-      when going to the office and am still often misgendered with he/him
-      pronouns, it's better than I could have ever asked for.
-    &lt;/p&gt;
-    &lt;p&gt;
-      Still though, I wonder and worry for the future of Malaysia where LGBT
-      individuals continue to be silenced and prosecuted, especially those of
-      the Muslim faith. I do not know the future of myself and many others in
-      this country, where even the 2019 Women's March saw backlash
-      &lt;a id="source-women-march" href="#note-women-march"&gt;[7]&lt;/a&gt;
-      due to the involvement of LGBT folks. I cannot even personally foresee my
-      future in this country where public opinion is still fuelled by hatred,
-      intolerance, and bigotry.
-    &lt;/p&gt;
-    &lt;h2&gt;notes&lt;/h2&gt;
-    &lt;ul class="links-list"&gt;
-      &lt;li id="note-cut-hair"&gt;
-        &lt;p&gt;
-          &lt;a href="#source-cut-hair"&gt;[1]&lt;/a&gt;
-          Outside of religious exemptions such as being
-          &lt;a href="https://en.wikipedia.org/wiki/Sikhs"&gt;Sikh&lt;/a&gt;, boys had to
-          have short hair.
-        &lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li id="note-repression"&gt;
-        &lt;p&gt;
-          &lt;a href="#source-repression"&gt;[2]&lt;/a&gt;
-          To suppress or repress the feelings. In the trans community, usually
-          to hide your feelings in fear of persecution or backlash.
-        &lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li id="note-pondan"&gt;
-        &lt;p&gt;
-          &lt;a href="#source-pondan"&gt;[3]&lt;/a&gt;
-          The word "pondan" is a Malay slur for the word "faggot".
-        &lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li id="note-cishet"&gt;
-        &lt;p&gt;
-          &lt;a href="#source-cishet"&gt;[4]&lt;/a&gt;
-          A cisgender heterosexual;- "normal" person.
-        &lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li id="note-fukuoka"&gt;
-        &lt;p&gt;
-          &lt;a href="#source-fukuoka"&gt;[5]&lt;/a&gt;
-          &lt;a href="https://www.youtube.com/watch?v=PctaZZ8pkrU"&gt;[YouTube]&lt;/a&gt;.
-          Sorry, no free sources found!
-        &lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li id="note-boymode"&gt;
-        &lt;p&gt;
-          &lt;a href="#source-boymode"&gt;[6]&lt;/a&gt;
-          Present as a male or in androgynous wear
-        &lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li id="note-women-march"&gt;
-        &lt;p&gt;
-          &lt;a href="#source-women-march"&gt;[7]&lt;/a&gt;
-          Opposition to women's march:
-        &lt;/p&gt;
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;a href="https://web.archive.org/web/20200309145939/https://www.freemalaysiatoday.com/category/nation/2019/03/20/it-was-a-womens-march-not-lgbt-says-mp/"&gt;It was a women’s march, not LGBT, says MP&lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a href="https://web.archive.org/web/20200309145844/https://www.thestar.com.my/news/nation/2019/03/10/womens-group-disappointed-by-govt-backlash-over-support-for-lgbt-community/"&gt;Women's group disappointed by govt backlash over support for LGBT
-              community during rally&lt;/a&gt;
-          &lt;/li&gt;
-          &lt;li&gt;
-            &lt;a href="https://web.archive.org/web/20200309145918/https://www.nst.com.my/news/nation/2019/03/467792/uproar-malaysia-over-lgbt-groups-womens-day-march"&gt;Uproar in Malaysia over LGBT groups at Women's Day march&lt;/a&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  </content><category term="personal"></category><category term="meta"></category><category term="personal"></category><category term="lgbt"></category></entry></feed>
+&lt;/style&gt;</content><category term="code"></category><category term="css"></category><category term="a11y"></category></entry></feed>
