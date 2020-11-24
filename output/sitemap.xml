@@ -5,35 +5,42 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://dontreinventbicycle.com/</loc>
-<lastmod>2020-11-08T00:14:15-00:00</lastmod>
+<lastmod>2020-11-24T14:58:46-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dontreinventbicycle.com/tags.html</loc>
-<lastmod>2020-11-08T00:14:15-00:00</lastmod>
+<lastmod>2020-11-24T14:58:46-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dontreinventbicycle.com/categories.html</loc>
-<lastmod>2020-11-08T00:14:15-00:00</lastmod>
+<lastmod>2020-11-24T14:58:46-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dontreinventbicycle.com/authors.html</loc>
-<lastmod>2020-11-08T00:14:15-00:00</lastmod>
+<lastmod>2020-11-24T14:58:46-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dontreinventbicycle.com/archives.html</loc>
-<lastmod>2020-11-08T00:14:15-00:00</lastmod>
+<lastmod>2020-11-24T14:58:46-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://dontreinventbicycle.com/sephora-email-compliance.html</loc>
+<lastmod>2020-11-24T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -151,6 +158,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://dontreinventbicycle.com/category/joke.html</loc>
+<lastmod>2020-11-24T00:00:00+07:21</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://dontreinventbicycle.com/category/personal.html</loc>
 <lastmod>2020-08-11T00:00:00+07:21</lastmod>
 <changefreq>daily</changefreq>
@@ -160,6 +174,27 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://dontreinventbicycle.com/category/tips.html</loc>
 <lastmod>2020-11-04T00:00:00+07:21</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://dontreinventbicycle.com/tag/javascript.html</loc>
+<lastmod>2020-11-24T00:00:00+07:21</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://dontreinventbicycle.com/tag/php.html</loc>
+<lastmod>2020-11-24T00:00:00+07:21</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://dontreinventbicycle.com/tag/regex.html</loc>
+<lastmod>2020-11-24T00:00:00+07:21</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -202,13 +237,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://dontreinventbicycle.com/tag/gtk.html</loc>
 <lastmod>2020-11-04T00:00:00+07:21</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
-<loc>https://dontreinventbicycle.com/tag/javascript.html</loc>
-<lastmod>2020-09-16T00:00:00+07:21</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -313,7 +341,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://dontreinventbicycle.com/author/dafne-kiyui.html</loc>
-<lastmod>2020-11-05T00:00:00+07:21</lastmod>
+<lastmod>2020-11-24T00:00:00+07:21</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>dont reinvent велосипед - how to use a valid email when signing up for Sephora</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="A quick guide on how to make sure your email is compliant with Sephora's RFC-5322 specification modification" />
+  <meta name="keywords" content="programming,practice,standards,hacking,musing,javascript,php,regex">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+  <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css">
+  <link
+    href="https://dontreinventbicycle.com/feeds/all.atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/all.rss.xml"
+    type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/all.xml"
+    type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+  <link
+    href="https://dontreinventbicycle.com/feeds/joke.atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+<meta name="tags" content="javascript" />
+<meta name="tags" content="php" />
+<meta name="tags" content="regex" />
+
+</head>
+
+<body id="index" class="home">
+  <header id="banner" class="body">
+    <h1>
+      <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+    </h1>
+  </header>
+
+  <nav id="menu" class="body">
+    <ul>
+
+
+      <li >
+        <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+      </li>
+      <li  class="active" >
+        <a href="https://dontreinventbicycle.com/category/joke.html">joke</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/personal.html">personal</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/tips.html">tips</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/sephora-email-compliance.html" rel="bookmark"
+        title="Permalink to how to use a valid email when signing up for Sephora">how to use a valid email when signing up for Sephora</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2020-11-24T00:00:00+08:00">
+        Tue 24 November 2020
+      </time>
+    </div>
+    <address class="vcard author">
+      by       <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">Dafne Kiyui</a>
+    </address>
+    <div class="category">
+      category: <a href="https://dontreinventbicycle.com/category/joke.html">joke</a>
+    </div>
+    <div class="tags">
+      tags:
+      <a href="https://dontreinventbicycle.com/tag/javascript.html">javascript</a>
+      <a href="https://dontreinventbicycle.com/tag/php.html">php</a>
+      <a href="https://dontreinventbicycle.com/tag/regex.html">regex</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><em>Please don't take anything in this article seriously.</em></p>
+<p><a href="https://gmail.com/">Gmail</a>, <a href="https://outlook.com/">Outlook</a>, and <a href="https://mail.yahoo.com/">Yahoo! Mail</a> are popular options for creating incredible email addresses that will be compliant with most software and are allowed to bypass sophisticated spam filters as the following:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">endsWith</span><span class="p">(</span><span class="nv">$sender</span><span class="p">,</span> <span class="s2">&quot;gmail.com&quot;</span><span class="p">)</span> <span class="o">||</span>
+    <span class="nx">endsWith</span><span class="p">(</span><span class="nv">$sender</span><span class="p">,</span> <span class="s1">&#39;yahoo.com&#39;</span><span class="p">)</span> <span class="o">||</span>
+    <span class="nx">endsWith</span><span class="p">(</span><span class="nv">$sender</span><span class="p">,</span> <span class="s2">&quot;yahoo.co.uk&quot;</span><span class="p">)</span> <span class="o">||</span>
+    <span class="nx">endsWith</span><span class="p">(</span><span class="nv">$sender</span><span class="p">,</span> <span class="s2">&quot;hotmail.com&quot;</span><span class="p">)</span> <span class="o">||</span>
+    <span class="nx">endsWith</span><span class="p">(</span><span class="nv">$sender</span><span class="p">,</span> <span class="s2">&quot;live.com&quot;</span><span class="p">)</span>    <span class="o">||</span>
+    <span class="nx">endsWith</span><span class="p">(</span><span class="nv">$sender</span><span class="p">,</span> <span class="s2">&quot;hotmail.com&quot;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nb">exec</span><span class="p">(</span><span class="s2">&quot;echo </span><span class="se">\&quot;</span><span class="s2"> </span><span class="si">$emailContent</span><span class="s2"> </span><span class="se">\&quot;</span><span class="s2"> | mail -s Fwd </span><span class="si">$receiver</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="c1">// T0DO reports the error</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>I use <a href="https://protonmail.com/">Protonmail</a> with a custom domain, so I've become accustomed to having my email not be accepted by most websites. Even regular Protonmail addresses ending with <code>protonmail.ch</code> instead of <code>protonmail.com</code> are regularly blocked by websites because whitelist code the developer copied from <a href="https://stackoverflow.com/">StackOverflow</a> was not up to date. Therefore, I was not at all surprised to see the following error when trying to sign in to Sephora:</p>
+<p><img alt="The Sephora login form with the error messages “We're sorry, there is an error with your email and/or password. Remember passwords are 4 to 12 characters (letters or numbers) long. Please try again.” and “Please enter an e-mail address in the format username@domain.com.”" src="https://dontreinventbicycle.com/images/sephora-email-compliance/login-error.png"></p>
+<p>The key here is that I was <em>signing in</em>, not signing up for an account. In fact, I have been signing into the mobile app just fine. Additionally, the “Continue” button did not trigger any requests, leading me to think that the restriction is indeed only on the frontend.</p>
+<p>With a little digging, I was able to source their email validation function. It appears that they are using a modified version of the RFC-5322 specification.</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * Note that our test for validity is much stricter than RFC-5322&#39;s definition</span>
+<span class="cm"> * @param el</span>
+<span class="cm"> * @returns {boolean}</span>
+<span class="cm"> */</span>
+<span class="kd">function</span> <span class="nx">isValidEmailAddress</span> <span class="p">(</span><span class="nx">login</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">pattern</span> <span class="o">=</span> <span class="sr">/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">login</span><span class="p">);</span>
+<span class="p">},</span>
+</code></pre></div>
+
+
+<p>Well there's your problem! The regex restricts the email top-level-domain to 2 to 4 characters only, which is why my email at <code>dafne.rocks</code> did not work! This simple patch should surely fix it now:</p>
+<div class="highlight"><pre><span></span><code> function isValidEmailAddress (login) {
+<span class="gd">-  var pattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i;</span>
+<span class="gi">+  var pattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5})$/i;</span>
+   return pattern.test(login);
+ },
+</code></pre></div>
+
+
+<p>This new specification is available as Dafne Kiyui's modification to Sephora's RFC-5322 specification modification.</p>
+  </div><!-- /.entry-content -->
+</section>
+  </div>
+
+  <footer id="contentinfo" class="body">
+    <div>
+      <h4 class="title">social:</h4>
+      <ul class="links">
+        <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+        <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+        <li><a href="https://codeberg.org/kiyui">Codeberg</a></li>
+        <li><a href="https://github.com/kiyui">GitHub</a></li>
+        <li><a rel="me" href="https://queer.party/@dafne">Mastodon</a></li>
+        <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="title">projects:</h4>
+      <ul class="links">
+        <li><a href="https://represent.io/kiyui">Resume</a></li>
+        <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+      </ul>
+    </div>
+    <address id="about" class="vcard body">
+      Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+      which takes great advantage of <a href="http://python.org">Python</a>.
+    </address>
+  </footer>
+</body>
+
+</html>
