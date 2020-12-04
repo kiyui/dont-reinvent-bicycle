@@ -101,7 +101,6 @@
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>I use <a href="https://protonmail.com/">Protonmail</a> with a custom domain, so I've become accustomed to having my email not be accepted by most websites. Even regular Protonmail addresses ending with <code>protonmail.ch</code> instead of <code>protonmail.com</code> are regularly blocked by websites because whitelist code the developer copied from <a href="https://stackoverflow.com/">StackOverflow</a> was not up to date. Therefore, I was not at all surprised to see the following error when trying to sign in to Sephora:</p>
 <p><img alt="The Sephora login form with the error messages “We're sorry, there is an error with your email and/or password. Remember passwords are 4 to 12 characters (letters or numbers) long. Please try again.” and “Please enter an e-mail address in the format username@domain.com.”" src="https://dontreinventbicycle.com/images/sephora-email-compliance/login-error.png"></p>
 <p>The key here is that I was <em>signing in</em>, not signing up for an account. In fact, I have been signing into the mobile app just fine. Additionally, the “Continue” button did not trigger any requests, leading me to think that the restriction is indeed only on the frontend.</p>
@@ -117,7 +116,6 @@
 <span class="p">},</span>
 </code></pre></div>
 
-
 <p>Well there's your problem! The regex restricts the email top-level-domain to 2 to 4 characters only, which is why my email at <code>dafne.rocks</code> did not work! This simple patch should surely fix it now:</p>
 <div class="highlight"><pre><span></span><code> function isValidEmailAddress (login) {
 <span class="gd">-  var pattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i;</span>
@@ -125,7 +123,6 @@
    return pattern.test(login);
  },
 </code></pre></div>
-
 
 <p>This new specification is available as Dafne Kiyui's modification to Sephora's RFC-5322 specification modification.</p>
   </div><!-- /.entry-content -->

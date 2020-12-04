@@ -88,12 +88,10 @@
 <span class="err">origin  git@github.com:username/repository.git (push)</span>
 </code></pre></div>
 
-
 <p>On your <a href="https://codeberg.org/">Codeberg</a> dashboard, create a new repository (<a href="https://docs.codeberg.org/getting-started/first-repository/">guide</a>) and copy its upstream URL. You can then simply update the remote by running,</p>
 <div class="highlight"><pre><span></span><code>git remote set-url origin git@codeberg.org:username/repository.git
 git push -u origin master <span class="c1"># Or whatever other branch</span>
 </code></pre></div>
-
 
 <h3>maintaining a mirror</h3>
 <p>If you're not interested in fully migrating your repository over to Codeberg and would rather maintain a mirror, you can simply set up an additional remote as so,</p>
@@ -101,7 +99,6 @@ git push -u origin master <span class="c1"># Or whatever other branch</span>
 git remote add codeberg git@codeberg.org:username/repository.git
 git push codeberg master <span class="c1"># Or whatever other branch</span>
 </code></pre></div>
-
 
 <p>This of course means that in addition to just running <code class="highlight">git push</code> to push to a branch's regular upstream, you'd have to run <code class="highlight">git push codeberg</code> as well.</p>
 <h3>using the Gitea migration feature</h3>

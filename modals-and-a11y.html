@@ -110,20 +110,17 @@
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>Now, in order to display the modal, all we need to do is create a link that behaves like a button to trigger the modal anchor:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#demo-target-modal&quot;</span><span class="p">&gt;</span>
   Show :target modal
 <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
 
-
 <p>Using the same trick, we can simply have our modal "close" button target "#" or any other anchor in the page!</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>
   Close :target modal
 <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
-
 
 <p>Finally piecing everything together, we get a modal that looks somewhat like this:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;demo-target-modal&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="p">&gt;</span>
@@ -135,7 +132,6 @@
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </code></pre></div>
-
 
 <p>And if you're interested in the styling I used:</p>
 <div class="highlight"><pre><span></span><code><span class="p">#</span><span class="nn">demo-target-modal</span> <span class="p">{</span>
@@ -174,7 +170,6 @@
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>Finally, having pieced everything together, here's that demo button you're looking for!</p>
 <p><a href="#demo-target-modal" class="modal-fake-button" role="button"> 
   Show :target modal
@@ -203,7 +198,6 @@
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;example-checkbox&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="p">/&gt;</span>
 </code></pre></div>
 
-
 <p>Using this, we now have a method in which we can open and close our modal by making use of the general sibling selector (<code>~</code>) by doing something like this:</p>
 <div class="highlight"><pre><span></span><code><span class="p">#</span><span class="nn">demo-checkbox-input</span> <span class="p">{</span>
   <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
@@ -213,7 +207,6 @@
   <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <p>Put together, our code looks somewhat like this:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;demo-checkbox-input&quot;</span><span class="p">&gt;</span>
@@ -232,7 +225,6 @@
   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </code></pre></div>
-
 
 <p>Again, here's a demo button of the checkbox modal:</p>
 <p><label class="modal-fake-button" tabindex="0" for="demo-checkbox-input" role="button"> 
