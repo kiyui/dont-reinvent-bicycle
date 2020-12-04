@@ -51,6 +51,7 @@ STATIC_PATHS = [
     'extra/CNAME',
     'extra/BingSiteAuth.xml',
     'extra/google84482ab458ba2d3d.html',
+    'extra/brave-rewards-verification.txt',
     'extra/robots.txt',
 ]
 EXTRA_PATH_METADATA = {
@@ -62,6 +63,9 @@ EXTRA_PATH_METADATA = {
     },
     'extra/google84482ab458ba2d3d.html': {
         'path': 'google84482ab458ba2d3d.html'
+    },
+    'extra/brave-rewards-verification.txt': {
+        'path': 'brave-rewards-verification.txt'
     },
     'extra/robots.txt': {
         'path': 'robots.txt'
