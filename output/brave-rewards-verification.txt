@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: dontreinventbicycle.com
+Token: 8acbc4dc73349aab68cab9af2a6f4810d14d279ab9bdb816128185e7a732c7c0
