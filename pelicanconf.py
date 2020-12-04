@@ -65,7 +65,7 @@ EXTRA_PATH_METADATA = {
         'path': 'google84482ab458ba2d3d.html'
     },
     'extra/brave-rewards-verification.txt': {
-        'path': 'brave-rewards-verification.txt'
+        'path': '.well-known/brave-rewards-verification.txt'
     },
     'extra/robots.txt': {
         'path': 'robots.txt'
