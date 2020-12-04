@@ -9,6 +9,7 @@ verify_ssl = true
 pelican = "*"
 markdown = "*"
 pymdown-extensions = "*"
+"minchin.pelican.plugins.nojekyll" = "*"
 
 [requires]
 python_version = "3.8"
