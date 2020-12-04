@@ -6,12 +6,10 @@
 &lt;span class="err"&gt;origin  git@github.com:username/repository.git (push)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;On your &lt;a href="https://codeberg.org/"&gt;Codeberg&lt;/a&gt; dashboard, create a new repository (&lt;a href="https://docs.codeberg.org/getting-started/first-repository/"&gt;guide&lt;/a&gt;) and copy its upstream URL. You can then simply update the remote by running,&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git remote set-url origin git@codeberg.org:username/repository.git
 git push -u origin master &lt;span class="c1"&gt;# Or whatever other branch&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h3&gt;maintaining a mirror&lt;/h3&gt;
 &lt;p&gt;If you're not interested in fully migrating your repository over to Codeberg and would rather maintain a mirror, you can simply set up an additional remote as so,&lt;/p&gt;
@@ -19,7 +17,6 @@ git push -u origin master &lt;span class="c1"&gt;# Or whatever other branch&lt;/
 git remote add codeberg git@codeberg.org:username/repository.git
 git push codeberg master &lt;span class="c1"&gt;# Or whatever other branch&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This of course means that in addition to just running &lt;code class="highlight"&gt;git push&lt;/code&gt; to push to a branch's regular upstream, you'd have to run &lt;code class="highlight"&gt;git push codeberg&lt;/code&gt; as well.&lt;/p&gt;
 &lt;h3&gt;using the Gitea migration feature&lt;/h3&gt;
@@ -85,7 +82,6 @@ git push codeberg master &lt;span class="c1"&gt;# Or whatever other branch&lt;/s
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;&lt;img alt="LGPL logo" src="https://dontreinventbicycle.com/images/lgplv3.png"&gt;&lt;/p&gt;
 &lt;p&gt;A typical &lt;code&gt;debounce&lt;/code&gt; function in JS decorates a callback function in a &lt;code&gt;setTimeout&lt;/code&gt; block, running &lt;code&gt;clearTimeout&lt;/code&gt; and re-decorating the callback function as the decorated function is called over time. In GJS however, neither &lt;code&gt;setTimeout&lt;/code&gt; nor &lt;code&gt;clearTimeout&lt;/code&gt; are defined. Instead, &lt;code&gt;GLib.timeout_add&lt;/code&gt; is the GJS equivalent of &lt;code&gt;setTimeout&lt;/code&gt; and &lt;code&gt;setInterval&lt;/code&gt; in JavaScript. See the &lt;a href="/gjs-set-timeout-interval.html"&gt;setTimeout and setInterval in gjs&lt;/a&gt; article for more information.&lt;/p&gt;</content><category term="tips"></category><category term="gnome-shell"></category><category term="gjs"></category><category term="gtk"></category></entry><entry><title>setTimeout and setInterval in gjs</title><link href="https://dontreinventbicycle.com/gjs-set-timeout-interval.html" rel="alternate"></link><published>2020-09-16T00:00:00+08:00</published><updated>2020-09-16T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-09-16:/gjs-set-timeout-interval.html</id><summary type="html">&lt;p&gt;The &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.timeout_add"&gt;GLib.timeout_add&lt;/a&gt; function is the GJS equivalent to both &lt;code&gt;setTimeout&lt;/code&gt; and &lt;code&gt;setInterval&lt;/code&gt;. It calls a given function repeatedly (such as &lt;code&gt;func&lt;/code&gt;) at given intervals until it returns a falsy value. It returns a &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source"&gt;GLib Source&lt;/a&gt; id, which just like &lt;code&gt;clearTimeout&lt;/code&gt; or &lt;code&gt;clearInterval&lt;/code&gt; can be removed with the static &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source#function-remove"&gt;GLib …&lt;/a&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;The &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.timeout_add"&gt;GLib.timeout_add&lt;/a&gt; function is the GJS equivalent to both &lt;code&gt;setTimeout&lt;/code&gt; and &lt;code&gt;setInterval&lt;/code&gt;. It calls a given function repeatedly (such as &lt;code&gt;func&lt;/code&gt;) at given intervals until it returns a falsy value. It returns a &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source"&gt;GLib Source&lt;/a&gt; id, which just like &lt;code&gt;clearTimeout&lt;/code&gt; or &lt;code&gt;clearInterval&lt;/code&gt; can be removed with the static &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source#function-remove"&gt;GLib.Source.remove&lt;/a&gt; function.&lt;/p&gt;
 &lt;p&gt;The following code is licensed under the &lt;a href="https://www.gnu.org/licenses/lgpl-3.0.txt"&gt;GNU Lesser General Public License v3.0 or later&lt;/a&gt;:&lt;/p&gt;
@@ -127,13 +123,11 @@ git push codeberg master &lt;span class="c1"&gt;# Or whatever other branch&lt;/s
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;&lt;img alt="LGPL logo" src="https://dontreinventbicycle.com/images/lgplv3.png"&gt;&lt;/p&gt;
 &lt;p&gt;For the sake of trivia, according to &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval"&gt;MDN&lt;/a&gt;, both &lt;code&gt;setTimeout()&lt;/code&gt; and &lt;code&gt;setInterval()&lt;/code&gt; share the same pool of IDs. As such, both &lt;code&gt;clearTimeout()&lt;/code&gt; and &lt;code&gt;clearInterval()&lt;/code&gt; can be used interchangeably. This makes the above code pretty compatible and standards compliant 😉&lt;/p&gt;</content><category term="tips"></category><category term="gnome-shell"></category><category term="gjs"></category><category term="gtk"></category><category term="javascript"></category></entry><entry><title>batch renaming numbered files</title><link href="https://dontreinventbicycle.com/batch-renames.html" rel="alternate"></link><published>2020-08-16T00:00:00+08:00</published><updated>2020-08-16T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-08-16:/batch-renames.html</id><summary type="html">&lt;p&gt;The year is 2009 and your minimalist CD ripper, let's say &lt;code&gt;goobox&lt;/code&gt; hasn't multi-CD support. The ripped content of both CD 1 &amp;amp; 2 are numbered incrementally from &lt;code&gt;01&lt;/code&gt; onwards, which isn't a problem if you organised your library by CD 1/2/etc, but you're rather flatten the directory because …&lt;/p&gt;</summary><content type="html">&lt;p&gt;The year is 2009 and your minimalist CD ripper, let's say &lt;code&gt;goobox&lt;/code&gt; hasn't multi-CD support. The ripped content of both CD 1 &amp;amp; 2 are numbered incrementally from &lt;code&gt;01&lt;/code&gt; onwards, which isn't a problem if you organised your library by CD 1/2/etc, but you're rather flatten the directory because you used &lt;code&gt;mongodb&lt;/code&gt; once.&lt;/p&gt;
 &lt;p&gt;The following is a shorthand for incrementing the numbers on disc 2 by &lt;code&gt;12&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;perl-rename -n &lt;span class="s1"&gt;&amp;#39;s/(\d+)/($1 + 12)/e&amp;#39;&lt;/span&gt; *.ogg
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;The &lt;code&gt;-n&lt;/code&gt; here makes it a dry run, which outputs the following for you to confirm:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;01. Slave to Your Mind.ogg -&amp;gt; 13. Slave to Your Mind.ogg&lt;/span&gt;
@@ -148,7 +142,6 @@ git push codeberg master &lt;span class="c1"&gt;# Or whatever other branch&lt;/s
 &lt;span class="err"&gt;10. The Battle.ogg -&amp;gt; 22. The Battle.ogg&lt;/span&gt;
 &lt;span class="err"&gt;11. Broken Sky Long Day (Reprise).ogg -&amp;gt; 23. Broken Sky Long Day (Reprise).ogg&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Prima! Just drop the &lt;code&gt;-n&lt;/code&gt; option to have it actually perform the operation on your files.&lt;/p&gt;
 &lt;h2&gt;note&lt;/h2&gt;
