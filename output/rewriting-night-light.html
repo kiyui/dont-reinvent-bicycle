@@ -117,7 +117,6 @@
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>The code smelled bad to me but I genuinely did not know whether or not I was doing the right thing, and that's something that has bugged me ever since I started writing this extension. I haven't a clue what I'm doing or how to write GJS properly! The extension had been since the very beginning a hack for something I needed, and that I decided to share with the world.</p>
 <p>As a side note, I did get <a href="https://extensions.gnome.org/review/17718">the following review</a> for the above code:</p>
 <blockquote>
@@ -169,7 +168,6 @@ In the case of your extension, so long as your callbacks are only triggered from
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>We also repopulate our <b id="metadata-file">extension metadata file</b>, <code>metadata.json</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Night Light Slider&quot;</span><span class="p">,</span>
@@ -182,7 +180,6 @@ In the case of your extension, so long as your callbacks are only triggered from
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>Next, I figured I'd start from basics and imitate how the <b id="brightness-slider">brightness slider</b> is set up in the GNOME Shell. To do this, I cloned myself a local copy of the <a href="https://gitlab.gnome.org/GNOME/gnome-shell">gnome-shell repository</a> and referred to <code>js/ui/status/brightness.js</code>. Everything under the <code>js/</code> folder is available to us under <code>imports</code> on top of what GJS already <a href="https://gitlab.gnome.org/GNOME/gjs/-/blob/master/doc/Modules.md">provides us with</a>.</p>
 <h3>GJS imports</h3>
 <p>Modules in GJS work <em>slightly</em> differently than they do in Node. There isn't a <code>require</code> function but instead an <code>imports</code> object (<code>GJSFileImporter</code>) that exposes members in a module. Variables declared with <code>const</code> or <code>let</code> aren't exported, nor are function expressions or classes declared with the <code>class</code> keyword, but regular functions declared with the <code>function</code> keyword or variables initialized with <code>var</code> are.</p>
@@ -193,7 +190,6 @@ In the case of your extension, so long as your callbacks are only triggered from
   <span class="cm">/* etc */</span>
 <span class="p">});</span>
 </code></pre></div>
-
 
 <h3>d-bus proxies &amp; gsettings</h3>
 <p>The brightness slider works very simply by using a <code>Gio.DBusProxy</code> proxy to both update and receive updates from changes to the system brightness by calling a private <code>_sync()</code> method. It also uses the <code>imports.ui.slider.Slider</code> class to render the brightness slider in the panel.</p>
@@ -208,25 +204,22 @@ In the case of your extension, so long as your callbacks are only triggered from
       <span class="k">this</span><span class="p">.</span><span class="nx">_sync</span><span class="p">();</span>
   <span class="p">});</span>
 
-<span class="k">this</span><span class="p">.</span><span class="nx">_slider</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Slider</span><span class="p">.</span><span class="nx">Slider</span><span class="p">(</span><span class="mf">0</span><span class="p">);</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">_slider</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Slider</span><span class="p">.</span><span class="nx">Slider</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">_sliderChangedId</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_slider</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;notify::value&#39;</span><span class="p">,</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">_sliderChanged</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
 </code></pre></div>
 
-
 <p>Updates to the slider in turn call the <code>_sliderChanged</code> method, which then updates the previously defined <code>_proxy</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">_sliderChanged</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">percent</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_slider</span><span class="p">.</span><span class="nx">value</span> <span class="o">*</span> <span class="mf">100</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">percent</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_slider</span><span class="p">.</span><span class="nx">value</span> <span class="o">*</span> <span class="mi">100</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">_proxy</span><span class="p">.</span><span class="nx">Brightness</span> <span class="o">=</span> <span class="nx">percent</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <p>Referring to <code>js/ui/status/nightLight.js</code>, we see that a <b id="similar-proxy">similar proxy</b> to the night light properties exists.</p>
 <div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">ColorInterface</span> <span class="o">=</span> <span class="nx">loadInterfaceXML</span><span class="p">(</span><span class="s1">&#39;org.gnome.SettingsDaemon.Color&#39;</span><span class="p">);</span>
 <span class="kr">const</span> <span class="nx">ColorProxy</span> <span class="o">=</span> <span class="nx">Gio</span><span class="p">.</span><span class="nx">DBusProxy</span><span class="p">.</span><span class="nx">makeProxyWrapper</span><span class="p">(</span><span class="nx">ColorInterface</span><span class="p">);</span>
 </code></pre></div>
-
 
 <p>Next, we refer to <code>js/misc/fileUtils.js</code> to understand what <code>loadInterfaceXML</code> here will load. We optimally need a <a href="https://dbus.freedesktop.org/doc/dbus-specification.html#introspection-format">D-Bus introspection specification</a> for the <code>Temperature</code> property. I actually have no clue where I got the <code>Temperature</code> property from, but I did have the following lines of code in my extension previously:</p>
 <div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">ColorInterface</span> <span class="o">=</span> <span class="s1">&#39;&lt;node&gt; \</span>
@@ -237,20 +230,17 @@ In the case of your extension, so long as your callbacks are only triggered from
 <span class="s1">&lt;/node&gt;&#39;</span>
 </code></pre></div>
 
-
 <p>In fact, I never understood what I was doing with the following values or why there'd be a <code>settings-daemon.plugins.color</code> and a <code>SettingsDaemon/Color</code>. Not only is one in kebab-case but one has a <code>plugins</code> path while the other doesn't:</p>
 <div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">BUS_NAME</span> <span class="o">=</span> <span class="s1">&#39;org.gnome.SettingsDaemon.Color&#39;</span>
 <span class="kr">const</span> <span class="nx">OBJECT_PATH</span> <span class="o">=</span> <span class="s1">&#39;/org/gnome/SettingsDaemon/Color&#39;</span>
 <span class="kr">const</span> <span class="nx">COLOR_SCHEMA</span> <span class="o">=</span> <span class="s1">&#39;org.gnome.settings-daemon.plugins.color&#39;</span>
 </code></pre></div>
 
-
 <p>Inspecting the <code>panels/display/cc-night-light-page.c</code> file in the <a href="https://gitlab.gnome.org/GNOME/gnome-control-center">gnome-control-center repository</a>, we again see an instance of the <code>org.gnome.settings-daemon.plugins.color</code> key being defined and used as a <code>GSetting</code> instance:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#define DISPLAY_SCHEMA   &quot;org.gnome.settings-daemon.plugins.color&quot;</span>
 <span class="c1">// etc</span>
 <span class="n">self</span><span class="o">-&gt;</span><span class="n">settings_display</span> <span class="o">=</span> <span class="n">g_settings_new</span> <span class="p">(</span><span class="n">DISPLAY_SCHEMA</span><span class="p">);</span>
 </code></pre></div>
-
 
 <p>This is why we can use <code>dconf</code> to inspect the values:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">[dafne@localhost]%</span> dconf dump <span class="s2">&quot;/org/gnome/settings-daemon/plugins/color/&quot;</span>
@@ -263,7 +253,6 @@ In the case of your extension, so long as your callbacks are only triggered from
 <span class="go">night-light-schedule-to=</span>
 <span class="go">night-light-temperature=</span>
 </code></pre></div>
-
 
 <p>Here is where I realized that <code>/org/gnome/settings-daemon/plugins/color/</code> is just our system settings and that <code>org.gnome.SettingsDaemon.Color</code> was instead the path to the D-Bus object!</p>
 <dl>
@@ -306,7 +295,6 @@ In the case of your extension, so long as your callbacks are only triggered from
 <span class="err">)</span>
 </code></pre></div>
 
-
 <p>Finally in <code>plugins/color/gsd-color-manager.c</code>, we can see the D-Bus introspection XML that we have been looking for:</p>
 <div class="highlight"><pre><span></span><code><span class="k">static</span> <span class="k">const</span> <span class="n">gchar</span> <span class="n">introspection_xml</span><span class="p">[]</span> <span class="o">=</span>
 <span class="s">&quot;&lt;node&gt;&quot;</span>
@@ -323,7 +311,6 @@ In the case of your extension, so long as your callbacks are only triggered from
 <span class="s">&quot;&lt;/node&gt;&quot;</span><span class="p">;</span>
 </code></pre></div>
 
-
 <p>Going back to the <code>loadInterfaceXML('org.gnome.SettingsDaemon.Color')</code> call from <a href="#similar-proxy">before</a>, we see that it loads <code>data/dbus-interfaces/org.gnome.SettingsDaemon.Color.xml</code> from the <a href="https://gitlab.gnome.org/GNOME/gnome-shell">gnome-shell repository</a> with the following content instead:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;node&gt;</span>
   <span class="nt">&lt;interface</span> <span class="na">name=</span><span class="s">&quot;org.gnome.SettingsDaemon.Color&quot;</span><span class="nt">&gt;</span>
@@ -332,7 +319,6 @@ In the case of your extension, so long as your callbacks are only triggered from
   <span class="nt">&lt;/interface&gt;</span>
 <span class="nt">&lt;/node&gt;</span>
 </code></pre></div>
-
 
 <p>We can notice here that the <code>Temperature</code> property is missing. This may hamper us from using the same <code>loadInterfaceXML</code> call. To test my hypothesis, I wrote the following GJS script:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env gjs</span>
@@ -358,20 +344,17 @@ In the case of your extension, so long as your callbacks are only triggered from
     <span class="p">}</span>
   <span class="p">});</span>
 
-<span class="nx">proxy</span><span class="p">.</span><span class="nx">Temperature</span> <span class="o">=</span> <span class="mf">3000</span><span class="p">;</span> <span class="c1">// I&#39;d randomly change this value to test for changes</span>
+<span class="nx">proxy</span><span class="p">.</span><span class="nx">Temperature</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span> <span class="c1">// I&#39;d randomly change this value to test for changes</span>
 </code></pre></div>
-
 
 <p>As expected, the script did not do anything when the "Temperature" property was removed:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&#39;Temperature&#39;</span> <span class="na">type=</span><span class="s">&#39;u&#39;</span> <span class="na">access=</span><span class="s">&#39;readwrite&#39;</span><span class="nt">/&gt;</span>
 </code></pre></div>
 
-
 <p>We would indeed need to define our own D-Bus introspection XML. Additionally, we observe that writing the values to D-Bus does not update the value in GSettings:</p>
 <div class="highlight"><pre><span></span><code>gsettings get org.gnome.settings-daemon.plugins.color night-light-temperature
 <span class="c1"># uint32 3734</span>
 </code></pre></div>
-
 
 <p>In the current version of the extension, we make changes to GSettings instead of writing to D-Bus. This is probably preferable because changes would then persist and also show in GNOME Settings. That variant would look like so:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env gjs</span>
@@ -380,9 +363,8 @@ In the case of your extension, so long as your callbacks are only triggered from
 
 <span class="kr">const</span> <span class="nx">COLOR_SCHEMA</span> <span class="o">=</span> <span class="s1">&#39;org.gnome.settings-daemon.plugins.color&#39;</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">settings</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Gio</span><span class="p">.</span><span class="nx">Settings</span><span class="p">({</span> <span class="nx">schema_id</span><span class="o">:</span> <span class="nx">COLOR_SCHEMA</span> <span class="p">});</span>
-<span class="nx">settings</span><span class="p">.</span><span class="nx">set_uint</span><span class="p">(</span><span class="s1">&#39;night-light-temperature&#39;</span><span class="p">,</span> <span class="mf">3000</span><span class="p">);</span>
+<span class="nx">settings</span><span class="p">.</span><span class="nx">set_uint</span><span class="p">(</span><span class="s1">&#39;night-light-temperature&#39;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">);</span>
 </code></pre></div>
-
 
 <p>Perhaps the deep-dive wasn't too necessary, but I now know just a tad more how everything works under the hood!.. and I also learned that the <code>Gio.Settings.schema</code> property has been <a href="https://gjs-docs.gnome.org/gio20~2.64p/gio.settings#property-schema">deprecated</a> since GIO version <code>2.32</code>:</p>
 <blockquote>
@@ -392,12 +374,10 @@ In the case of your extension, so long as your callbacks are only triggered from
 <div class="highlight"><pre><span></span><code><span class="k">this</span><span class="p">.</span><span class="nx">_schema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Gio</span><span class="p">.</span><span class="nx">Settings</span><span class="p">({</span> <span class="nx">schema</span><span class="o">:</span> <span class="nx">COLOR_SCHEMA</span> <span class="p">});</span>
 </code></pre></div>
 
-
 <p>when it should have been:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">- this._schema = new Gio.Settings({ schema: COLOR_SCHEMA });</span>
 <span class="gi">+ this._schema = new Gio.Settings({ schema_id: COLOR_SCHEMA });</span>
 </code></pre></div>
-
 
 <h4>a minor caveat</h4>
 <p>While the <code>introspection_xml</code> in <code>plugins/color/gsd-color-manager.c</code> may specify <code>Temperature</code> as being of type <code>u</code>, I recall setting this as <code>d</code> in my extension because of the following warning message:</p>
@@ -409,12 +389,10 @@ In the case of your extension, so long as your callbacks are only triggered from
                        <span class="n">g_variant_new_double</span> <span class="p">(</span><span class="n">temperature</span><span class="p">));</span>
 </code></pre></div>
 
-
 <p>The fix here is luckily quite simple:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">-&lt;property name=&#39;Temperature&#39; type=&#39;u&#39; access=&#39;readwrite&#39;/&gt;</span>
 <span class="gi">+&lt;property name=&#39;Temperature&#39; type=&#39;d&#39; access=&#39;readwrite&#39;/&gt;</span>
 </code></pre></div>
-
 
 <p>I'm not quite if this is the correct way about the issue, but I think I've jumped deep enough into the rabbit hole.</p>
 <h2>interlude</h2>
@@ -422,7 +400,6 @@ In the case of your extension, so long as your callbacks are only triggered from
 <div class="highlight"><pre><span></span><code><span class="gd">- Date: 2020-07-08</span>
 <span class="gi">+ Date: 2020-09-06</span>
 </code></pre></div>
-
 
 <p>My favourite earworm has now changed. It is now <em>circle the drain</em> by <em>Soccer Mommy</em> <a href="https://sopharela.bandcamp.com/album/color-theory">♬</a>.</p>
 <h2>the rewrite, continued</h2>
@@ -501,13 +478,11 @@ In the case of your extension, so long as your callbacks are only triggered from
  &lt;/schemalist&gt;
 </code></pre></div>
 
-
 <p>While we do have the <code>schema_id</code> defined in the above XML as <code>org.gnome.shell.extensions.nightlightslider</code>, we cannot simply initialize <code>Gio.Settings</code> with this value as it is not defined anywhere in our <code>XDG_DATA_DIRS</code> (usually <code>/usr/share/glib-2.0/schemas</code>). You can read more about that under the <a href="https://developer.gnome.org/gio/stable/glib-compile-schemas.html">glib-compile-schemas documentation</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">Gio</span> <span class="o">=</span> <span class="nx">imports</span><span class="p">.</span><span class="nx">gi</span><span class="p">.</span><span class="nx">Gio</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">EXTENSION_SCHEMA</span> <span class="o">=</span> <span class="s1">&#39;org.gnome.shell.extensions.nightlightslider&#39;</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">settings</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Gio</span><span class="p">.</span><span class="nx">Settings</span><span class="p">({</span> <span class="nx">schema_id</span><span class="o">:</span> <span class="nx">EXTENSION_SCHEMA</span> <span class="p">});</span>
 </code></pre></div>
-
 
 <p>In spite of the schema not being installed globally, we still observe that running <code>dconf dump "/org/gnome/shell/extensions/nightlightslider/"</code> dumps the current extension settings (assuming you've used the extension before). That is because the settings are still stored in the local dconf database at <code>~/.config/dconf/user</code>.</p>
 <h4>refactoring the gsettings code</h4>
@@ -534,7 +509,6 @@ In the case of your extension, so long as your callbacks are only triggered from
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>I think like many other extension writers we just copied from one another. Well, it turns out that this function has already been <a href="https://web.archive.org/web/20200916121616/https://gitlab.gnome.org/GNOME/gnome-shell/-/commit/93425b05004094520790b12953bc3aa50f85367c">vendored</a> in GNOME a whole 2 years ago! This is even stated in the <a href="https://web.archive.org/web/20200707175025/https://wiki.gnome.org/Projects/GnomeShell/Extensions/Writing">official guide</a>!</p>
 <blockquote>
 <p>Long ago, Giovanni Campagna (aka gcampax) wrote a small helper script for Gettext translations and GSettings called <code>convenience.js</code>. This script was used so widely by extension authors that they were merged in GNOME Shell in version 3.32.</p>
@@ -551,7 +525,6 @@ In the case of your extension, so long as your callbacks are only triggered from
   <span class="c1">// Recreate night light slider</span>
 <span class="p">});</span>
 </code></pre></div>
-
 
 <p>A special note on the <code>changed</code> signal is that it supports listening to detailed connections such as <code>changed::show-in-submenu</code> as shown above!</p>
 <blockquote>
@@ -574,7 +547,6 @@ aggregate menu.</p>
 <span class="k">this</span><span class="p">.</span><span class="nx">_indicator</span><span class="p">.</span><span class="nx">icon_name</span> <span class="o">=</span> <span class="s1">&#39;night-light-symbolic&#39;</span><span class="p">;</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">_indicator</span><span class="p">.</span><span class="nx">visible</span> <span class="o">=</span> <span class="nx">visible</span><span class="p">;</span>
 </code></pre></div>
-
 
 <p>Modifying the brightness slider slightly, we already have the base code for a bare-bones night light slider:</p>
 <div class="highlight"><pre><span></span><code><span class="gd">--- brightness.js</span>
@@ -653,7 +625,6 @@ aggregate menu.</p>
  });
 </code></pre></div>
 
-
 <h3>displaying the slider</h3>
 <p>With the minimal slider created, we can finally test displaying it with the extension. To do this, we will again need to refer to the <code>panel</code> setup in the <a href="https://gitlab.gnome.org/GNOME/gnome-shell">gnome-shell repository</a>. Digging through <code>js/ui/main.js</code>, we discover that the <code>panel</code> instance is actually exported!</p>
 <div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">Panel</span> <span class="o">=</span> <span class="nx">imports</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">panel</span><span class="p">;</span>
@@ -663,7 +634,6 @@ aggregate menu.</p>
     <span class="nx">panel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Panel</span><span class="p">.</span><span class="nx">Panel</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <p>We can verify that we do indeed have access to the <code>panel</code> instance by testing for the value of <code>imports.ui.main.panel</code> in the <a href="https://wiki.gnome.org/Projects/GnomeShell/LookingGlass">Looking Glass</a>. Look out for the red highlight around the panel.</p>
 <p><img alt="Inspecting the panel instance in Looking Glass" src="https://dontreinventbicycle.com/images/rewriting-night-light/lg.jpg"></p>
@@ -687,7 +657,6 @@ aggregate menu.</p>
 <span class="k">this</span><span class="p">.</span><span class="nx">menu</span><span class="p">.</span><span class="nx">addMenuItem</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_power</span><span class="p">.</span><span class="nx">menu</span><span class="p">);</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">menu</span><span class="p">.</span><span class="nx">addMenuItem</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_nightLight</span><span class="p">.</span><span class="nx">menu</span><span class="p">);</span>
 </code></pre></div>
-
 
 <p>With both the <code>AggregateMenu.menu</code> and <code>AggregateMenu._nightLight</code> instances accessible under the class instance, and the class instance being defined at <code>imports.ui.main.panel.statusArea.aggregateMenu</code>, we should have all that we need to display the night light slider.</p>
 <div class="highlight"><pre><span></span><code> class Extension {
@@ -720,14 +689,12 @@ aggregate menu.</p>
  }
 </code></pre></div>
 
-
 <h4>notice that order in which they're added corresponds to how they are displayed?</h4>
 <p>With regards to that comment, you may have noticed an additional parameter to the <code>aggregateMenu.menu.addMenuItem</code> call. That's because the type signature for the function actually allows us to redefine the position of items added. In this instance, we want it after the volume and brightness slider, hence the index of <code>2</code>. Without this index, the slider would actually appear under the system menu.</p>
 <div class="highlight"><pre><span></span><code><span class="kr">interface</span> <span class="nx">addMenuItem</span> <span class="p">{</span>
     <span class="p">(</span><span class="nx">menuItem</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">position?</span>: <span class="kt">number</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <h3>indicator options</h3>
 <p>From the <a href="#settings-schema">settings schema</a>, we can identify the following keys as being those key to the indicator:</p>
@@ -748,7 +715,6 @@ aggregate menu.</p>
          this._settings = new Gio.Settings({schema_id: COLOR_SCHEMA});
 </code></pre></div>
 
-
 <p>which can can initialize by running,</p>
 <div class="highlight"><pre><span></span><code><span class="k">new</span> <span class="nx">Indicator</span><span class="p">({</span>
     <span class="nx">minimum</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">_preferences</span><span class="p">.</span><span class="nx">get_int</span><span class="p">(</span><span class="s1">&#39;minimum&#39;</span><span class="p">),</span>
@@ -759,7 +725,6 @@ aggregate menu.</p>
 <span class="p">})</span>
 </code></pre></div>
 
-
 <p>and update with the following new <code>Indicator</code> method,</p>
 <div class="highlight"><pre><span></span><code><span class="nx">updateOption</span><span class="p">(</span><span class="nx">option</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">_options</span><span class="p">[</span><span class="nx">option</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
@@ -769,7 +734,6 @@ aggregate menu.</p>
 <span class="p">}</span>
 </code></pre></div>
 
-
 <h3>feature by feature</h3>
 <p>Now, speed-running development feature-by-feature:</p>
 <h4>changing the temperature</h4>
@@ -777,13 +741,12 @@ aggregate menu.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">_sliderChanged</span><span class="p">()</span> <span class="p">{</span>
     <span class="kr">const</span> <span class="p">{</span><span class="nx">swapAxis</span><span class="p">,</span> <span class="nx">minimum</span><span class="p">,</span> <span class="nx">maximum</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_options</span><span class="p">;</span>
     <span class="kr">const</span> <span class="nx">percent</span> <span class="o">=</span> <span class="nx">swapAxis</span>
-        <span class="o">?</span> <span class="mf">1</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">_slider</span><span class="p">.</span><span class="nx">value</span>
+        <span class="o">?</span> <span class="mi">1</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">_slider</span><span class="p">.</span><span class="nx">value</span>
         <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">_slider</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
     <span class="kr">const</span> <span class="nx">temperature</span> <span class="o">=</span> <span class="nx">percent</span> <span class="o">*</span> <span class="p">(</span><span class="nx">maximum</span> <span class="o">-</span> <span class="nx">minimum</span><span class="p">)</span> <span class="o">+</span> <span class="nx">minimum</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">_settings</span><span class="p">.</span><span class="nx">set_uint</span><span class="p">(</span><span class="s1">&#39;night-light-temperature&#39;</span><span class="p">,</span> <span class="nx">temperature</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <p>Even more easily with <code>Slider.value</code> being a percentage decimal, we can swap the axis with <code>1 - percent</code>.</p>
 <h4>brightness sync</h4>
@@ -802,7 +765,6 @@ aggregate menu.</p>
     <span class="p">});</span>
 </code></pre></div>
 
-
 <p>Again, adding on to the <code>_sliderChanged</code> method, making sure to only update the brightness if the key is defined (this is usually undefined on desktops without brightness controls):</p>
 <div class="highlight"><pre><span></span><code> _sliderChanged() {
 <span class="gd">-    const {swapAxis, minimum, maximum} = this._options;</span>
@@ -818,12 +780,10 @@ aggregate menu.</p>
  }
 </code></pre></div>
 
-
 <h4>updating the proxy sink</h4>
 <p>The <code>_sync</code> function acts as a sink for the <code>ColorProxy</code> object such that the slider always reflects the current system state, such as when the night light is no longer active or if the temperature has changed externally. This was set up by listening to the <code>g-properties-changed</code> signal on the <code>this._proxy</code> object previously:</p>
 <div class="highlight"><pre><span></span><code><span class="k">this</span><span class="p">.</span><span class="nx">_proxy</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">&#39;g-properties-changed&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_sync</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
 </code></pre></div>
-
 
 <p>The <code>_sync</code> function would also be responsible to ensure that the slider is hidden when the night light is no longer active (<code>NightLightActive: false</code>) while still respecting the <code>show-always</code> option.</p>
 <p>It would also need to update the slider with the updated percentage. To do so, we simply invert the previous temperature calculation function:</p>
@@ -831,7 +791,6 @@ aggregate menu.</p>
 <span class="err">temperature - minimum = percent * (maximum - minimum)</span>
 <span class="err">(temperature - minimum) / (maximum - minimum) = percent</span>
 </code></pre></div>
-
 
 <p>Again, swapping the axis is as simple as doing <code>1 - percent</code>. Putting that together:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">_sync</span><span class="p">()</span> <span class="p">{</span>
@@ -842,13 +801,12 @@ aggregate menu.</p>
     <span class="k">if</span> <span class="p">(</span><span class="nx">active</span><span class="p">)</span> <span class="p">{</span>
         <span class="kr">const</span> <span class="nx">percent</span> <span class="o">=</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_proxy</span><span class="p">.</span><span class="nx">Temperature</span> <span class="o">-</span> <span class="nx">minimum</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">maximum</span> <span class="o">-</span> <span class="nx">minimum</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">swapAxis</span><span class="p">)</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">_changeSlider</span><span class="p">(</span><span class="mf">1</span> <span class="o">-</span> <span class="nx">percent</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_changeSlider</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nx">percent</span><span class="p">);</span>
         <span class="k">else</span>
             <span class="k">this</span><span class="p">.</span><span class="nx">_changeSlider</span><span class="p">(</span><span class="nx">percent</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <h4>debouncing the _sync method</h4>
 <p>While the <code>_changeSlider</code> method is already set up to temporarily block the <code>notify::value</code> handler to avoid a recursive loop,</p>
@@ -859,14 +817,12 @@ aggregate menu.</p>
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>we still need a way to debounce the <code>_sync</code> method, because GNOME updates the night light temperature gradually. Here we see the slider slowly moving along as I click on the slider:</p>
 <p><img alt="The slider slowly slides to the clicked position" src="https://dontreinventbicycle.com/images/rewriting-night-light/slow-sync.gif"></p>
 <p>What happens is that the <code>Temperature</code> value in the proxy is slowly updated over time until it reaches the desired <code>night-light-temperature</code> value, hence calling the <code>_sync</code> method which slowly updates the slider with using the <code>_changeSlider</code> method.</p>
 <p>To do this, we vendor a <code>debounce</code> function from a <a href="/gjs-debounce.html">sibling article</a> and rename the <code>_sync</code> function to <code>__sync</code> so we can wrap it accordingly in the constructor:</p>
-<div class="highlight"><pre><span></span><code><span class="k">this</span><span class="p">.</span><span class="nx">_sync</span> <span class="o">=</span> <span class="nx">debounce</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">__sync</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mf">500</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="k">this</span><span class="p">.</span><span class="nx">_sync</span> <span class="o">=</span> <span class="nx">debounce</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">__sync</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">500</span><span class="p">);</span>
 </code></pre></div>
-
 
 <h3>feature checklist checkpoint</h3>
 <p>At this point, we already have a pretty functional slider and have delivered upon the following requirements:</p>
@@ -898,7 +854,6 @@ aggregate menu.</p>
     <span class="k">this</span><span class="p">.</span><span class="nx">_item</span><span class="p">.</span><span class="nx">visible</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_indicator</span><span class="p">.</span><span class="nx">visible</span> <span class="o">=</span> <span class="nx">visible</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <p>What we want to do here instead of to possibly have the indicator hidden, even when the night light is active. It should resemble the following logic table:</p>
 <table>
@@ -944,7 +899,6 @@ aggregate menu.</p>
              &lt;default&gt;false&lt;/default&gt;
 </code></pre></div>
 
-
 <p>Next, we would need to update the constructor for the <code>Indicator</code> such that we can receive the existing night light <code>SystemIndicator</code> and add an additional key to the <code>options</code> parameter for the new <code>showStatusIcon</code> preference:</p>
 <div class="highlight"><pre><span></span><code> var Indicator = GObject.registerClass(
  class Indicator extends PanelMenu.SystemIndicator {
@@ -962,7 +916,6 @@ aggregate menu.</p>
          this._options = options;
 </code></pre></div>
 
-
 <p>The <code>Indicator</code> instance now needs to be initialized with the additional <code>indicator</code> parameter, which we hijack from the existing night light in the panel:</p>
 <div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">indicator</span> <span class="o">=</span> <span class="nx">panel</span><span class="p">.</span><span class="nx">statusArea</span><span class="p">.</span><span class="nx">aggregateMenu</span><span class="p">.</span><span class="nx">_nightLight</span><span class="p">;</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">_nightLight</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Indicator</span><span class="p">(</span><span class="nx">indicator</span><span class="p">,</span> <span class="p">{</span>
@@ -975,7 +928,6 @@ aggregate menu.</p>
 <span class="p">});</span>
 </code></pre></div>
 
-
 <p>To update the indicator visibility, we make some changes to the <code>__sync</code> method:</p>
 <div class="highlight"><pre><span></span><code>     __sync() {
 <span class="gd">-        const {showAlways, swapAxis, minimum, maximum} = this._options;</span>
@@ -984,7 +936,6 @@ aggregate menu.</p>
          this._item.visible = active || showAlways;
 <span class="gi">+        this._indicator.visible = active &amp;&amp; showStatusIcon;</span>
 </code></pre></div>
-
 
 <p>...and that didn't work 🤔</p>
 <p><img alt="The night light indicator flickers as we update the temperature" src="https://dontreinventbicycle.com/images/rewriting-night-light/show-status-icon.gif"></p>
@@ -1003,7 +954,6 @@ aggregate menu.</p>
 <span class="gi">+        this._updateIndicatorVisibility();</span>
 </code></pre></div>
 
-
 <p>I then make sure to listen to the indicator's <code>show</code> signal so I can update its visibility when required:</p>
 <div class="highlight"><pre><span></span><code>         this._indicatorScrollId = this._indicator.connect(&#39;scroll-event&#39;, (actor, event) =&gt; {
              return this._slider.emit(&#39;scroll-event&#39;, event);
@@ -1015,7 +965,6 @@ aggregate menu.</p>
 <span class="gi">+        });</span>
      }
 </code></pre></div>
-
 
 <p>The same of course applies to the <code>updateOption</code> method:</p>
 <div class="highlight"><pre><span></span><code>     updateOption(option, value) {
@@ -1031,13 +980,11 @@ aggregate menu.</p>
      }
 </code></pre></div>
 
-
 <p>And finally of course we remember to properly disconnect the listener on <code>destroy</code> such that the indicator does not propagate events to a destroyed slider instance:</p>
 <div class="highlight"><pre><span></span><code>     destroy() {
 <span class="gi">+        this._indicator.disconnect(this._indicatorShowId);</span>
          this._item.destroy();
 </code></pre></div>
-
 
 <p>Voila!</p>
 <p>Next, to allow scrolling on the indicator to mimic scrolling on the slider, all we need to do is hook up the <code>scroll-event</code> between the two:</p>
@@ -1051,13 +998,11 @@ aggregate menu.</p>
      }
 </code></pre></div>
 
-
 <p>And again, we remember to disconnect the listener on <code>destroy</code>:</p>
 <div class="highlight"><pre><span></span><code>     destroy() {
          this._indicator.disconnect(this._indicatorShowId);
 <span class="gi">+        this._indicator.disconnect(this._indicatorScrollId);</span>
 </code></pre></div>
-
 
 <h3>enabling the night light indefinitely</h3>
 <p>Having the night light enabled indefinitely is as simple as having the night light schedule shifted indefinitely, changing the following values:</p>
@@ -1075,7 +1020,7 @@ aggregate menu.</p>
     <span class="nx">enableTimer</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_settings</span><span class="p">.</span><span class="nx">set_boolean</span><span class="p">(</span><span class="s1">&#39;night-light-schedule-automatic&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
         <span class="c1">// Update schedule every 1 hour</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">_timerId</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_updateSchedule</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mf">60</span> <span class="o">*</span> <span class="mf">60</span> <span class="o">*</span> <span class="mf">1000</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_timerId</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_updateSchedule</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_updateSchedule</span><span class="p">();</span>
     <span class="p">}</span>
 
@@ -1090,14 +1035,13 @@ aggregate menu.</p>
     <span class="nx">_updateSchedule</span><span class="p">()</span> <span class="p">{</span>
         <span class="kr">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
         <span class="c1">// Set a schedule span of 6 hours to &amp; from now</span>
-        <span class="kr">const</span> <span class="nx">to</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">now</span> <span class="o">+</span> <span class="mf">6</span> <span class="o">*</span> <span class="mf">60</span> <span class="o">*</span> <span class="mf">60</span> <span class="o">*</span> <span class="mf">1000</span><span class="p">);</span>
-        <span class="kr">const</span> <span class="nx">from</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">now</span> <span class="o">-</span> <span class="mf">6</span> <span class="o">*</span> <span class="mf">60</span> <span class="o">*</span> <span class="mf">60</span> <span class="o">*</span> <span class="mf">1000</span><span class="p">)</span>
+        <span class="kr">const</span> <span class="nx">to</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">now</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+        <span class="kr">const</span> <span class="nx">from</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">now</span> <span class="o">-</span> <span class="mi">6</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_settings</span><span class="p">.</span><span class="nx">set_double</span><span class="p">(</span><span class="s1">&#39;night-light-schedule-to&#39;</span><span class="p">,</span> <span class="nx">to</span><span class="p">.</span><span class="nx">getHours</span><span class="p">());</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_settings</span><span class="p">.</span><span class="nx">set_double</span><span class="p">(</span><span class="s1">&#39;night-light-schedule-from&#39;</span><span class="p">,</span> <span class="nx">from</span><span class="p">.</span><span class="nx">getHours</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <p>Here, I removed some flawed logic in the original extension where I'd attempt to restore the original values of <code>night-light-schedule-{to,from,automatic}</code> even if the code would technically not hold up across reboots.</p>
 <h2>completing the extension</h2>
@@ -1165,7 +1109,7 @@ aggregate menu.</p>
         <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_preferences</span><span class="p">.</span><span class="nx">get_boolean</span><span class="p">(</span><span class="s1">&#39;show-in-submenu&#39;</span><span class="p">))</span>
             <span class="nx">panel</span><span class="p">.</span><span class="nx">statusArea</span><span class="p">.</span><span class="nx">aggregateMenu</span><span class="p">.</span><span class="nx">_nightLight</span><span class="p">.</span><span class="nx">_item</span><span class="p">.</span><span class="nx">menu</span><span class="p">.</span><span class="nx">addMenuItem</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_nightLight</span><span class="p">.</span><span class="nx">menu</span><span class="p">);</span>
         <span class="k">else</span>
-            <span class="nx">panel</span><span class="p">.</span><span class="nx">statusArea</span><span class="p">.</span><span class="nx">aggregateMenu</span><span class="p">.</span><span class="nx">menu</span><span class="p">.</span><span class="nx">addMenuItem</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_nightLight</span><span class="p">.</span><span class="nx">menu</span><span class="p">,</span> <span class="mf">2</span><span class="p">);</span>
+            <span class="nx">panel</span><span class="p">.</span><span class="nx">statusArea</span><span class="p">.</span><span class="nx">aggregateMenu</span><span class="p">.</span><span class="nx">menu</span><span class="p">.</span><span class="nx">addMenuItem</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_nightLight</span><span class="p">.</span><span class="nx">menu</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="nx">_updateOption</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
@@ -1187,29 +1131,27 @@ aggregate menu.</p>
 <span class="p">}</span>
 </code></pre></div>
 
-
 <h3>bugs into a week of use</h3>
 <p><del>Thus concludes the night light slider rewrite.</del></p>
 <p>Alas, even the best developers write bugs. Terrible developers such as myself however even more.</p>
-<div class="highlight"><pre><span></span><code><span class="n">JS</span> <span class="n">ERROR</span><span class="p">:</span> <span class="n">Error</span><span class="p">:</span> <span class="n">Argument</span> <span class="s1">&#39;instance&#39;</span> <span class="p">(</span><span class="n">type</span> <span class="n">interface</span><span class="p">)</span> <span class="n">may</span> <span class="ow">not</span> <span class="n">be</span> <span class="nb nb-Type">null</span>
-<span class="n">_init</span><span class="o">/</span><span class="n">GObject</span><span class="o">.</span><span class="n">Object</span><span class="o">.</span><span class="n">prototype</span><span class="o">.</span><span class="n">block_signal_handler</span><span class="err">@</span><span class="n">resource</span><span class="p">:</span><span class="o">///</span><span class="n">org</span><span class="o">/</span><span class="n">gnome</span><span class="o">/</span><span class="n">gjs</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">overrides</span><span class="o">/</span><span class="n">GObject</span><span class="o">.</span><span class="n">js</span><span class="p">:</span><span class="mi">574</span><span class="p">:</span><span class="mi">24</span>
-<span class="n">_changeSlider</span><span class="err">@</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">dafne</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">gnome</span><span class="o">-</span><span class="n">shell</span><span class="o">/</span><span class="n">extensions</span><span class="o">/</span><span class="n">night</span><span class="o">-</span><span class="n">light</span><span class="o">-</span><span class="n">slider</span><span class="o">.</span><span class="n">timur</span><span class="err">@</span><span class="n">linux</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">extension</span><span class="o">.</span><span class="n">js</span><span class="p">:</span><span class="mi">129</span><span class="p">:</span><span class="mi">22</span>
-<span class="n">__sync</span><span class="err">@</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">dafne</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">gnome</span><span class="o">-</span><span class="n">shell</span><span class="o">/</span><span class="n">extensions</span><span class="o">/</span><span class="n">night</span><span class="o">-</span><span class="n">light</span><span class="o">-</span><span class="n">slider</span><span class="o">.</span><span class="n">timur</span><span class="err">@</span><span class="n">linux</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">extension</span><span class="o">.</span><span class="n">js</span><span class="p">:</span><span class="mi">150</span><span class="p">:</span><span class="mi">22</span>
-<span class="n">debouncedFunc</span><span class="err">@</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">dafne</span><span class="o">/.</span><span class="n">local</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">gnome</span><span class="o">-</span><span class="n">shell</span><span class="o">/</span><span class="n">extensions</span><span class="o">/</span><span class="n">night</span><span class="o">-</span><span class="n">light</span><span class="o">-</span><span class="n">slider</span><span class="o">.</span><span class="n">timur</span><span class="err">@</span><span class="n">linux</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">convenience</span><span class="o">.</span><span class="n">js</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">18</span>
-<span class="nb nb-Type">Object</span> <span class="o">.</span><span class="n">Gjs_ui_popupMenu_PopupBaseMenuItem</span> <span class="p">(</span><span class="mh">0x55ef4c229600</span><span class="p">),</span> <span class="n">has</span> <span class="n">been</span> <span class="n">already</span> <span class="n">deallocated</span> <span class="err">—</span> <span class="n">impossible</span> <span class="n">to</span> <span class="n">set</span> <span class="n">any</span> <span class="n">property</span> <span class="n">on</span> <span class="n">it</span><span class="o">.</span> <span class="n">This</span> <span class="n">might</span> <span class="n">be</span> <span class="n">caused</span> <span class="n">by</span> <span class="n">the</span> <span class="n">object</span> <span class="n">having</span> <span class="n">been</span> <span class="n">destroyed</span> <span class="n">from</span> <span class="n">C</span> <span class="n">code</span> <span class="n">using</span> <span class="n">something</span> <span class="n">such</span> <span class="k">as</span> <span class="n">destroy</span><span class="p">(),</span> <span class="n">dispose</span><span class="p">(),</span> <span class="ow">or</span> <span class="n">remove</span><span class="p">()</span> <span class="n">vfuncs</span><span class="o">.</span>
-<span class="o">==</span> <span class="n">Stack</span> <span class="n">trace</span> <span class="k">for</span> <span class="n">context</span> <span class="mh">0x55ef489dd8d0</span> <span class="o">==</span>
-<span class="c1">#0   55ef530c7160 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:141 (1b4d10eab3d0 @ 150)</span>
-<span class="c1">#1   7ffd6c54c4a0 b   self-hosted:1007 (223d2c49e790 @ 492)</span>
-<span class="c1">#2   55ef530c70c8 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/convenience.js:9 (1b4d10eabf10 @ 39)</span>
-<span class="o">==</span> <span class="n">Stack</span> <span class="n">trace</span> <span class="k">for</span> <span class="n">context</span> <span class="mh">0x55ef489dd8d0</span> <span class="o">==</span>
-<span class="c1">#0   55ef530c72d0 i   resource:///org/gnome/gjs/modules/core/overrides/GObject.js:574 (1dadea7b6cb8 @ 25)</span>
-<span class="c1">#1   55ef530c7238 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:129 (1b4d10eab2e0 @ 31)</span>
-<span class="c1">#2   55ef530c7160 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:150 (1b4d10eab3d0 @ 319)</span>
-<span class="nb nb-Type">Object</span> <span class="o">.</span><span class="n">Gjs_ui_slider_Slider</span> <span class="p">(</span><span class="mh">0x55ef4c212210</span><span class="p">),</span> <span class="n">has</span> <span class="n">been</span> <span class="n">already</span> <span class="n">deallocated</span> <span class="err">—</span> <span class="n">impossible</span> <span class="n">to</span> <span class="n">access</span> <span class="n">it</span><span class="o">.</span> <span class="n">This</span> <span class="n">might</span> <span class="n">be</span> <span class="n">caused</span> <span class="n">by</span> <span class="n">the</span> <span class="n">object</span> <span class="n">having</span> <span class="n">been</span> <span class="n">destroyed</span> <span class="n">from</span> <span class="n">C</span> <span class="n">code</span> <span class="n">using</span> <span class="n">something</span> <span class="n">such</span> <span class="k">as</span> <span class="n">destroy</span><span class="p">(),</span> <span class="n">dispose</span><span class="p">(),</span> <span class="ow">or</span> <span class="n">remove</span><span class="p">()</span> <span class="n">vfuncs</span><span class="o">.</span>
-<span class="c1">#3   7ffd6c54c4a0 b   self-hosted:1007 (223d2c49e790 @ 492)</span>
-<span class="c1">#4   55ef530c70c8 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/convenience.js:9 (1b4d10eabf10 @ 39)</span>
+<div class="highlight"><pre><span></span><code><span class="err">JS ERROR: Error: Argument &#39;instance&#39; (type interface) may not be null</span>
+<span class="err">_init/GObject.Object.prototype.block_signal_handler@resource:///org/gnome/gjs/modules/core/overrides/GObject.js:574:24</span>
+<span class="err">_changeSlider@/home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:129:22</span>
+<span class="err">__sync@/home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:150:22</span>
+<span class="err">debouncedFunc@/home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/convenience.js:9:18</span>
+<span class="err">Object .Gjs_ui_popupMenu_PopupBaseMenuItem (0x55ef4c229600), has been already deallocated — impossible to set any property on it. This might be caused by the object having been destroyed from C code using something such as destroy(), dispose(), or remove() vfuncs.</span>
+<span class="err">== Stack trace for context 0x55ef489dd8d0 ==</span>
+<span class="err">#0   55ef530c7160 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:141 (1b4d10eab3d0 @ 150)</span>
+<span class="err">#1   7ffd6c54c4a0 b   self-hosted:1007 (223d2c49e790 @ 492)</span>
+<span class="err">#2   55ef530c70c8 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/convenience.js:9 (1b4d10eabf10 @ 39)</span>
+<span class="err">== Stack trace for context 0x55ef489dd8d0 ==</span>
+<span class="err">#0   55ef530c72d0 i   resource:///org/gnome/gjs/modules/core/overrides/GObject.js:574 (1dadea7b6cb8 @ 25)</span>
+<span class="err">#1   55ef530c7238 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:129 (1b4d10eab2e0 @ 31)</span>
+<span class="err">#2   55ef530c7160 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/extension.js:150 (1b4d10eab3d0 @ 319)</span>
+<span class="err">Object .Gjs_ui_slider_Slider (0x55ef4c212210), has been already deallocated — impossible to access it. This might be caused by the object having been destroyed from C code using something such as destroy(), dispose(), or remove() vfuncs.</span>
+<span class="err">#3   7ffd6c54c4a0 b   self-hosted:1007 (223d2c49e790 @ 492)</span>
+<span class="err">#4   55ef530c70c8 i   /home/dafne/.local/share/gnome-shell/extensions/night-light-slider.timur@linux.com/convenience.js:9 (1b4d10eabf10 @ 39)</span>
 </code></pre></div>
-
 
 <p>This was apparently caused because I had not properly disconnected the <code>g-properties-changed</code> signal from the <code>ColorProxy</code> when destroying the <code>Indicator</code>. I also had to make sure I was removing all references to the indicator when the extension was disabled, such as at <code>panel.statusArea.aggregateMenu</code>.</p>
 <p>Also revising <a href="https://wiki.gnome.org/Projects/GnomeShell/Extensions/Writing">the guide</a> (on the 30th of September, I cannot for the life of me figure out how to resubmit a page to be re-archived 🤦), I come across the following comment that was not present <a href="https://web.archive.org/web/20200707175025/https://wiki.gnome.org/Projects/GnomeShell/Extensions/Writing">before</a>:</p>
@@ -1266,7 +1208,6 @@ the signal, so we can override that callback and chain-up.</p>
  }
 </code></pre></div>
 
-
 <p>The next issue I found was that the slider would wiggle a little upon updates:</p>
 <p><img alt="The slider moves ever so slightly upon letting go of it" src="https://dontreinventbicycle.com/images/rewriting-night-light/slider-wiggle.gif"></p>
 <p>With some logging enabled, I noticed that the <code>__sync</code> function was still being called by the <code>ColorProxy</code>:</p>
@@ -1281,11 +1222,10 @@ the signal, so we can override that callback and chain-up.</p>
 <span class="err">__sync temperature: 3292.842247173721</span>
 </code></pre></div>
 
-
 <p>This is expected because the debounced <code>_sync</code> function should still proxy updates called after the 500ms interval to <code>__sync</code>. What is observed however is that the final "Temperature" reported by the proxy will always fall within a delta (<code>2171 - 2163</code>, <code>3292 - 3283</code>) of the set value instead of actually reaching the intended value 🤔.</p>
 <p>Revisiting <code id="gsd-night-light">plugins/color/gsd-night-light.c</code> in the <a href="https://gitlab.gnome.org/GNOME/gnome-settings-daemon/">gnome-settings-daemon repository</a>, we see that this is intended behaviour where the proxy stops notifying of updates if they fall within the <code>GSD_TEMPERATURE_MAX_DELTA</code> delta of <code>10.f</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">static</span> <span class="kt">void</span>
-<span class="n">gsd_night_light_set_temperature_internal</span> <span class="p">(</span><span class="n">GsdNightLight</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">gdouble</span> <span class="n">temperature</span><span class="p">)</span>
+<span class="nf">gsd_night_light_set_temperature_internal</span> <span class="p">(</span><span class="n">GsdNightLight</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">gdouble</span> <span class="n">temperature</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">ABS</span> <span class="p">(</span><span class="n">self</span><span class="o">-&gt;</span><span class="n">cached_temperature</span> <span class="o">-</span> <span class="n">temperature</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">GSD_TEMPERATURE_MAX_DELTA</span><span class="p">)</span>
                 <span class="k">return</span><span class="p">;</span>
@@ -1293,7 +1233,6 @@ the signal, so we can override that callback and chain-up.</p>
         <span class="n">g_object_notify</span> <span class="p">(</span><span class="n">G_OBJECT</span> <span class="p">(</span><span class="n">self</span><span class="p">),</span> <span class="s">&quot;temperature&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-
 
 <p>The following is a representation of how the "Temperature" value updates over time when the slider is moved where,</p>
 <ul>
@@ -1320,7 +1259,7 @@ the signal, so we can override that callback and chain-up.</p>
 <p>The unmarked head and tail span of the line is the actual system GSettings value, showing that the value reported by D-Bus is never exactly the same as that value. One solution would be to duplicate the delta check with something like <code class="highlight"><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_proxy</span><span class="p">.</span><span class="nx">Temperature</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">_settings</span><span class="p">.</span><span class="nx">get_uint</span><span class="p">(</span><span class="s1">&#39;night-light-temperature&#39;</span><span class="p">))</span></code>, but this feels like a hack.</p>
 <p>In the <a href="#gsd-night-light">same file</a>, we also see that the night light temperature is actually smeared over a span of <code>GSD_NIGHT_LIGHT_SMOOTH_SMEAR</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="k">static</span> <span class="n">gboolean</span>
-<span class="n">gsd_night_light_smooth_cb</span> <span class="p">(</span><span class="n">gpointer</span> <span class="n">user_data</span><span class="p">)</span>
+<span class="nf">gsd_night_light_smooth_cb</span> <span class="p">(</span><span class="n">gpointer</span> <span class="n">user_data</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="n">GsdNightLight</span> <span class="o">*</span><span class="n">self</span> <span class="o">=</span> <span class="n">GSD_NIGHT_LIGHT</span> <span class="p">(</span><span class="n">user_data</span><span class="p">);</span>
         <span class="n">gdouble</span> <span class="n">tmp</span><span class="p">;</span>
@@ -1345,7 +1284,6 @@ the signal, so we can override that callback and chain-up.</p>
 <span class="p">}</span>
 </code></pre></div>
 
-
 <p>Since we can identify the smear spread of <code>GSD_NIGHT_LIGHT_SMOOTH_SMEAR</code>, all we have to do is ignore updates from <code>ColorProxy</code> over that duration, like so:</p>
 <div class="highlight"><pre><span></span><code><span class="gu">@@ -124,6 +124,13 @@ class Indicator extends PanelMenu.SystemIndicator {</span>
              ? 1 - this._slider.value
@@ -1363,7 +1301,6 @@ the signal, so we can override that callback and chain-up.</p>
          if (brightnessSync &amp;&amp; this._brightnessProxy.Brightness &gt;= 0)
 </code></pre></div>
 
-
 <p>A final bug I discovered while rewriting the preferences panel was that the <code>show-status-icon</code> preference would not take effect immediately. This was luckily an easy fix:</p>
 <div class="highlight"><pre><span></span><code><span class="gu">@@ -167,9 +167,8 @@ class Indicator extends PanelMenu.SystemIndicator {</span>
          this._options[option] = value;
@@ -1376,7 +1313,6 @@ the signal, so we can override that callback and chain-up.</p>
          }
      }
 </code></pre></div>
-
 
 <h3>Copy of Copy of Final final asdasda Copy (3).psd</h3>
 <p>Thus concludes the night light slider rewrite. With the <a href="https://www.gnome.org/news/2020/09/gnome-3-38-released/">GNOME 3.38 release</a> came the habitual <a href="https://codeberg.org/kiyui/gnome-shell-night-light-slider-extension/issues/70">"Not working with $version" report</a> and thus a rush for me to complete all bug fixes and the preferences panel.</p>

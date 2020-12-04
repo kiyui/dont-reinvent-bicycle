@@ -13,17 +13,14 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;If we were the compile the above code and run it, we would see that it returns a non-zero exit code of &lt;code&gt;1&lt;/code&gt;, indicating a failure in execution.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;g++ main.cpp &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; ./a.out  &lt;span class="c1"&gt;# Hello world&lt;/span&gt;
 &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;                  &lt;span class="c1"&gt;# 1&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;We can extend on this further by trying to chain the command with other commands:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./a.out &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;...succeeded&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;...failed&amp;quot;&lt;/span&gt;  &lt;span class="c1"&gt;#=&amp;gt; Hello world...failed&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;We see that chaining the &lt;code&gt;echo "...succeeded"&lt;/code&gt; command failed because the command returned a non-zero exit code. In UNIX, well-behaving programs return &lt;code&gt;0&lt;/code&gt; on success and a non-zero exit code on failure, that should act as a type of error code. For example, you could have your application return &lt;code&gt;1&lt;/code&gt; on a general failure and perhaps &lt;code&gt;2&lt;/code&gt; if it encountered an issue reading your input, and so on. You can read more about exit status codes in &lt;a href="https://www.tldp.org/LDP/abs/html/exit-status.html"&gt;the following chapter&lt;/a&gt; by The Linux Documentation Project.&lt;/p&gt;
 &lt;h2&gt;exit codes are an interface&lt;/h2&gt;
@@ -43,12 +40,10 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Where we would consume it as so:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;await&lt;/span&gt; &lt;span class="nx"&gt;getUser&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;user&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;        &lt;span class="c1"&gt;// =&amp;gt; TypeError: Cannot read property &amp;#39;name&amp;#39; of null&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This is exactly why the interface matters;- People expect certain conventions of how something should behave. Now, let's try the intuition behind using interfaces to see how we should be throwing or handling errors.&lt;/p&gt;
 &lt;h2&gt;understanding error interfaces&lt;/h2&gt;
@@ -62,7 +57,6 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The part we want to focus on is the store dispatch method, &lt;code&gt;this.$store.dispatch&lt;/code&gt; because this is where our error can stem from.&lt;/p&gt;
 &lt;h3&gt;the store&lt;/h3&gt;
 &lt;p&gt;Let's start with defining the basic interface of our store action. We want a function that sends our login credentials to a server and responds with our logged-in user. As this function would require a network request, it makes sense that we should start with it returning an empty promise.&lt;/p&gt;
@@ -71,7 +65,6 @@
   &lt;span class="p"&gt;})&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Now, let's take a look at how we can craft that login request. To keep things simple, we will be making use of the &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API"&gt;fetch API&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(...)&lt;/span&gt;
@@ -82,7 +75,6 @@
   &lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The fetch function returns a Promise that either resolves a &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/Response"&gt;Response&lt;/a&gt; or rejects when there is a network error, one area where we should raise an exception. If the response succeeded, the value of &lt;code&gt;response.ok&lt;/code&gt; should be truthy, meaning we successfully got a response from the server. If not, we can assume we have run into an error and let the consumer of the function handle that.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;ok&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="c1"&gt;// Our response should be in response.body&lt;/span&gt;
@@ -91,7 +83,6 @@
   &lt;span class="c1"&gt;// We should raise an exception here!&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Next, we want to parse the response with an imaginary &lt;code&gt;User&lt;/code&gt; class with a static &lt;code&gt;from&lt;/code&gt; method:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;class&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -108,7 +99,6 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;You can see that since &lt;code&gt;from&lt;/code&gt; is a regular method, our interface for raising an exception is by using a &lt;code&gt;throw&lt;/code&gt; statement. As this function can also throw an error, we use it inside a &lt;code&gt;try/catch&lt;/code&gt; block inside out &lt;code&gt;if (response.ok)&lt;/code&gt; block as so:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;User&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;response&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -116,7 +106,6 @@
   &lt;span class="c1"&gt;// User.from threw an error&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Finally, now that we all that we have all the components to build our store action, we can piece it together! Remember, since our &lt;code&gt;login&lt;/code&gt; function returns a Promise, our interface for raising an exception is by rejecting &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;login&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;context&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -147,7 +136,6 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;h3&gt;the component&lt;/h3&gt;
 &lt;p&gt;Now back to our component, we can figure out how to the deal with exceptions when they occur:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$store&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;login&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;password&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
@@ -165,7 +153,6 @@
     &lt;span class="nx"&gt;captureException&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;err&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Let's take a look at the interfaces we have made use of:&lt;/p&gt;
 &lt;ul&gt;
@@ -194,7 +181,6 @@
   &lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;h2&gt;finally {&lt;/h2&gt;
 &lt;p&gt;Errors are an extra dimension that we can make use of when coding and can help us achieve cleaner code, so long as we use it.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -206,7 +192,6 @@
   &lt;span class="c1"&gt;// we are in the endgame&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This article is powered by the exception-free code philosophy, perhaps made popular by &lt;a href="https://google.github.io/styleguide/cppguide.html#Exceptions"&gt;Google's C++ styleguide&lt;/a&gt;, leaking into other languages like JavaScript. Also for fun, I recommend checking out &lt;a href="https://wiki.haskell.org/Exception"&gt;how Haskell implements exceptions&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;}&lt;/h2&gt;</content><category term="code"></category><category term="programming"></category><category term="unix"></category><category term="javascript"></category><category term="vue"></category></entry><entry><title>Default Title</title><link href="https://dontreinventbicycle.com/default-values.html" rel="alternate"></link><published>2019-04-27T17:51:00+08:00</published><updated>2019-04-27T22:31:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-04-27:/default-values.html</id><summary type="html">&lt;p&gt;The use of default values, also known as optional parameters is a controversial topic in programming. Languages like Go even go so far to outright disallow the possibility of using optional parameters or method overloading, emphasising simplicity instead. But what exactly are optional parameters used for?&lt;/p&gt;
@@ -234,7 +219,6 @@
 &lt;span class="n"&gt;long_long_man&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;volume&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 1200&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;would be a lot more verbose, include unnecessary duplication, and have to be written for every possible variation!&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Cuboid&lt;/span&gt;  
   &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;Int32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -257,19 +241,17 @@
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Additionally, could you imagine having to define every key-value mapping in configuration files each and every time you set something up?&lt;/p&gt;
 &lt;h2&gt;so, what's the problem?&lt;/h2&gt;
 &lt;p&gt;One of the main arguments against the use of optional parameters is that it leads to the production of inconsistent APIs. This is one such example:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="c1"&gt;// ...rotation code&lt;/span&gt;
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotatedMatrix&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
 &lt;span class="nx"&gt;itemOne&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;itemOne&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;       &lt;span class="c1"&gt;// What is the angle of the rotation?&lt;/span&gt;
-&lt;span class="nx"&gt;itemTwo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;itemTwo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;180&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;// Here, we know immediately&lt;/span&gt;
+&lt;span class="nx"&gt;itemTwo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;itemTwo&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;180&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;// Here, we know immediately&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;The above function doesn't immediately make it clear what the resulting value of the function will be since it makes a value that should be required optional. Another such argument is that it allows for the introduction of flag-oriented programming. While that is a whole other can of hydras, the following is a classic example of flag-oriented programming:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;logNames&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;people&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;logAges&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -284,7 +266,6 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;To add insult to injury, it would seem that the implementation of optional arguments isn't even consistent from one language to another! Consider how Python handles optional parameter default values:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;random&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;randint&lt;/span&gt;
 
@@ -298,19 +279,17 @@
 &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;with_random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;             &lt;span class="c1"&gt;# [79, 55]          wait what?? ah, python&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;The following more or less exact same code in JavaScript behaves quite differently!&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;seed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;randomValue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;floor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mf"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;randomValue&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;floor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;random&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="nx"&gt;seed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;push&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;randomValue&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;seed&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mf"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;44&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;15&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;  &lt;span class="c1"&gt;// [23, 44, 15, 16]&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;44&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;  &lt;span class="c1"&gt;// [23, 44, 15, 16]&lt;/span&gt;
 &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;              &lt;span class="c1"&gt;// [79]&lt;/span&gt;
 &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;withRandom&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;              &lt;span class="c1"&gt;// [55]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Quick! Grab your pitchforks and put an end to the evil that is default values!&lt;/p&gt;
 &lt;h2&gt;no, your opinion is wrong&lt;/h2&gt;
@@ -321,13 +300,11 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;In fact, if you do find yourself using the value &lt;code&gt;90&lt;/code&gt; as the &lt;code&gt;angle&lt;/code&gt; argument more often than not, consider using method-overloading or proxying the function:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix90&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;angle&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;rotateMatrix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;90&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;If you still aren't sure &lt;a href="/identifying-hacks.html"&gt;how to identify hacky use of optional parameters&lt;/a&gt;, here are a few good design principles:&lt;/p&gt;
 &lt;ul&gt;
@@ -340,7 +317,6 @@
 &lt;span class="nv"&gt;LS_COLORS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;...&amp;quot;&lt;/span&gt; /usr/bin/ls .
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;This article was powered by the procrastination of setting up a Raspberry Pi.&lt;/p&gt;</content><category term="code"></category><category term="programming"></category><category term="improve"></category></entry><entry><title>the unix paradigm</title><link href="https://dontreinventbicycle.com/the-unix-paradigm.html" rel="alternate"></link><published>2019-04-19T15:00:00+08:00</published><updated>2020-11-04T00:00:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-04-19:/the-unix-paradigm.html</id><summary type="html">&lt;p&gt;If you're a learned programmer or computer nerd, you may have heard of the UNIX philosophy;- A set of guidelines to developing minimalist and modular software. The premise of this design pattern was fundamentally opposed to software designed in a monolithic fashion. We've all seen those crazy bash liners for …&lt;/p&gt;</summary><content type="html">&lt;p&gt;If you're a learned programmer or computer nerd, you may have heard of the UNIX philosophy;- A set of guidelines to developing minimalist and modular software. The premise of this design pattern was fundamentally opposed to software designed in a monolithic fashion. We've all seen those crazy bash liners for doing a myriad of tasks. There's even an &lt;a href="http://www.bashoneliners.com/"&gt;entire site&lt;/a&gt; dedicated to it. Here's one I have aliased and use frequently:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;fd -t f &lt;span class="m"&gt;2&lt;/span&gt;&amp;gt; /dev/null &lt;span class="p"&gt;|&lt;/span&gt; fzy &lt;span class="p"&gt;|&lt;/span&gt; xsel -b
 
@@ -350,14 +326,12 @@
 &lt;span class="c1"&gt;# xsel -b       Copy the output to clipboard&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;I'm not going to go too deep into the UNIX philosophy, though if you are interested, AT&amp;amp;T has made available &lt;a href="https://www.youtube.com/watch?v=tc4ROCJYbm0"&gt;this great video&lt;/a&gt; on YouTube. The UNIX design philosophy was designed not only with composability in mind, but with the limitations that the machines had. Writing monolith software took more memory as the software had to take on more responsibilities. Software was designed to do one thing, and one thing only. We have today come to know this as "the functional approach" to programming;- Writing composable functions easy to test and piece together.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;users&lt;/span&gt;
-  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ageMoreThan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;18&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;ageMoreThan&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
   &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;sortByAge&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// If you think about it, pipes are all reduce statements!&lt;/span&gt;
   &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;prop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;With the &lt;a href="https://tc39.github.io/proposal-pipeline-operator/"&gt;TC39 pipeline operator&lt;/a&gt; for ECMAScript in place and libraries like RxJS introducing &lt;a href="https://github.com/ReactiveX/rxjs/blob/91088dae1df097be2370c73300ffa11b27fd0100/doc/pipeable-operators.md"&gt;pipeable operators&lt;/a&gt;, we are seeing large code ecosystems adopt ever more functional programming ideas. That said, while functional programming and composable functions are great and all, what did it mean to the original UNIX developers? What was it to this idea that was so fundamentally different? I had to see for myself;- By building a program that relies on pipes. Naturally, I settled upon writing the 2048 game, using UNIX principles.&lt;/p&gt;
 &lt;h2&gt;unix 2048&lt;/h2&gt;
@@ -370,11 +344,9 @@
 &lt;span class="err"&gt;-----------------&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Parsing this in an application would be hard, so let's break it down into a single 1x16 CSV string:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;The game starts off with a single &lt;code&gt;2&lt;/code&gt; randomly on the board, as well as one added per move in the game. As such, we would a need a function that takes a board and replaces an empty space, represented by a &lt;code&gt;0&lt;/code&gt;, with a &lt;code&gt;2&lt;/code&gt;. I decided to go with Python for this program since it is stupidly simple programming language for getting anything done. The following details a hacked together way to add a number &lt;code&gt;2&lt;/code&gt; to an array of length 16:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add_random&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;board&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -392,7 +364,6 @@
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;game_board&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Great! Let's call this program &lt;code&gt;add_random.py&lt;/code&gt;. It will read a board of &lt;code&gt;1x16&lt;/code&gt; from STDIN (or from a provided argument) and print out a board of &lt;code&gt;1x16&lt;/code&gt; to STDOUT with a 2 added to it.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./add_random.py --help
 
@@ -405,11 +376,9 @@
 &lt;span class="c1"&gt;#   --board BOARD  The 2048 game board as a CSV string&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;This works out to something like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 &lt;span class="p"&gt;|&lt;/span&gt; ./src/add_random.py &lt;span class="c1"&gt;#=&amp;gt; 0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Now, we need a program to help us shift the values on the board according to the values swiped. In the game 2048, one can swipe from top to bottom, left to right, and vice-versa. For example, a swipe right on the following board:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;-----------------&lt;/span&gt;
@@ -420,7 +389,6 @@
 &lt;span class="err"&gt;-----------------&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;would result in the following:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;-----------------&lt;/span&gt;
 &lt;span class="err"&gt;| 0 | 0 | 0 | 0 |&lt;/span&gt;
@@ -429,7 +397,6 @@
 &lt;span class="err"&gt;| 0 | 0 | 2 | 8 |&lt;/span&gt;
 &lt;span class="err"&gt;-----------------&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Playing the game would do more justice than any explanation could. Values are added row by row, adding same values and shifting populated values over empty values. Simplified, this only requires that we deal with every board row by row from left to right, such as the following:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;-----------------&lt;/span&gt;
@@ -442,7 +409,6 @@
 &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="n"&gt;th&lt;/span&gt; &lt;span class="k"&gt;row&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;right&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="k"&gt;left&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
 &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="n"&gt;th&lt;/span&gt; &lt;span class="k"&gt;column&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;top&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="n"&gt;bttom&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Assuming we could write a function that would shift these values in the order left to right, we could break any 4x4 matrix into a 1x4 array in any direction and have it dealt with row by row. Let's write a function in a separate program to do just that:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value_row&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -472,7 +438,6 @@
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;output_row&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Putting that in a test case, we can assert that exact behaviour:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;game&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;play_game&lt;/span&gt;
 
@@ -484,7 +449,6 @@
     &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;slide_values&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="c1"&gt;# etc...&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Great, now from a 1x16 CSV input, we can simply convert it into a 4x4 matrix and rotate it such that our rows can always result in a 1x4 input to be parsed by the &lt;code&gt;slide_values&lt;/code&gt; function. Packaging this as another program, we now have a &lt;code&gt;game.py&lt;/code&gt; program. We can now have the program composed as so, the first argument to &lt;code&gt;game.py&lt;/code&gt; being the direction:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./game.py --help
@@ -501,11 +465,9 @@
 &lt;span class="c1"&gt;#   --board BOARD  The 2048 game board as a CSV string&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Using the program works out to the following:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0 &lt;span class="p"&gt;|&lt;/span&gt; ./src/game.py &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="c1"&gt;#=&amp;gt; 2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;h2&gt;putting it all together&lt;/h2&gt;
 &lt;p&gt;The game now being composed, we can try playing it! The following details an example game-play of &lt;code&gt;unix-2048&lt;/code&gt;:&lt;/p&gt;
@@ -521,7 +483,6 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
 $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,2&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/game.py &lt;span class="m"&gt;3&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; ./src/add_random.py
 &lt;span class="c1"&gt;#=&amp;gt; 0,2,0,2,0,0,0,0,0,0,0,0,0,0,0,4&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;The UX of that was pretty bad, so I coded up a &lt;code&gt;view.py&lt;/code&gt; that prints a 1x16 input string as a 4x4 table. Piecing that as a script, I managed to come up with a full-on game!&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
@@ -555,7 +516,6 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
 &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Check out the end result on &lt;del&gt;GitHub&lt;/del&gt; &lt;a href="https://codeberg.org/kiyui/unix-2048"&gt;Codeberg&lt;/a&gt;. Cheers, and enjoy your musing.&lt;/p&gt;</content><category term="code"></category><category term="programming"></category><category term="unix"></category><category term="musing"></category></entry><entry><title>identifying a hack</title><link href="https://dontreinventbicycle.com/identifying-hacks.html" rel="alternate"></link><published>2019-04-02T22:26:00+08:00</published><updated>2019-04-03T22:24:00+08:00</updated><author><name>Timur Kiyui</name></author><id>tag:dontreinventbicycle.com,2019-04-02:/identifying-hacks.html</id><summary type="html">&lt;p&gt;I was one rainy evening on the way to town when I noticed that my Grab driver was sitting in a very strange position. I asked the man had they any spine condition or something of sort, and they replied no. Helpfully they added that they were leaning to the …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I was one rainy evening on the way to town when I noticed that my Grab driver was sitting in a very strange position. I asked the man had they any spine condition or something of sort, and they replied no. Helpfully they added that they were leaning to the side such that they could keep their elbow rested upon a pen pressing a button to keep the window up because the button was broken. That sure is a hack if I've ever seen one!&lt;/p&gt;
 &lt;p&gt;Hacks are all around us, and they are probably here to stay because we simply have better to do than having the leaking shower hose fixed when closing the main pipe that feeds the heater proves apt. Most hacks are inconsequential, especially in &lt;em&gt;the real life&lt;/em&gt;. However, have we considered the code we write? Code is becoming an ever more vital part of everything. We wouldn't ride a boat wherein its leaks had been patched with duct tape, apart for as a &lt;strong&gt;temporary hack&lt;/strong&gt; should the situation warrant it, would we? Why do we allow the same for code?&lt;/p&gt;
 &lt;p&gt;There are a few classes of which hacks fall into. There are the obvious hacks that we may have in place as workarounds of bugs that we cannot solve, or things that are too low on the priority list to have fixed. Here's an epic one I've had to deal with recently, GitHub issue &lt;a href="https://github.com/ReactiveX/rxjs/issues/4415"&gt;linked&lt;/a&gt;. Consider that the following code causes an error:&lt;/p&gt;
@@ -569,7 +529,6 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
 &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;adapt$&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;observableFrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;num$&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// error here&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;..and that the following code does not, simply by switching the order of import! Check out the issue if you're interested in what causes it.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;xstream&amp;#39;&lt;/span&gt;
 &lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;observableFrom&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rxjs&amp;#39;&lt;/span&gt;
@@ -581,11 +540,9 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
 &lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;adapt$&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;observableFrom&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;num$&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// no error here&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;This is a hack, but it's a good hack. Or at least, it's one we haven't much control over. However, it isn't so obvious so we just need a little fixup:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;xs&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;xstream&amp;#39;&lt;/span&gt; &lt;span class="c1"&gt;// HACK: KEEP THIS AS THE FIRST LINE DO NOT REMOVE&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This probably isn't the kind of hack that you have in mind. There is a class of hack that puts to crawl the skin of some programmers, see them the code. So why are there good or bad hacks? Consider the following rather trivial javascript code:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;export&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;addValues&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;lhs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;rhs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -595,10 +552,9 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;span class="nx"&gt;addValues&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;42&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nx"&gt;addValues&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;95&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;19&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nx"&gt;addValues&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nx"&gt;addValues&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;95&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;19&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Have you noticed the hack? Instead of making sure to always pass values of the correct type to the function, the function converts the values into integers so that it can continue with the &lt;code&gt;add&lt;/code&gt; operation. Hacks like this are not only make code hard to reason about, but become completely invisible outside the scope of where the function is defined. Code like this also makes debugging issues harder.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;doSomething&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -610,7 +566,6 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;If one were to encounter the above code, they'd naturally think that the issue is in the function &lt;code&gt;addCostToBill&lt;/code&gt; since that's where the error is and since &lt;code&gt;addTaxxedCostToBill&lt;/code&gt; is clearly working just fine. Hacks can waste a great amount of time, and you wouldn't want to be on the receiving end of debugging an issue caused by a hack. Considering this, why do people hack in the first place?&lt;/p&gt;
 &lt;h3&gt;why do people hack in the first place?&lt;/h3&gt;
 &lt;p&gt;Afamiliarity with the codebase? Laziness? It is easy to dismiss someone for being symptomatic of these, or for just being good 'ol Randy the intern.&lt;/p&gt;
@@ -619,7 +574,6 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
   &lt;span class="c1"&gt;// noop&lt;/span&gt;
 &lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;In version 3.1.0 however, after &lt;a href="https://github.com/vuejs/vuex/pull/1115"&gt;the following PR&lt;/a&gt;, an improvement was made making the following also possible under the same method name:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;store&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;subscribeAction&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
@@ -631,7 +585,6 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
   &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;})&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Predicting what people want of a library is hard, especially when you've got yourselves so many users! Renaming &lt;code&gt;subscribe&lt;/code&gt; to &lt;code&gt;subscribeMutations&lt;/code&gt; would be a breaking change, as would changing the API of &lt;code&gt;subscribeAction&lt;/code&gt; to only support the &lt;code&gt;{ before, after }&lt;/code&gt; syntax.&lt;/p&gt;
 &lt;h3&gt;some people do not know what a hack is&lt;/h3&gt;
@@ -658,7 +611,6 @@ $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0,0,
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="nx"&gt;defaultUser&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="nx"&gt;sanitisedUser&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;Because of the context of the code, not handling every aspect of it is not considered a hack.&lt;/p&gt;
 &lt;h3&gt;there are no bad hacks&lt;/h3&gt;

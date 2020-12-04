@@ -21,7 +21,6 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;I use &lt;a href="https://protonmail.com/"&gt;Protonmail&lt;/a&gt; with a custom domain, so I've become accustomed to having my email not be accepted by most websites. Even regular Protonmail addresses ending with &lt;code&gt;protonmail.ch&lt;/code&gt; instead of &lt;code&gt;protonmail.com&lt;/code&gt; are regularly blocked by websites because whitelist code the developer copied from &lt;a href="https://stackoverflow.com/"&gt;StackOverflow&lt;/a&gt; was not up to date. Therefore, I was not at all surprised to see the following error when trying to sign in to Sephora:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="The Sephora login form with the error messages “We're sorry, there is an error with your email and/or password. Remember passwords are 4 to 12 characters (letters or numbers) long. Please try again.” and “Please enter an e-mail address in the format username@domain.com.”" src="https://dontreinventbicycle.com/images/sephora-email-compliance/login-error.png"&gt;&lt;/p&gt;
 &lt;p&gt;The key here is that I was &lt;em&gt;signing in&lt;/em&gt;, not signing up for an account. In fact, I have been signing into the mobile app just fine. Additionally, the “Continue” button did not trigger any requests, leading me to think that the restriction is indeed only on the frontend.&lt;/p&gt;
@@ -37,7 +36,6 @@
 &lt;span class="p"&gt;},&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-
 &lt;p&gt;Well there's your problem! The regex restricts the email top-level-domain to 2 to 4 characters only, which is why my email at &lt;code&gt;dafne.rocks&lt;/code&gt; did not work! This simple patch should surely fix it now:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt; function isValidEmailAddress (login) {
 &lt;span class="gd"&gt;-  var pattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i;&lt;/span&gt;
@@ -45,6 +43,5 @@
    return pattern.test(login);
  },
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
 
 &lt;p&gt;This new specification is available as Dafne Kiyui's modification to Sephora's RFC-5322 specification modification.&lt;/p&gt;</content><category term="joke"></category><category term="javascript"></category><category term="php"></category><category term="regex"></category></entry></feed>
