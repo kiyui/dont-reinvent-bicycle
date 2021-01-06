@@ -5,35 +5,42 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://dontreinventbicycle.com/</loc>
-<lastmod>2020-12-04T03:29:58-00:00</lastmod>
+<lastmod>2021-01-07T00:09:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dontreinventbicycle.com/tags.html</loc>
-<lastmod>2020-12-04T03:29:58-00:00</lastmod>
+<lastmod>2021-01-07T00:09:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dontreinventbicycle.com/categories.html</loc>
-<lastmod>2020-12-04T03:29:58-00:00</lastmod>
+<lastmod>2021-01-07T00:09:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dontreinventbicycle.com/authors.html</loc>
-<lastmod>2020-12-04T03:29:58-00:00</lastmod>
+<lastmod>2021-01-07T00:09:29-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://dontreinventbicycle.com/archives.html</loc>
-<lastmod>2020-12-04T03:29:58-00:00</lastmod>
+<lastmod>2021-01-07T00:09:29-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://dontreinventbicycle.com/macos-missing-zprofile.html</loc>
+<lastmod>2021-01-07T00:00:00+08:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -173,7 +180,21 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://dontreinventbicycle.com/category/tips.html</loc>
-<lastmod>2020-11-04T00:00:00+07:21</lastmod>
+<lastmod>2021-01-07T00:00:00+07:21</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://dontreinventbicycle.com/tag/shell.html</loc>
+<lastmod>2021-01-07T00:00:00+07:21</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://dontreinventbicycle.com/tag/macos.html</loc>
+<lastmod>2021-01-07T00:00:00+07:21</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -341,7 +362,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://dontreinventbicycle.com/author/dafne-kiyui.html</loc>
-<lastmod>2020-11-24T00:00:00+07:21</lastmod>
+<lastmod>2021-01-07T00:00:00+07:21</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
