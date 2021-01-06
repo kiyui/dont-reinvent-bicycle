@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>dont reinvent велосипед - how to fix the zsh setup on macos</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="A fix for having to source .zshrc manually on macOS Big Sur" />
+  <meta name="keywords" content="programming,practice,standards,hacking,musing,shell,macos">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+  <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css">
+  <link
+    href="https://dontreinventbicycle.com/feeds/all.atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/all.rss.xml"
+    type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/all.xml"
+    type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+  <link
+    href="https://dontreinventbicycle.com/feeds/tips.atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+<meta name="tags" content="shell" />
+<meta name="tags" content="macos" />
+
+</head>
+
+<body id="index" class="home">
+  <header id="banner" class="body">
+    <h1>
+      <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+    </h1>
+  </header>
+
+  <nav id="menu" class="body">
+    <ul>
+
+
+      <li >
+        <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/joke.html">joke</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/personal.html">personal</a>
+      </li>
+      <li  class="active" >
+        <a href="https://dontreinventbicycle.com/category/tips.html">tips</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/macos-missing-zprofile.html" rel="bookmark"
+        title="Permalink to how to fix the zsh setup on macos">how to fix the zsh setup on macos</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2021-01-07T00:00:00+08:00">
+        Thu 07 January 2021
+      </time>
+    </div>
+    <address class="vcard author">
+      by       <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">Dafne Kiyui</a>
+    </address>
+    <div class="category">
+      category: <a href="https://dontreinventbicycle.com/category/tips.html">tips</a>
+    </div>
+    <div class="tags">
+      tags:
+      <a href="https://dontreinventbicycle.com/tag/shell.html">shell</a>
+      <a href="https://dontreinventbicycle.com/tag/macos.html">macos</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p>Apple has defaulted macOS to using the <code>zsh</code> shell since <a href="https://support.apple.com/en-us/HT208050">macOS Catalina</a>. For many, the switch (if they weren't already using <code>zsh</code>) was as simple as running <code>chsh -s /bin/zsh</code> and everything would appear to be working just fine.</p>
+<p>On brand new Macs however, both the <code>.zprofile</code> and <code>.zshrc</code> dotfiles of new users are not automatically populated in <code>$HOME</code>. Even upon creating a <code>~/.zshrc</code> file, it may seem as if the file is not sourced/loaded upon starting a new terminal session.</p>
+<p>The workaround for this is to create a <code>~/.zprofile</code> file with the following contents:</p>
+<div class="highlight"><pre><span></span><code><span class="o">[[</span> -f ~/.zshrc <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.zshrc
+</code></pre></div>
+
+<p>This will result in a much cleaner shell, loading <code>/etc/zprofile</code>, <code>/etc/zshrc</code>, and your local configuration without having to resolve to hacks with ugly <code>clear</code> flashes such as adding a start-up command like the following:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># I was misguided by terrible tutorials on the webbernet 😡, do not do this!</span>
+zsh<span class="p">;</span> clear
+</code></pre></div>
+  </div><!-- /.entry-content -->
+</section>
+  </div>
+
+  <footer id="contentinfo" class="body">
+    <div>
+      <h4 class="title">social:</h4>
+      <ul class="links">
+        <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+        <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+        <li><a href="https://codeberg.org/kiyui">Codeberg</a></li>
+        <li><a href="https://github.com/kiyui">GitHub</a></li>
+        <li><a rel="me" href="https://queer.party/@dafne">Mastodon</a></li>
+        <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="title">projects:</h4>
+      <ul class="links">
+        <li><a href="https://represent.io/kiyui">Resume</a></li>
+        <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+      </ul>
+    </div>
+    <address id="about" class="vcard body">
+      Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+      which takes great advantage of <a href="http://python.org">Python</a>.
+    </address>
+  </footer>
+</body>
+
+</html>
