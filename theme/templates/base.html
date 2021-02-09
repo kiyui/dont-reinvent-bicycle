@@ -8,6 +8,15 @@
   <meta name="description" content="{% block description %}{{ SITE_DESCRIPTION }}{% endblock description %}" />
   <meta name="keywords" content="{% block keywords %}{{ SITE_KEYWORDS | join(',') }}{% endblock keywords %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- favicon items from https://realfavicongenerator.net -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#c18a6e">
+  <meta name="msapplication-TileColor" content="#c18a6e">
+  <meta name="theme-color" content="#c18a6e">
+  <!-- end of favicon items -->
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
   <link rel="stylesheet" href="{{ SITEURL }}/theme/css/{{ CSS_FILE }}" type="text/css">
   {% if FEED_ALL_ATOM %}
