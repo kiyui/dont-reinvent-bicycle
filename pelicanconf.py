@@ -48,11 +48,7 @@ MARKDOWN = {
 # Static content
 ARTICLE_EXCLUDES = ['extra', 'images', 'demos']
 STATIC_PATHS = [
-    'extra/CNAME',
-    'extra/BingSiteAuth.xml',
-    'extra/google84482ab458ba2d3d.html',
-    'extra/brave-rewards-verification.txt',
-    'extra/robots.txt',
+    'extra',
 ]
 EXTRA_PATH_METADATA = {
     'extra/CNAME': {
@@ -69,6 +65,33 @@ EXTRA_PATH_METADATA = {
     },
     'extra/robots.txt': {
         'path': 'robots.txt'
+    },
+    'extra/favicon.ico': {
+        'path': 'favicon.ico'
+    },
+    'extra/favicon-16x16.png': {
+        'path': 'favicon-16x16.png'
+    },
+    'extra/favicon-32x32.png': {
+        'path': 'favicon-32x32.png'
+    },
+    'extra/apple-touch-icon.png': {
+        'path': 'apple-touch-icon.png'
+    },
+    'extra/site.webmanifest': {
+        'path': 'site.webmanifest'
+    },
+    'extra/android-chrome-192x192.png': {
+        'path': 'android-chrome-192x192.png'
+    },
+    'extra/android-chrome-384x384.png': {
+        'path': 'android-chrome-384x384.png'
+    },
+    'extra/browserconfig.xml': {
+        'path': 'browserconfig.xml'
+    },
+    'extra/safari-pinned-tab.svg': {
+        'path': 'safari-pinned-tab.svg'
     },
 }
 
