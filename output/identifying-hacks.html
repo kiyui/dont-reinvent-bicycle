@@ -101,47 +101,47 @@
     <p>I was one rainy evening on the way to town when I noticed that my Grab driver was sitting in a very strange position. I asked the man had they any spine condition or something of sort, and they replied no. Helpfully they added that they were leaning to the side such that they could keep their elbow rested upon a pen pressing a button to keep the window up because the button was broken. That sure is a hack if I've ever seen one!</p>
 <p>Hacks are all around us, and they are probably here to stay because we simply have better to do than having the leaking shower hose fixed when closing the main pipe that feeds the heater proves apt. Most hacks are inconsequential, especially in <em>the real life</em>. However, have we considered the code we write? Code is becoming an ever more vital part of everything. We wouldn't ride a boat wherein its leaks had been patched with duct tape, apart for as a <strong>temporary hack</strong> should the situation warrant it, would we? Why do we allow the same for code?</p>
 <p>There are a few classes of which hacks fall into. There are the obvious hacks that we may have in place as workarounds of bugs that we cannot solve, or things that are too low on the priority list to have fixed. Here's an epic one I've had to deal with recently, GitHub issue <a href="https://github.com/ReactiveX/rxjs/issues/4415">linked</a>. Consider that the following code causes an error:</p>
-<div class="highlight"><pre><span></span><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">from</span> <span class="kr">as</span> <span class="nx">observableFrom</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs&#39;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">isInteropObservable</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs/internal/util/isInteropObservable&#39;</span>
-<span class="kr">import</span> <span class="nx">xs</span> <span class="nx">from</span> <span class="s1">&#39;xstream&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="p">{</span> <span class="k">from</span> <span class="kr">as</span> <span class="nx">observableFrom</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">&#39;rxjs&#39;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">isInteropObservable</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">&#39;rxjs/internal/util/isInteropObservable&#39;</span>
+<span class="k">import</span> <span class="nx">xs</span> <span class="k">from</span> <span class="s1">&#39;xstream&#39;</span>
 
-<span class="kr">const</span> <span class="nx">num$</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">from</span><span class="p">([</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span> <span class="p">])</span>
+<span class="kd">const</span> <span class="nx">num$</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="k">from</span><span class="p">([</span> <span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">,</span> <span class="mf">4</span> <span class="p">])</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Is num$ an observable?&#39;</span><span class="p">,</span> <span class="nx">isInteropObservable</span><span class="p">(</span><span class="nx">num$</span><span class="p">))</span> <span class="c1">// false</span>
 
-<span class="kr">const</span> <span class="nx">adapt$</span> <span class="o">=</span> <span class="nx">observableFrom</span><span class="p">(</span><span class="nx">num$</span><span class="p">)</span> <span class="c1">// error here</span>
+<span class="kd">const</span> <span class="nx">adapt$</span> <span class="o">=</span> <span class="nx">observableFrom</span><span class="p">(</span><span class="nx">num$</span><span class="p">)</span> <span class="c1">// error here</span>
 </code></pre></div>
 
 <p>..and that the following code does not, simply by switching the order of import! Check out the issue if you're interested in what causes it.</p>
-<div class="highlight"><pre><span></span><code><span class="kr">import</span> <span class="nx">xs</span> <span class="nx">from</span> <span class="s1">&#39;xstream&#39;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">from</span> <span class="kr">as</span> <span class="nx">observableFrom</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs&#39;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">isInteropObservable</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;rxjs/internal/util/isInteropObservable&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nx">xs</span> <span class="k">from</span> <span class="s1">&#39;xstream&#39;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="k">from</span> <span class="kr">as</span> <span class="nx">observableFrom</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">&#39;rxjs&#39;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">isInteropObservable</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">&#39;rxjs/internal/util/isInteropObservable&#39;</span>
 
-<span class="kr">const</span> <span class="nx">num$</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">from</span><span class="p">([</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span> <span class="p">])</span>
+<span class="kd">const</span> <span class="nx">num$</span> <span class="o">=</span> <span class="nx">xs</span><span class="p">.</span><span class="k">from</span><span class="p">([</span> <span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">,</span> <span class="mf">4</span> <span class="p">])</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Is num$ an observable?&#39;</span><span class="p">,</span> <span class="nx">isInteropObservable</span><span class="p">(</span><span class="nx">num$</span><span class="p">))</span> <span class="c1">// true</span>
 
-<span class="kr">const</span> <span class="nx">adapt$</span> <span class="o">=</span> <span class="nx">observableFrom</span><span class="p">(</span><span class="nx">num$</span><span class="p">)</span> <span class="c1">// no error here</span>
+<span class="kd">const</span> <span class="nx">adapt$</span> <span class="o">=</span> <span class="nx">observableFrom</span><span class="p">(</span><span class="nx">num$</span><span class="p">)</span> <span class="c1">// no error here</span>
 </code></pre></div>
 
 <p>This is a hack, but it's a good hack. Or at least, it's one we haven't much control over. However, it isn't so obvious so we just need a little fixup:</p>
-<div class="highlight"><pre><span></span><code><span class="kr">import</span> <span class="nx">xs</span> <span class="nx">from</span> <span class="s1">&#39;xstream&#39;</span> <span class="c1">// HACK: KEEP THIS AS THE FIRST LINE DO NOT REMOVE</span>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nx">xs</span> <span class="k">from</span> <span class="s1">&#39;xstream&#39;</span> <span class="c1">// HACK: KEEP THIS AS THE FIRST LINE DO NOT REMOVE</span>
 </code></pre></div>
 
 <p>This probably isn't the kind of hack that you have in mind. There is a class of hack that puts to crawl the skin of some programmers, see them the code. So why are there good or bad hacks? Consider the following rather trivial javascript code:</p>
-<div class="highlight"><pre><span></span><code><span class="kr">export</span> <span class="kd">function</span> <span class="nx">addValues</span> <span class="p">(</span><span class="nx">lhs</span><span class="p">,</span> <span class="nx">rhs</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">lhs</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">rhs</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">export</span> <span class="kd">function</span> <span class="nx">addValues</span> <span class="p">(</span><span class="nx">lhs</span><span class="p">,</span> <span class="nx">rhs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">lhs</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">rhs</span><span class="p">)</span>
 
   <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
 <span class="p">}</span>
 
-<span class="nx">addValues</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="nx">addValues</span><span class="p">(</span><span class="mi">95</span><span class="p">,</span> <span class="s1">&#39;19&#39;</span><span class="p">)</span>
+<span class="nx">addValues</span><span class="p">(</span><span class="mf">42</span><span class="p">,</span> <span class="mf">0</span><span class="p">)</span>
+<span class="nx">addValues</span><span class="p">(</span><span class="mf">95</span><span class="p">,</span> <span class="s1">&#39;19&#39;</span><span class="p">)</span>
 </code></pre></div>
 
 <p>Have you noticed the hack? Instead of making sure to always pass values of the correct type to the function, the function converts the values into integers so that it can continue with the <code>add</code> operation. Hacks like this are not only make code hard to reason about, but become completely invisible outside the scope of where the function is defined. Code like this also makes debugging issues harder.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">doSomething</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">cost</span> <span class="o">=</span> <span class="nx">getCostFromNetwork</span><span class="p">()</span>
-  <span class="kr">const</span> <span class="nx">costWithTax</span> <span class="o">=</span> <span class="nx">addValues</span><span class="p">(</span><span class="nx">cost</span><span class="p">,</span> <span class="nx">cost</span> <span class="o">*</span> <span class="mf">1.06</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">cost</span> <span class="o">=</span> <span class="nx">getCostFromNetwork</span><span class="p">()</span>
+  <span class="kd">const</span> <span class="nx">costWithTax</span> <span class="o">=</span> <span class="nx">addValues</span><span class="p">(</span><span class="nx">cost</span><span class="p">,</span> <span class="nx">cost</span> <span class="o">*</span> <span class="mf">1.06</span><span class="p">)</span>
 
   <span class="nx">addTaxxedCostToBill</span><span class="p">(</span><span class="nx">costWithTax</span><span class="p">)</span> <span class="c1">// Works fine</span>
   <span class="nx">addCostToBill</span><span class="p">(</span><span class="nx">cost</span><span class="p">)</span> <span class="c1">// Throws an error because cost is a string</span>
@@ -173,7 +173,7 @@
 <p>But what about Randy? Randy does not know what a <em>bad hack</em> is. To Randy, code is code as long as it works. It's also tough to argue with the guy. After all, their code works, the tests all seem to pass, and their hack isn't related to some data structure that we would have to maintain 5 years down the line. What is there to complain about? Can you tell Randy why code that works isn't good enough?</p>
 <p>You probably can't, and there's a reason for that. The reality is that there are no bad hacks. Hacks exist only because we have standards about how things should be. If the first boat had been invented with holes through it patched with duct tape, that would be the norm! The same is true with code. Hacks tend to be contextual. Consider the following code that is used to parse data received from a GraphQL backend:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">sanitiseUserObject</span> <span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">sanitisedUser</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="kd">const</span> <span class="nx">sanitisedUser</span> <span class="o">=</span> <span class="p">{}</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="s1">&#39;string&#39;</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">sanitisedUser</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name</span>
   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
@@ -210,16 +210,18 @@
       <ul class="links">
         <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
         <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
-        <li><a href="https://codeberg.org/kiyui">Codeberg</a></li>
-        <li><a href="https://github.com/kiyui">GitHub</a></li>
-        <li><a rel="me" href="https://queer.party/@dafne">Mastodon</a></li>
         <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+        <li><a rel="me" href="https://deadinsi.de/@dafne">Mastodon</a></li>
+        <li><a href="https://twitter.com/dafnelately">Twitter</a></li>
+        <li><a href="https://www.abillion.com/users/dafnelately">abillion</a></li>
       </ul>
     </div>
     <div>
       <h4 class="title">projects:</h4>
       <ul class="links">
         <li><a href="https://represent.io/kiyui">Resume</a></li>
+        <li><a href="https://codeberg.org/kiyui">Codeberg</a></li>
+        <li><a href="https://github.com/kiyui">GitHub</a></li>
         <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
       </ul>
     </div>
