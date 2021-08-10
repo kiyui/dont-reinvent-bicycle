@@ -15,8 +15,7 @@ DEFAULT_LANG = 'en'
 THEME = 'theme/'
 
 # Site customization
-PLUGIN_PATHS = ["pelican-plugins"]
-PLUGINS = ["sitemap", "gzip_cache", "minchin.pelican.plugins.nojekyll"]
+PLUGINS = ["pelican.plugins.sitemap", "pelican.plugins.precompress", "minchin.pelican.plugins.nojekyll"]
 
 # Plugin options
 SITEMAP = {
