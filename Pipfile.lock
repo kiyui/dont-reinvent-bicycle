@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "301455663560adde8415d901f8bce1a54563bfa8dbe55530bbe34ac467855801"
+            "sha256": "80f689ebebaded87de692a923a587a9999fc2d6c4f241d12f209a4c2d24a4ea2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -108,6 +108,14 @@
             ],
             "index": "pypi",
             "version": "==4.6.0"
+        },
+        "pelican-sitemap": {
+            "hashes": [
+                "sha256:464052dbbf3daa7183c531c486e3db872f8f74b5fcc7aa25743b7c9aefbb359a",
+                "sha256:ec930ee8182d4b905a4e5732d0b87ad84ee62ee1830b42d1b1f82bcac8e12f2b"
+            ],
+            "index": "pypi",
+            "version": "==1.0.2"
         },
         "pygments": {
             "hashes": [
