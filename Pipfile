@@ -11,6 +11,8 @@ markdown = "*"
 pymdown-extensions = "*"
 "minchin.pelican.plugins.nojekyll" = "*"
 pelican-sitemap = "*"
+pelican-precompress = "*"
+zopfli = "*"
 
 [requires]
 python_version = "3.9"
