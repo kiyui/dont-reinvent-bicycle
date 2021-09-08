@@ -107,25 +107,31 @@ FEED_ALL_RSS = 'feeds/all.rss.xml'
 DEFAULT_PAGINATION = 10
 
 # Blogroll
-LINKS = (('Resume',
-          'https://represent.io/kiyui'),
-         ('Codeberg',
-          'https://codeberg.org/kiyui'),
-         ('GitHub',
-          'https://github.com/kiyui'),
-         ('GNOME Extensions',
-          'https://extensions.gnome.org/accounts/profile/TimurKiyivinski'),)
+PROJECTS = (('Codeberg',
+             'https://codeberg.org/kiyui',
+             None),
+            ('GitHub',
+             'https://github.com/kiyui',
+             None),
+            ('GNOME Extensions',
+             'https://extensions.gnome.org/accounts/profile/TimurKiyivinski',
+             None),)
 
 # Social widget
-SOCIAL = (('LinkedIn',
-           'https://www.linkedin.com/in/dafnelately/',
-           None),
-          ('Mastodon',
-           'https://deadinsi.de/@dafne',
-           'me'),
-          ('Twitter',
-           'https://twitter.com/dafnelately',
-           None),
-          ('abillion',
-           'https://www.abillion.com/users/dafnelately',
-           None),)
+SOCIALS = (('LinkedIn',
+            'https://www.linkedin.com/in/dafnelately/',
+            None),
+           ('Mastodon',
+            'https://deadinsi.de/@dafne',
+            'me'),
+           ('Twitter',
+            'https://twitter.com/dafnelately',
+            None),
+           ('abillion',
+            'https://www.abillion.com/users/dafnelately',
+            None),)
+
+# Misc. links
+LINKS = (('Ko-fi (tip jar)',
+          'https://ko-fi.com/dafne',
+          None),)

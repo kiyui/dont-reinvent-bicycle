@@ -103,15 +103,9 @@
 
   <footer id="contentinfo" class="body">
     <div>
-      <h4 class="title">social:</h4>
+      <h4 class="title">socials:</h4>
       <ul class="links">
-        {% if FEED_ATOM %}
-        <li><a href="{{ SITEURL }}/{{ FEED_ATOM }}" rel="alternate">atom feed</a></li>
-        {% endif %}
-        {% if FEED_RSS %}
-        <li><a href="{{ SITEURL }}/{{ FEED_RSS }}" rel="alternate">rss feed</a></li>
-        {% endif %}
-        {% for name, link, rel in SOCIAL %}
+        {% for name, link, rel in SOCIALS %}
         {% if rel %}
         <li><a rel="{{ rel }}" href="{{ link }}">{{ name }}</a></li>
         {% else %}
@@ -123,8 +117,30 @@
     <div>
       <h4 class="title">projects:</h4>
       <ul class="links">
-        {% for name, link in LINKS %}
+        {% for name, link, rel in PROJECTS %}
+        {% if rel %}
+        <li><a rel="{{ rel }}" href="{{ link }}">{{ name }}</a></li>
+        {% else %}
         <li><a href="{{ link }}">{{ name }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    <div>
+      <h4 class="title">misc:</h4>
+      <ul class="links">
+        {% if FEED_ATOM %}
+        <li><a href="{{ SITEURL }}/{{ FEED_ATOM }}" rel="alternate">atom feed</a></li>
+        {% endif %}
+        {% if FEED_RSS %}
+        <li><a href="{{ SITEURL }}/{{ FEED_RSS }}" rel="alternate">rss feed</a></li>
+        {% endif %}
+        {% for name, link, rel in LINKS %}
+        {% if rel %}
+        <li><a rel="{{ rel }}" href="{{ link }}">{{ name }}</a></li>
+        {% else %}
+        <li><a href="{{ link }}">{{ name }}</a></li>
+        {% endif %}
         {% endfor %}
       </ul>
     </div>
