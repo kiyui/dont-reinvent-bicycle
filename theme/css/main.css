@@ -151,3 +151,9 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #eddcdd;
 }
+
+video {
+  width: 100%;
+  border-right: 5px solid #c18a6e;
+  border-bottom: 3px solid #eddcdd;
+}

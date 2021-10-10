@@ -171,7 +171,7 @@ void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
   <span class="nx">canvas</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">;</span>
 
   <span class="c1">// Trigger video load</span>
-  <span class="k">await</span> <span class="ow">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">video</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;loadedmetadata&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
       <span class="nx">video</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">;</span>
       <span class="nx">video</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">;</span>
