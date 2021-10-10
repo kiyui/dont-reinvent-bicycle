@@ -108,12 +108,12 @@
 <p>handling invalid JSON data is out of the scope of the function</p>
 </blockquote>
 <p>In the quest of trimming down functions and not creating monolithic code, exceptions help us define the boundaries of our functions. They also help to signal failure that a given function cannot handle, or should not be responsible for handling. To make this simpler to understand, we need to go downscale to a simpler primitive, UNIX programs. Take the following C++ code for example:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello world&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">EXIT_FAILURE</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>If we were the compile the above code and run it, we would see that it returns a non-zero exit code of <code>1</code>, indicating a failure in execution.</p>
@@ -131,7 +131,7 @@
 <h2>think of the interface of an error</h2>
 <p>In a JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>, the interface for throwing an error would be to <code>reject</code> the Promise. We wouldn't expect a failed promise to <code>resolve</code>, lest we run into unexpected behaviours! Assuming we have the following function <code>getUser</code> that returns a Promise, it would be logical to expect that the function should <code>reject</code> if it fails to find a user:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">getUser</span> <span class="p">(</span><span class="nx">userId</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="ow">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">UserStore</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">userId</span><span class="p">))</span> <span class="p">{</span>
       <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">UserStore</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">userId</span><span class="p">)</span>
       <span class="nx">resolve</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span>
@@ -164,7 +164,7 @@
 <h3>the store</h3>
 <p>Let's start with defining the basic interface of our store action. We want a function that sends our login credentials to a server and responds with our logged-in user. As this function would require a network request, it makes sense that we should start with it returning an empty promise.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">login</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span> <span class="p">})</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="ow">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="p">})</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -189,22 +189,22 @@
 
 <p>Next, we want to parse the response with an imaginary <code>User</code> class with a static <code>from</code> method:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">User</span> <span class="p">{</span>
-  <span class="k">public</span> <span class="k">static</span> <span class="kr">from</span> <span class="p">(</span><span class="nx">userString</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">User</span> <span class="p">{</span>
+  <span class="k">public</span> <span class="k">static</span> <span class="k">from</span> <span class="p">(</span><span class="nx">userString</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">User</span> <span class="p">{</span>
     <span class="c1">// This can throw an error if it&#39;s not valid JSON</span>
-    <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">userString</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">userString</span><span class="p">)</span>
 
     <span class="c1">// Create a user and return it if data is of valid shape</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="k">return</span> <span class="ow">new</span> <span class="nx">User</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="k">return</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span>
 
     <span class="c1">// If we reached here, assume data is invalid</span>
-    <span class="k">throw</span> <span class="ow">new</span> <span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Invalid user string provided!&#39;</span><span class="p">)</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Invalid user string provided!&#39;</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 
 <p>You can see that since <code>from</code> is a regular method, our interface for raising an exception is by using a <code>throw</code> statement. As this function can also throw an error, we use it inside a <code>try/catch</code> block inside out <code>if (response.ok)</code> block as so:</p>
 <div class="highlight"><pre><span></span><code><span class="k">try</span> <span class="p">{</span>
-  <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">User</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">User</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
 <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// User.from threw an error</span>
 <span class="p">}</span> 
@@ -212,28 +212,28 @@
 
 <p>Finally, now that we all that we have all the components to build our store action, we can piece it together! Remember, since our <code>login</code> function returns a Promise, our interface for raising an exception is by rejecting </p>
 <div class="highlight"><pre><span></span><code><span class="nx">login</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span> <span class="p">})</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="ow">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="nx">fetch</span><span class="p">(...)</span>
       <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span> <span class="p">=&gt;</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="p">{</span>
           <span class="k">try</span> <span class="p">{</span>
             <span class="c1">// Parse the user from the response body</span>
-            <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">User</span><span class="p">.</span><span class="kr">from</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
+            <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">User</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
 
             <span class="c1">// We&#39;ve successfully parsed the user object</span>
             <span class="nx">resolve</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span>
           <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// User.from threw an error</span>
-            <span class="nx">reject</span><span class="p">(</span><span class="ow">new</span> <span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;There is an issue with the server response!&#39;</span><span class="p">))</span>
+            <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;There is an issue with the server response!&#39;</span><span class="p">))</span>
           <span class="p">}</span> 
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
           <span class="c1">// We got a HTTP status code greater than 299</span>
-          <span class="nx">reject</span><span class="p">(</span><span class="ow">new</span> <span class="ne">Error</span><span class="p">(</span><span class="sb">`There was an error with your request: </span><span class="si">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">statusText</span><span class="si">}</span><span class="sb">`</span><span class="p">))</span>
+          <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="sb">`There was an error with your request: </span><span class="si">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">statusText</span><span class="si">}</span><span class="sb">`</span><span class="p">))</span>
         <span class="p">}</span>
       <span class="p">})</span>
       <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="p">=&gt;</span> <span class="p">{</span>
         <span class="c1">// Network error</span>
-        <span class="nx">reject</span><span class="p">(</span><span class="ow">new</span> <span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;A network error occured!&#39;</span><span class="p">))</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;A network error occured!&#39;</span><span class="p">))</span>
       <span class="p">})</span>
   <span class="p">})</span>
 <span class="p">}</span>
@@ -272,7 +272,7 @@
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
       <span class="nx">reject</span><span class="p">({</span>
         <span class="nx">type</span><span class="o">:</span> <span class="nx">ErrorType</span><span class="p">.</span><span class="nx">ServerError</span><span class="p">,</span>
-        <span class="nx">error</span><span class="o">:</span> <span class="ow">new</span> <span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">)</span>
+        <span class="nx">error</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">)</span>
       <span class="p">})</span>
     <span class="p">}</span>
   <span class="p">})</span>
