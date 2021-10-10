@@ -182,7 +182,7 @@
 
 <p>..where the main function of the extension is to just perform this override:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">Extension</span> <span class="p">{</span>
-    <span class="kr">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_preferences</span> <span class="o">=</span> <span class="nx">ExtensionUtils</span><span class="p">.</span><span class="nx">getSettings</span><span class="p">();</span>
     <span class="p">}</span>
 
@@ -193,7 +193,7 @@
 
     <span class="nx">disable</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">Main</span><span class="p">.</span><span class="nx">shellDBusService</span><span class="p">.</span><span class="nx">_screenshotService</span><span class="p">.</span><span class="nx">_resolveRelativeFilename</span> <span class="o">=</span> <span class="nx">Main</span><span class="p">.</span><span class="nx">shellDBusService</span><span class="p">.</span><span class="nx">_screenshotService</span><span class="p">.</span><span class="nx">_original_resolveRelativeFilename</span><span class="p">;</span>
-        <span class="ow">delete</span> <span class="nx">Main</span><span class="p">.</span><span class="nx">shellDBusService</span><span class="p">.</span><span class="nx">_screenshotService</span><span class="p">.</span><span class="nx">_original_resolveRelativeFilename</span><span class="p">;</span>
+        <span class="k">delete</span> <span class="nx">Main</span><span class="p">.</span><span class="nx">shellDBusService</span><span class="p">.</span><span class="nx">_screenshotService</span><span class="p">.</span><span class="nx">_original_resolveRelativeFilename</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="o">*</span><span class="nx">_resolveRelativeFilenameOverride</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="p">{</span>
@@ -207,7 +207,7 @@
 <p>Digging into the <a href="https://gitlab.gnome.org/GNOME/gnome-shell">gnome-shell repository</a>, we find that the <code>_initializeUI</code> function, which in turn initializes all extensions, is called before the <code>shellDBusService</code> is even initialized.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">_initializeUI</span><span class="p">();</span>
 <span class="c1">// etc</span>
-<span class="nx">shellDBusService</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">ShellDBus</span><span class="p">.</span><span class="nx">GnomeShell</span><span class="p">();</span>
+<span class="nx">shellDBusService</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ShellDBus</span><span class="p">.</span><span class="nx">GnomeShell</span><span class="p">();</span>
 </code></pre></div>
 
 <p>The correct way to detect when <code>shellDBusService</code> is initialized would to over-engineer a solution, so instead I used a hack that ever JavaScript developer loves, <a href="/gjs-set-timeout-interval.html">setTimeout</a>.</p>
