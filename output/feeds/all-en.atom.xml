@@ -1,5 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/all-en.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2021-10-10T00:00:00+08:00</updated><entry><title>4 years at Piktochart</title><link href="https://dontreinventbicycle.com/piktochart.html" rel="alternate"></link><published>2021-10-10T00:00:00+08:00</published><updated>2021-10-10T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2021-10-10:/piktochart.html</id><summary type="html">&lt;p&gt;On &lt;time datetime="2021-07-27"&gt;Tuesday, the 27th of July 2021&lt;/time&gt;, I served my final day at &lt;a href="https://piktochart.com/"&gt;Piktochart&lt;/a&gt;. I spent 4 years and some change at the company, joining as a JavaScript intern and leaving a DevOp &amp;amp; backend engineer for &lt;a href="https://piktostory.com/"&gt;Piktostory&lt;/a&gt;. Piktochart was my first “real” job and having spent a good part of …&lt;/p&gt;</summary><content type="html">&lt;p&gt;On &lt;time datetime="2021-07-27"&gt;Tuesday, the 27th of July 2021&lt;/time&gt;, I served my final day at &lt;a href="https://piktochart.com/"&gt;Piktochart&lt;/a&gt;. I spent 4 years and some change at the company, joining as a JavaScript intern and leaving a DevOp &amp;amp; backend engineer for &lt;a href="https://piktostory.com/"&gt;Piktostory&lt;/a&gt;. Piktochart was my first “real” job and having spent a good part of my early twenties there, there's a lot to look back and reflect on.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>dont reinvent велосипед</title><link href="https://dontreinventbicycle.com/" rel="alternate"></link><link href="https://dontreinventbicycle.com/feeds/all-en.atom.xml" rel="self"></link><id>https://dontreinventbicycle.com/</id><updated>2021-10-23T00:00:00+08:00</updated><entry><title>You should probably use enum flags</title><link href="https://dontreinventbicycle.com/enum-flags.html" rel="alternate"></link><published>2021-10-23T00:00:00+08:00</published><updated>2021-10-23T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2021-10-23:/enum-flags.html</id><summary type="html">&lt;p&gt;Enum flags are a clever optimisation technique that make use of bitwise logic operations paired with &lt;a href="https://en.wikipedia.org/wiki/Enumerated_type"&gt;enumerated types&lt;/a&gt; that sadly see a lack of use in more modern codebases and languages such as JavaScript, in spite of &lt;code&gt;enum&lt;/code&gt;s being otherwise fairly popular in TypeScript.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;Guild&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;Mage&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Rogue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Warrior …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Enum flags are a clever optimisation technique that make use of bitwise logic operations paired with &lt;a href="https://en.wikipedia.org/wiki/Enumerated_type"&gt;enumerated types&lt;/a&gt; that sadly see a lack of use in more modern codebases and languages such as JavaScript, in spite of &lt;code&gt;enum&lt;/code&gt;s being otherwise fairly popular in TypeScript.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;Guild&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;Mage&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Rogue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Warrior&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In the case of “regular enums” such as the above, a value could either be &lt;code&gt;Guild.Mage&lt;/code&gt; or &lt;code&gt;Guild.Warrior&lt;/code&gt; but not both. While this may be desirable for some cases, consider the following enum &lt;code&gt;Element&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;Fire&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Water&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Electric&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Grass&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Ice&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Rock&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Psychic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Treating this like a regular enum would mean an &lt;code&gt;element&lt;/code&gt; property would either have to be one value or another or be an array of &lt;code&gt;Element&lt;/code&gt;s:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;interface&lt;/span&gt; &lt;span class="nx"&gt;Weapon&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;elements&lt;/span&gt;: &lt;span class="kt"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;[];&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Doing this comes at the complication of needing to use array-specific methods to filter items in an array. Consider the following code filtering a list of weapons to find all weapons that contain the elements &lt;em&gt;Fire&lt;/em&gt; and &lt;em&gt;Electric&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;weapons&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(({&lt;/span&gt; &lt;span class="nx"&gt;elements&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;includes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Fire&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nx"&gt;elements&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;includes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Electric&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Needless to say, this code would be even more complicated if we were to filter all weapons that are &lt;strong&gt;only&lt;/strong&gt; &lt;em&gt;Fire&lt;/em&gt; and &lt;em&gt;Electric&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Enum flags make use of bitwise operations and binary flags to be able to assign more then one value in the form of a binary flags. Consider that numbers can be represented in binary, each binary exponent could be used as a flag:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Fire&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Water&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Electric&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Grass&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Ice&lt;/span&gt;
+&lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Rock&lt;/span&gt;
+&lt;span class="n"&gt;Psychic&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A weapon with the elements &lt;em&gt;Fire&lt;/em&gt; and &lt;em&gt;Electric&lt;/em&gt; could then be represented by binary &lt;code&gt;000101&lt;/code&gt;&lt;sub&gt;2&lt;/sub&gt; or the decimal number &lt;code&gt;5&lt;/code&gt;, as illustrated below:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Fire&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Water&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Electric&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Grass&lt;/span&gt;
+&lt;span class="err"&gt;|&lt;/span&gt; &lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Ice&lt;/span&gt;
+&lt;span class="err"&gt;↓&lt;/span&gt; &lt;span class="n"&gt;Rock&lt;/span&gt;
+&lt;span class="n"&gt;Psychic&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;With each exponent representing a flag for a specific element, it's now possible to reconstruct the &lt;code&gt;Element&lt;/code&gt; enum with binary flag values.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Element&lt;/th&gt;
+&lt;th&gt;Exponent&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Fire&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Water&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Electric&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Grass&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ice&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Rock&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Psychic&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;While simply assigning the exponents of &lt;code&gt;2&lt;/code&gt; to each member of the element works, it looks a little messy and doesn't as effective communicate that the values represent binary flags.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;Fire&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="nx"&gt;Water&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="nx"&gt;Electric&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="nx"&gt;Grass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;3&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="nx"&gt;Ice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;4&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="nx"&gt;Rock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;5&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="nx"&gt;Psychic&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Math&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;6&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Using the &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Left_shift"&gt;bitwise left shift operator (&lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt;)&lt;/a&gt; on the other hand does 👇 This is also the more common practice anyway.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;Fire&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Water&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Electric&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Grass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Ice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Rock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nx"&gt;Psychic&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Just as a quick primer on the left shift operator, it effectively shifts the bits of a value by the number of bits indicated by the right hand side, discarding any excess bits.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;0001&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0010&lt;/span&gt;
+&lt;span class="mf"&gt;0101&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1010&lt;/span&gt;
+&lt;span class="mf"&gt;0001&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0100&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#binary_bitwise_operators"&gt;Binary bitwise operators&lt;/a&gt; can then be used to perform operations with these values. &lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR"&gt;Bitwise OR (&lt;code&gt;|&lt;/code&gt;)&lt;/a&gt; can for example be used to assign the values:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Assigning the elements Fire and Electric to a weapon&lt;/span&gt;
+&lt;span class="nx"&gt;weapon&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;element&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Fire&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Electric&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// 1 | 2 = 5&lt;/span&gt;
+
+&lt;span class="c1"&gt;// Adding the element Psychic to the same weapon&lt;/span&gt;
+&lt;span class="nx"&gt;weapon&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;element&lt;/span&gt; &lt;span class="o"&gt;|=&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Psychic&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// 5 | 64 = 69&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_AND"&gt;Bitwise AND (&lt;code&gt;&amp;amp;&lt;/code&gt;)&lt;/a&gt; on the other hand can be used for comparing values. Our previous filter function can now be simplified so:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;weapons&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(({&lt;/span&gt; &lt;span class="nx"&gt;element&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;FireAndElectric&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Fire&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Electric&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;element&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="nx"&gt;FireAndElectric&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// &amp;gt; 0 if element has Fire &amp;amp; Electric&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;A tonne easier and more versatile!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Try doing this with your element arrays 😉&lt;/span&gt;
+&lt;span class="nx"&gt;weapons&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(({&lt;/span&gt; &lt;span class="nx"&gt;element&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;FireAndElectric&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Fire&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nx"&gt;Element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Electric&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;element&lt;/span&gt; &lt;span class="o"&gt;===&lt;/span&gt; &lt;span class="nx"&gt;FireAndElectric&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="code"></category><category term="optimise"></category><category term="improve"></category></entry><entry><title>4 years at Piktochart</title><link href="https://dontreinventbicycle.com/piktochart.html" rel="alternate"></link><published>2021-10-10T00:00:00+08:00</published><updated>2021-10-10T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2021-10-10:/piktochart.html</id><summary type="html">&lt;p&gt;On &lt;time datetime="2021-07-27"&gt;Tuesday, the 27th of July 2021&lt;/time&gt;, I served my final day at &lt;a href="https://piktochart.com/"&gt;Piktochart&lt;/a&gt;. I spent 4 years and some change at the company, joining as a JavaScript intern and leaving a DevOp &amp;amp; backend engineer for &lt;a href="https://piktostory.com/"&gt;Piktostory&lt;/a&gt;. Piktochart was my first “real” job and having spent a good part of …&lt;/p&gt;</summary><content type="html">&lt;p&gt;On &lt;time datetime="2021-07-27"&gt;Tuesday, the 27th of July 2021&lt;/time&gt;, I served my final day at &lt;a href="https://piktochart.com/"&gt;Piktochart&lt;/a&gt;. I spent 4 years and some change at the company, joining as a JavaScript intern and leaving a DevOp &amp;amp; backend engineer for &lt;a href="https://piktostory.com/"&gt;Piktostory&lt;/a&gt;. Piktochart was my first “real” job and having spent a good part of my early twenties there, there's a lot to look back and reflect on.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="A screenshot of the Piktochart web editor" src="https://dontreinventbicycle.com/images/piktochart/piktochart-editor.png"&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;“An infographic maker, presentation creator, and report builder in one online platform. No graphic design skills needed.”
@@ -1643,45 +1794,4 @@ __sync temperature: 3292.842247173721
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;img alt="LGPL logo" src="https://dontreinventbicycle.com/images/lgplv3.png"&gt;&lt;/p&gt;
-&lt;p&gt;A typical &lt;code&gt;debounce&lt;/code&gt; function in JS decorates a callback function in a &lt;code&gt;setTimeout&lt;/code&gt; block, running &lt;code&gt;clearTimeout&lt;/code&gt; and re-decorating the callback function as the decorated function is called over time. In GJS however, neither &lt;code&gt;setTimeout&lt;/code&gt; nor &lt;code&gt;clearTimeout&lt;/code&gt; are defined. Instead, &lt;code&gt;GLib.timeout_add&lt;/code&gt; is the GJS equivalent of &lt;code&gt;setTimeout&lt;/code&gt; and &lt;code&gt;setInterval&lt;/code&gt; in JavaScript. See the &lt;a href="/gjs-set-timeout-interval.html"&gt;setTimeout and setInterval in gjs&lt;/a&gt; article for more information.&lt;/p&gt;</content><category term="tips"></category><category term="gnome-shell"></category><category term="gjs"></category><category term="gtk"></category></entry><entry><title>setTimeout and setInterval in gjs</title><link href="https://dontreinventbicycle.com/gjs-set-timeout-interval.html" rel="alternate"></link><published>2020-09-16T00:00:00+08:00</published><updated>2020-09-16T00:00:00+08:00</updated><author><name>Dafne Kiyui</name></author><id>tag:dontreinventbicycle.com,2020-09-16:/gjs-set-timeout-interval.html</id><summary type="html">&lt;p&gt;The &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.timeout_add"&gt;GLib.timeout_add&lt;/a&gt; function is the GJS equivalent to both &lt;code&gt;setTimeout&lt;/code&gt; and &lt;code&gt;setInterval&lt;/code&gt;. It calls a given function repeatedly (such as &lt;code&gt;func&lt;/code&gt;) at given intervals until it returns a falsy value. It returns a &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source"&gt;GLib Source&lt;/a&gt; id, which just like &lt;code&gt;clearTimeout&lt;/code&gt; or &lt;code&gt;clearInterval&lt;/code&gt; can be removed with the static &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source#function-remove"&gt;GLib …&lt;/a&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;The &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.timeout_add"&gt;GLib.timeout_add&lt;/a&gt; function is the GJS equivalent to both &lt;code&gt;setTimeout&lt;/code&gt; and &lt;code&gt;setInterval&lt;/code&gt;. It calls a given function repeatedly (such as &lt;code&gt;func&lt;/code&gt;) at given intervals until it returns a falsy value. It returns a &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source"&gt;GLib Source&lt;/a&gt; id, which just like &lt;code&gt;clearTimeout&lt;/code&gt; or &lt;code&gt;clearInterval&lt;/code&gt; can be removed with the static &lt;a href="https://gjs-docs.gnome.org/glib20~2.64.1/glib.source#function-remove"&gt;GLib.Source.remove&lt;/a&gt; function.&lt;/p&gt;
-&lt;p&gt;The following code is licensed under the &lt;a href="https://www.gnu.org/licenses/lgpl-3.0.txt"&gt;GNU Lesser General Public License v3.0 or later&lt;/a&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/* exported clearTimeout clearInterval setTimeout setInterval */&lt;/span&gt;
-
-&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * Copyright 2020 Dafne Kiyui&lt;/span&gt;
-&lt;span class="cm"&gt; *&lt;/span&gt;
-&lt;span class="cm"&gt; * This program is free software: you can redistribute it and/or modify&lt;/span&gt;
-&lt;span class="cm"&gt; * it under the terms of the GNU Lesser General Public License as published by&lt;/span&gt;
-&lt;span class="cm"&gt; * the Free Software Foundation, either version 3 of the License, or&lt;/span&gt;
-&lt;span class="cm"&gt; * (at your option) any later version.&lt;/span&gt;
-&lt;span class="cm"&gt; *&lt;/span&gt;
-&lt;span class="cm"&gt; * This program is distributed in the hope that it will be useful,&lt;/span&gt;
-&lt;span class="cm"&gt; * but WITHOUT ANY WARRANTY; without even the implied warranty of&lt;/span&gt;
-&lt;span class="cm"&gt; * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&lt;/span&gt;
-&lt;span class="cm"&gt; * GNU Lesser General Public License for more details.&lt;/span&gt;
-&lt;span class="cm"&gt; *&lt;/span&gt;
-&lt;span class="cm"&gt; * You should have received a copy of the GNU Lesser General Public License&lt;/span&gt;
-&lt;span class="cm"&gt; * along with this program.  If not, see &amp;lt;https://www.gnu.org/licenses/&amp;gt;.&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;imports&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;gi&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;clearTimeout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;clearInterval&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="nx"&gt;clearTimeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;clearInterval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Source&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;remove&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;setTimeout&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="nx"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;wrappedFunc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;args&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="p"&gt;};&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;timeout_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;PRIORITY_DEFAULT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;wrappedFunc&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;setInterval&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="nx"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;wrappedFunc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;};&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;timeout_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;GLib&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;PRIORITY_DEFAULT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;wrappedFunc&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img alt="LGPL logo" src="https://dontreinventbicycle.com/images/lgplv3.png"&gt;&lt;/p&gt;
-&lt;p&gt;For the sake of trivia, according to &lt;a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval"&gt;MDN&lt;/a&gt;, both &lt;code&gt;setTimeout()&lt;/code&gt; and &lt;code&gt;setInterval()&lt;/code&gt; share the same pool of IDs. As such, both &lt;code&gt;clearTimeout()&lt;/code&gt; and &lt;code&gt;clearInterval()&lt;/code&gt; can be used interchangeably. This makes the above code pretty compatible and standards compliant 😉&lt;/p&gt;</content><category term="tips"></category><category term="gnome-shell"></category><category term="gjs"></category><category term="gtk"></category><category term="javascript"></category></entry></feed>
+&lt;p&gt;A typical &lt;code&gt;debounce&lt;/code&gt; function in JS decorates a callback function in a &lt;code&gt;setTimeout&lt;/code&gt; block, running &lt;code&gt;clearTimeout&lt;/code&gt; and re-decorating the callback function as the decorated function is called over time. In GJS however, neither &lt;code&gt;setTimeout&lt;/code&gt; nor &lt;code&gt;clearTimeout&lt;/code&gt; are defined. Instead, &lt;code&gt;GLib.timeout_add&lt;/code&gt; is the GJS equivalent of &lt;code&gt;setTimeout&lt;/code&gt; and &lt;code&gt;setInterval&lt;/code&gt; in JavaScript. See the &lt;a href="/gjs-set-timeout-interval.html"&gt;setTimeout and setInterval in gjs&lt;/a&gt; article for more information.&lt;/p&gt;</content><category term="tips"></category><category term="gnome-shell"></category><category term="gjs"></category><category term="gtk"></category></entry></feed>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>dont reinvent велосипед - You should probably use enum flags</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="programming,practice,standards,hacking,musing,optimise,improve">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- favicon items from https://realfavicongenerator.net -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#c18a6e">
+  <meta name="msapplication-TileColor" content="#c18a6e">
+  <meta name="theme-color" content="#c18a6e">
+  <!-- end of favicon items -->
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Serif" rel="stylesheet">
+  <link rel="stylesheet" href="https://dontreinventbicycle.com/theme/css/main.css" type="text/css">
+  <link
+    href="https://dontreinventbicycle.com/feeds/all.atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Full Atom Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/all.rss.xml"
+    type="application/rss+xml" rel="alternate" title="dont reinvent велосипед Full RSS Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Atom Feed" />
+  <link href="https://dontreinventbicycle.com/feeds/all.xml"
+    type="application/rss+xml" rel="alternate" title="dont reinvent велосипед RSS Feed" />
+  <link
+    href="https://dontreinventbicycle.com/feeds/code.atom.xml"
+    type="application/atom+xml" rel="alternate" title="dont reinvent велосипед Categories Atom Feed" />
+
+
+
+<meta name="tags" content="optimise" />
+<meta name="tags" content="improve" />
+
+</head>
+
+<body id="index" class="home">
+  <header id="banner" class="body">
+    <h1>
+      <a href="https://dontreinventbicycle.com/">dont reinvent велосипед <strong></strong></a>
+    </h1>
+  </header>
+
+  <nav id="menu" class="body">
+    <ul>
+
+
+      <li  class="active" >
+        <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/joke.html">joke</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/personal.html">personal</a>
+      </li>
+      <li >
+        <a href="https://dontreinventbicycle.com/category/tips.html">tips</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="body">
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://dontreinventbicycle.com/enum-flags.html" rel="bookmark"
+        title="Permalink to You should probably use enum flags">You should probably use enum flags</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <div>
+      published:
+      <time class="published" datetime="2021-10-23T00:00:00+08:00">
+        Sat 23 October 2021
+      </time>
+    </div>
+    <address class="vcard author">
+      by       <a class="url fn" href="https://dontreinventbicycle.com/author/dafne-kiyui.html">Dafne Kiyui</a>
+    </address>
+    <div class="category">
+      category: <a href="https://dontreinventbicycle.com/category/code.html">code</a>
+    </div>
+    <div class="tags">
+      tags:
+      <a href="https://dontreinventbicycle.com/tag/optimise.html">optimise</a>
+      <a href="https://dontreinventbicycle.com/tag/improve.html">improve</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p>Enum flags are a clever optimisation technique that make use of bitwise logic operations paired with <a href="https://en.wikipedia.org/wiki/Enumerated_type">enumerated types</a> that sadly see a lack of use in more modern codebases and languages such as JavaScript, in spite of <code>enum</code>s being otherwise fairly popular in TypeScript.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">enum</span> <span class="nx">Guild</span> <span class="p">{</span>
+  <span class="nx">Mage</span><span class="p">,</span>
+  <span class="nx">Rogue</span><span class="p">,</span>
+  <span class="nx">Warrior</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>In the case of “regular enums” such as the above, a value could either be <code>Guild.Mage</code> or <code>Guild.Warrior</code> but not both. While this may be desirable for some cases, consider the following enum <code>Element</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">enum</span> <span class="nx">Element</span> <span class="p">{</span>
+  <span class="nx">Fire</span><span class="p">,</span>
+  <span class="nx">Water</span><span class="p">,</span>
+  <span class="nx">Electric</span><span class="p">,</span>
+  <span class="nx">Grass</span><span class="p">,</span>
+  <span class="nx">Ice</span><span class="p">,</span>
+  <span class="nx">Rock</span><span class="p">,</span>
+  <span class="nx">Psychic</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Treating this like a regular enum would mean an <code>element</code> property would either have to be one value or another or be an array of <code>Element</code>s:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">interface</span> <span class="nx">Weapon</span> <span class="p">{</span>
+  <span class="nx">elements</span>: <span class="kt">Element</span><span class="p">[];</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Doing this comes at the complication of needing to use array-specific methods to filter items in an array. Consider the following code filtering a list of weapons to find all weapons that contain the elements <em>Fire</em> and <em>Electric</em>:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">weapons</span><span class="p">.</span><span class="nx">filter</span><span class="p">(({</span> <span class="nx">elements</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">elements</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">Element</span><span class="p">.</span><span class="nx">Fire</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">elements</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">Element</span><span class="p">.</span><span class="nx">Electric</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>Needless to say, this code would be even more complicated if we were to filter all weapons that are <strong>only</strong> <em>Fire</em> and <em>Electric</em>.</p>
+<p>Enum flags make use of bitwise operations and binary flags to be able to assign more then one value in the form of a binary flags. Consider that numbers can be represented in binary, each binary exponent could be used as a flag:</p>
+<div class="highlight"><pre><span></span><code><span class="mf">0</span> <span class="mf">0</span> <span class="mf">0</span> <span class="mf">0</span> <span class="mf">0</span> <span class="mf">0</span> <span class="mf">0</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">↓</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">↓</span> <span class="n">Fire</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">↓</span> <span class="n">Water</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">↓</span> <span class="n">Electric</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">↓</span> <span class="n">Grass</span>
+<span class="err">|</span> <span class="err">↓</span> <span class="n">Ice</span>
+<span class="err">↓</span> <span class="n">Rock</span>
+<span class="n">Psychic</span>
+</code></pre></div>
+
+<p>A weapon with the elements <em>Fire</em> and <em>Electric</em> could then be represented by binary <code>000101</code><sub>2</sub> or the decimal number <code>5</code>, as illustrated below:</p>
+<div class="highlight"><pre><span></span><code><span class="mf">0</span> <span class="mf">0</span> <span class="mf">0</span> <span class="mf">0</span> <span class="mf">1</span> <span class="mf">0</span> <span class="mf">1</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">↓</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">↓</span> <span class="n">Fire</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">↓</span> <span class="n">Water</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">|</span> <span class="err">↓</span> <span class="n">Electric</span>
+<span class="err">|</span> <span class="err">|</span> <span class="err">↓</span> <span class="n">Grass</span>
+<span class="err">|</span> <span class="err">↓</span> <span class="n">Ice</span>
+<span class="err">↓</span> <span class="n">Rock</span>
+<span class="n">Psychic</span>
+</code></pre></div>
+
+<p>With each exponent representing a flag for a specific element, it's now possible to reconstruct the <code>Element</code> enum with binary flag values.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Exponent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fire</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Water</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Electric</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Grass</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Ice</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Rock</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Psychic</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>While simply assigning the exponents of <code>2</code> to each member of the element works, it looks a little messy and doesn't as effective communicate that the values represent binary flags.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">enum</span> <span class="nx">Element</span> <span class="p">{</span>
+  <span class="nx">Fire</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">0</span><span class="p">),</span>
+  <span class="nx">Water</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">1</span><span class="p">),</span>
+  <span class="nx">Electric</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">2</span><span class="p">),</span>
+  <span class="nx">Grass</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">),</span>
+  <span class="nx">Ice</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">4</span><span class="p">),</span>
+  <span class="nx">Rock</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">5</span><span class="p">),</span>
+  <span class="nx">Psychic</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">6</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Left_shift">bitwise left shift operator (<code>&lt;&lt;</code>)</a> on the other hand does 👇 This is also the more common practice anyway.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">enum</span> <span class="nx">Element</span> <span class="p">{</span>
+  <span class="nx">Fire</span> <span class="o">=</span> <span class="mf">1</span> <span class="o">&lt;&lt;</span> <span class="mf">0</span><span class="p">,</span>
+  <span class="nx">Water</span> <span class="o">=</span> <span class="mf">1</span> <span class="o">&lt;&lt;</span> <span class="mf">1</span><span class="p">,</span>
+  <span class="nx">Electric</span> <span class="o">=</span> <span class="mf">1</span> <span class="o">&lt;&lt;</span> <span class="mf">2</span><span class="p">,</span>
+  <span class="nx">Grass</span> <span class="o">=</span> <span class="mf">1</span> <span class="o">&lt;&lt;</span> <span class="mf">3</span><span class="p">,</span>
+  <span class="nx">Ice</span> <span class="o">=</span> <span class="mf">1</span> <span class="o">&lt;&lt;</span> <span class="mf">4</span><span class="p">,</span>
+  <span class="nx">Rock</span> <span class="o">=</span> <span class="mf">1</span> <span class="o">&lt;&lt;</span> <span class="mf">5</span><span class="p">,</span>
+  <span class="nx">Psychic</span> <span class="o">=</span> <span class="mf">1</span> <span class="o">&lt;&lt;</span> <span class="mf">6</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Just as a quick primer on the left shift operator, it effectively shifts the bits of a value by the number of bits indicated by the right hand side, discarding any excess bits.</p>
+<div class="highlight"><pre><span></span><code><span class="mf">0001</span> <span class="o">&lt;&lt;</span> <span class="mf">1</span> <span class="o">=</span> <span class="mf">0010</span>
+<span class="mf">0101</span> <span class="o">&lt;&lt;</span> <span class="mf">1</span> <span class="o">=</span> <span class="mf">1010</span>
+<span class="mf">0001</span> <span class="o">&lt;&lt;</span> <span class="mf">2</span> <span class="o">=</span> <span class="mf">0100</span>
+</code></pre></div>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#binary_bitwise_operators">Binary bitwise operators</a> can then be used to perform operations with these values. <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_OR">Bitwise OR (<code>|</code>)</a> can for example be used to assign the values:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Assigning the elements Fire and Electric to a weapon</span>
+<span class="nx">weapon</span><span class="p">.</span><span class="nx">element</span> <span class="o">=</span> <span class="nx">Element</span><span class="p">.</span><span class="nx">Fire</span> <span class="o">|</span> <span class="nx">Element</span><span class="p">.</span><span class="nx">Electric</span><span class="p">;</span> <span class="c1">// 1 | 2 = 5</span>
+
+<span class="c1">// Adding the element Psychic to the same weapon</span>
+<span class="nx">weapon</span><span class="p">.</span><span class="nx">element</span> <span class="o">|=</span> <span class="nx">Element</span><span class="p">.</span><span class="nx">Psychic</span><span class="p">;</span> <span class="c1">// 5 | 64 = 69</span>
+</code></pre></div>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_AND">Bitwise AND (<code>&amp;</code>)</a> on the other hand can be used for comparing values. Our previous filter function can now be simplified so:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">weapons</span><span class="p">.</span><span class="nx">filter</span><span class="p">(({</span> <span class="nx">element</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">FireAndElectric</span> <span class="o">=</span> <span class="nx">Element</span><span class="p">.</span><span class="nx">Fire</span> <span class="o">|</span> <span class="nx">Element</span><span class="p">.</span><span class="nx">Electric</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">element</span> <span class="o">&amp;</span> <span class="nx">FireAndElectric</span><span class="p">;</span> <span class="c1">// &gt; 0 if element has Fire &amp; Electric</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>A tonne easier and more versatile!</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Try doing this with your element arrays 😉</span>
+<span class="nx">weapons</span><span class="p">.</span><span class="nx">filter</span><span class="p">(({</span> <span class="nx">element</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">FireAndElectric</span> <span class="o">=</span> <span class="nx">Element</span><span class="p">.</span><span class="nx">Fire</span> <span class="o">|</span> <span class="nx">Element</span><span class="p">.</span><span class="nx">Electric</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">element</span> <span class="o">===</span> <span class="nx">FireAndElectric</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+  </div><!-- /.entry-content -->
+</section>
+  </div>
+
+  <footer id="contentinfo" class="body">
+    <div>
+      <h4 class="title">socials:</h4>
+      <ul class="links">
+        <li><a href="https://www.linkedin.com/in/dafnelately/">LinkedIn</a></li>
+        <li><a rel="me" href="https://deadinsi.de/@dafne">Mastodon</a></li>
+        <li><a href="https://twitter.com/dafnelately">Twitter</a></li>
+        <li><a href="https://www.abillion.com/users/dafnelately">abillion</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="title">projects:</h4>
+      <ul class="links">
+        <li><a href="https://codeberg.org/kiyui">Codeberg</a></li>
+        <li><a href="https://github.com/kiyui">GitHub</a></li>
+        <li><a href="https://extensions.gnome.org/accounts/profile/TimurKiyivinski">GNOME Extensions</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="title">misc:</h4>
+      <ul class="links">
+        <li><a href="https://dontreinventbicycle.com/feeds/atom.xml" rel="alternate">atom feed</a></li>
+        <li><a href="https://dontreinventbicycle.com/feeds/all.xml" rel="alternate">rss feed</a></li>
+        <li><a href="https://ko-fi.com/dafne">Ko-fi (tip jar)</a></li>
+      </ul>
+    </div>
+    <address id="about" class="vcard body">
+      Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+      which takes great advantage of <a href="http://python.org">Python</a>.
+    </address>
+  </footer>
+</body>
+
+</html>
